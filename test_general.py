@@ -1,5 +1,5 @@
 import pytest
 
 
-def test_generic():
+def test_generics():
     assert 5 == 5
