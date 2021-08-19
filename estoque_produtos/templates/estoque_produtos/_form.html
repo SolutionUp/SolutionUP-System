@@ -1,0 +1,19 @@
+<form class="form" method="post" novalidate>
+    <p class="h2">Cadastro de produtos</p>
+    {% csrf_token %}
+    <div>
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            {{ field }}
+            <label for="{{ field.name }}">{{ field.label }}</label>
+        </div>
+        <div class="text-danger">
+            {{ field.errors }}
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <input class="btn btn-primary" type="submit" value="Cadastrar">
+        <input type="reset" class="btn btn-secondary" value="Resetar" />
+    </div>
+</form>
