@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic.list import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from .forms import FormProduto
 from .models import Produto
@@ -8,6 +8,9 @@ class ProdutoListView(ListView):
     model = Produto
     paginate_by = 100
     ordering = ['codigo']
+
+class ProdutoDetailView(DetailView):
+    model = Produto
 
 def adicionar_produto(request):
     if request.method == 'POST':

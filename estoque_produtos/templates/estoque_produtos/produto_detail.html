@@ -1,0 +1,15 @@
+{% extends "estoque_produtos/base.html" %} {% block content %}
+<h1>Informações do produto</h1>
+
+<h2>Nome: {{ object.nome }} </h2>
+
+<p>Valor: R${{ object.valor }}</p>
+
+<p>Descrição: {{ object.descricao }}</p>
+
+<p>Tipo: {{ object.tipo }}</p>
+
+<p>Marca: {{ object.marca }}</p>
+
+<p>Link de venda: {{ object.link }}</p>
+{% endblock %}
