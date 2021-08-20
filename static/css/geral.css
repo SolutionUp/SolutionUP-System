@@ -1,0 +1,12 @@
+body {
+    padding: 0;
+    margin: 0;
+    }        
+body .main {
+    min-height: 95vh;
+    padding: 15px;
+}        
+a {
+    text-decoration: none;
+    color: #000000;
+}
