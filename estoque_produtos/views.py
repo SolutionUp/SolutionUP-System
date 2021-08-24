@@ -1,13 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
+from django.db.models import Q
 from .forms import FormProduto
 from .models import Produto
 
 class ProdutoListView(ListView):
     model = Produto
     paginate_by = 100
-    ordering = ['codigo']
+
+    def get_queryset(self):
+        query = self.request.GET.get('q') or ''
+        object_list = Produto.objects.filter(
+            Q(codigo__icontains=query) |
+            Q(nome__icontains=query) |
+            Q(marca__icontains=query)
+        )
+        return object_list
 
 class ProdutoDetailView(DetailView):
     model = Produto
@@ -47,5 +56,3 @@ def alterar_produto(request, codigo):
             return render(request, 'estoque_produtos/produto_add.html', {'form': form})
     else:
         return render(request, 'estoque_produtos/produto_add.html', {'form': form})
-
-
