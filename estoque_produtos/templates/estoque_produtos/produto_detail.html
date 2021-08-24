@@ -1,15 +1,53 @@
-{% extends "base.html" %} {% block content %}
-<h1>Informações do produto</h1>
-
-<h2>Nome: {{ object.nome }} </h2>
-
-<p>Valor: R${{ object.valor }}</p>
-
-<p>Descrição: {{ object.descricao }}</p>
-
-<p>Tipo: {{ object.tipo }}</p>
-
-<p>Marca: {{ object.marca }}</p>
-
-<p>Link de venda: {{ object.link }}</p>
+{% extends "base.html" %} {% block content %} {% load static %}
+<section class="col-10 offset-1 mb-5">
+  <div class="title-center col-8 offset-2 mb-5">
+  <p class="h3">Informações do produto</p>
+  </div>
+    <div class="row">
+      <div class="col-4 offset-1 mb-4 mb-md-0 ">  
+        <div class="mdb-lightbox">  
+          <div class="row product-gallery mx-1">  
+            <div class="col-12 mb-0">
+              <img src="{% static 'images/not-image.png' %}" class="img-fluid z-depth-1">
+            </div>          
+          </div>  
+        </div>  
+      </div>
+      <div class="col-md-6">  
+        <p class="h5">{{ object.nome }}</p>
+        <p class="mb-2 text-muted small">{{ object.tipo }} - {{ object.marca }}</p>
+        <p class="descricao-produto">{{ object.descricao }}</p>
+        <!-- <p class="mb-1 text-muted small">Cartões de crédito ou débito</p>
+        <div class="mb-2 cartoes-credito">
+            <div class="mb-3">
+                <img width="33%" src="{% static 'images/cartoes-credito.png' %}" alt="Cartões de Crédito">
+            </div>
+        </div>
+        <p class="mb-2 text-muted small">Boleto parcelado em até 12x</p>
+        <div class="mb-2 mercado-credito">
+            <div>
+                <div class="mb-3">
+                    <img width="8%" src="{% static 'images/mercado-credito.png' %}" alt="Mercado Crédito">
+                </div>
+            </div>
+        </div>
+        <p class="mb-2 text-muted small">Pix</p>
+        <div>
+            <div class="mb-3">
+                <img width="9%" src="{% static 'images/pix.png' %}" alt="Pix">
+            </div>
+        </div>
+        <p class="mb-2 text-muted small">Boleto</p>
+        <div>
+            <div class="mb-3">
+                <img width="6%" decoding="async" src="{% static 'images/boleto.png' %}" alt="Boleto">
+            </div>
+        </div> -->
+        <p><span class="h3 detail-valor-produto">R${{ object.valor }}</span></p>
+        <a href="{{ object.link }}" type="button" class="btn btn-warning"><img src="{% static 'images/mercado-livre.png' %}" width="94px"></a>
+        <a href="/produtos"type="button" class="btn btn-secondary"><i class="fas fa-shopping-cart pr-2"></i>Voltar</a><br>
+        <p class="pt-3 text-muted small">Observação: Toda compra é realizada através do Mercado Livre.</p></div>
+      </div>
+    </div>  
+</section>
 {% endblock %}
