@@ -1,119 +1,151 @@
-    /** Estilizações genéricas **/
-    
-    * {
-        padding: 0;
-        margin: 0;
+/** Estilizações genéricas **/
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: ProximaHelvetica, Helvetica, Arial, sans-serif;
+    /* min-height: 100vh; */
+    background-color: #f8f9fa
+}
+
+body .main {
+    padding: 15px;
+}
+
+footer {
+    display: None;
+    /* Temporariamente desativado*/
+    text-align: center;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #000000 !important;
+}
+
+a:hover {
+    color: currentColor !important;
+}
+
+.form-control:focus {
+    box-shadow: unset;
+    border: 2px solid #27ae5f;
+}
+/* Navbar | Header */
+
+.nav-link div {
+    height: 2px;
+    transition-duration: 0.3s;
+    width: 0%
+}
+
+.nav-link:hover {
+    color: #27ae5fcc !important;
+}
+
+.nav-link:hover div,
+.atual div {
+    background-color: #27ae5fcc;
+    width: 100%;
+}
+/** Componentes **/
+
+.btn-adicionar {
+    color: #ffffff !important;
+    background-color: #27ae60;
+    border-color: #27ae60;
+    padding: 10px;
+    width: 40px;
+    height: 38px;
+}
+
+.btn-adicionar:hover {
+    color: #ffffff !important;
+}
+
+.btn-confirmar {
+    color: #fff !important;
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+.btn-voltar,
+.btn-voltar:hover {
+    color: #fff !important;
+}
+
+.btn-mercado-livre {
+    background-color: #fff159;
+    border-color: #fff159;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #27ae60;
+    color: #fff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #27ae60;
+}
+/** Produtos **/
+
+.produto-foto {
+    box-shadow: 0px 3px 17px 0px #d5cece;
+    max-width: 370px;
+    height: fit-content;
+}
+
+.produto-descricao {
+    text-align: justify;
+}
+
+.produto-valor {
+    animation: kf-produto-valor 5s;
+    color: #000000; 
+    font: bold 36px Helvetica, Arial, Sans-Serif;
+    margin-bottom: 15px;
+    text-shadow: 
+        1px 1px #27ae5f, 
+        1px 1px #27ae5f, 
+        2px 2px #27ae5f;
+}
+
+/* Produto - Animações */
+
+@keyframes kf-produto-valor {
+    0% {
+        opacity: 0;
     }
-    
-    body {
-        font-family: ProximaHelvetica, Helvetica, Arial, sans-serif;
-        /* min-height: 100vh; */
-        background-color: #f8f9fa
+    100% {
+        opacity: 1;
     }
-    
-    body .main {
-        padding: 15px;
-    }
-    
-    footer {
-        display: None;
-        /* Temporariamente desativado*/
-        text-align: center;
-        bottom: 0;
-        position: absolute;
-        width: 100%;
-    }
-    
-    a {
-        text-decoration: none;
-        color: #000 !important;
-    }
-    
-    a:hover {
-        color: currentColor !important;
-    }
-    
-    .form-control:focus {
-        box-shadow: unset;
-        border: 2px solid #27ae5f;
-    }
-    /* Navbar | Header */
-    
-    .nav-link div {
-        height: 2px;
-        transition-duration: 0.3s;
-        width: 0%
-    }
-    
-    .nav-link:hover {
-        color: #27ae5fcc !important;
-    }
-    
-    .nav-link:hover div,
-    .atual div {
-        background-color: #27ae5fcc;
-        width: 100%;
-    }
-    /** Componentes **/
-    
-    .btn-adicionar {
-        color: #fff !important;
-        background-color: #27ae60;
-        border-color: #27ae60;
-        padding: 10px;
-        width: 40px;
-        height: 38px;
-    }
-    
-    .styled-table {
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        width: 100%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-    
-    .styled-table thead tr {
-        background-color: #27ae60;
-        color: #ffffff;
-        text-align: left;
-    }
-    
-    .styled-table th,
-    .styled-table td {
-        padding: 12px 15px;
-    }
-    
-    .styled-table tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    
-    .styled-table tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    
-    .styled-table tbody tr:last-of-type {
-        border-bottom: 2px solid #27ae60;
-    }
-    /** Produtos **/
-    
-    .produto-foto {
-        box-shadow: 0px 3px 17px 0px #d5cece;
-        max-width: 370px;
-    }
-    
-    .produto-valor {
-        animation: kf-produto-valor 5s;
-        color: #27ae5f;
-    }
-    /* Produto - Animações */
-    
-    @keyframes kf-produto-valor {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
+}
