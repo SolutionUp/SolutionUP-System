@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<section class="col-10 offset-1 mb-5">
+    <div class="text-center col-8 offset-2 mb-5">
+        <p class="h3">Informações do produto</p>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="produto-foto m-auto">
+                {% if object.imagem %}
+                <img src="{{ object.imagem.url }}" class="img-fluid">
+                {% else %}
+                <img src="{% static 'images/not-image.png' %}" class="img-fluid">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-6">
+            <p class="h5">{{ object.nome }}</p>
+            <p class="text-muted small mb-2">{{ object.tipo }} {% if object.marca %} - {{ object.marca }} {% endif %}</p>
+            <p class="produto-descricao">{{ object.descricao }}</p>
+
+            <p class="h3 produto-valor">R${{ object.valor }}</p>
+            <a href="{{ object.link }}" type="button" class="btn btn-warning btn-mercado-livre">
+                <img src="{% static 'images/mercado-livre.png' %}" width="94px">
+            </a>
+            <a href="/produtos" type="button" class="btn btn-secondary btn-voltar">
+               Voltar
+            </a>
+            <p class="text-muted small pt-2">Observação: Toda compra é realizada através do Mercado Livre.</p>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}
