@@ -6,7 +6,7 @@ class Produto(models.Model):
     valor = models.DecimalField(blank=False, null=False, max_digits=7, decimal_places=2)
     tipo = models.CharField(max_length=30, blank=False, null=False)
     descricao = models.TextField(blank=True, null=True)
-    marca = models.CharField(max_length=30, blank=True, null=True)
+    marca = models.CharField(max_length=30, blank=False, null=False)
     link = models.TextField(blank=True, null=True)
     imagem = models.ImageField(upload_to='images/produtos', blank=True, null=True)
 
