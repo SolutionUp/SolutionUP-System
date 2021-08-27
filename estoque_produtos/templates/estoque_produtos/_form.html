@@ -3,7 +3,7 @@
     {% csrf_token %}
     <div class="row">
         <p class="h2">Cadastro de produtos</p>
-        <div class="produto-foto col-4 pt-3">
+        <div class="produto-foto col-4 pt-5">
             {% if form.imagem.value %}
                 <img src="{% get_media_prefix %}{{form.imagem.value}}" class="img-fluid mb-2"/>
             {% else %}
@@ -25,7 +25,7 @@
                     <label for="{{ form.valor.name }}">{{ form.valor.label }}</label>
                 </div>
                 <div class="text-danger">
-                    {{ form.nome.errors }}
+                    {{ form.valor.errors }}
                 </div>
                 <div class="form-floating mb-3">
                     {{ form.tipo }}
@@ -46,18 +46,19 @@
                     <label for="{{ form.link.name }}">{{ form.link.label }}</label>
                 </div>
                 <div class="text-danger">
-                    {{ form.marca.errors }}
+                    {{ form.link.errors }}
                 </div>
             </div>
         </div>
     </div>
     <div class="row mb-3">
         {{ form.descricao }}
-    </div>
-    <div class="col-3 ">
-        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
-        <input class="btn btn-secondary btn-resetar" type="reset" value="Resetar"/>
+        <div class="mb-3"></div>
+        <div class="row col-1 me-0">
+            <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        </div>
+        <div class="row col-1">
+            <input class="btn btn-secondary btn-resetar" type="reset" value="Resetar"/>
+        </div>
     </div>
 </form>
-
-
