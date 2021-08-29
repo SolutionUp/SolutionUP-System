@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
 <p class="h2">Produtos</p>
 <div class="row">
-    <div class="pesquisa col-11 mb-2">
+    <div class="pesquisa col-4">
         <form class="input-group" action="{% url 'listagem_produto' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite para buscar..." />
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um produto ou código..." />
             <button class="btn btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -56,4 +56,4 @@
     </tbody>
 </table>
 {% else %}
-<p class="text-secondary">Não há produtos disponíveis.</p> {% endif %} {% endblock %}
+<p class="text-secondary pt-2">Não há produtos disponíveis.</p> {% endif %} {% endblock %}
