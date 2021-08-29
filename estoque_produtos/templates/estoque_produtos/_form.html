@@ -1,17 +1,22 @@
 {% load static %}
 <form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
-    <div class="row">
-        <p class="h2">Cadastro de produtos</p>
-        <div class="produto-foto col-4 pt-5">
+    <div class="row container">
+        <p class="row h2 mb-4">Cadastro de produtos</p>
+        <div class="produto-foto col-5 p-3">
             {% if form.imagem.value %}
-                <img src="{% get_media_prefix %}{{form.imagem.value}}" class="img-fluid mb-2"/>
+                <img id="image" src="" class="img-fluid mb-2 d-none"/>
+                <img id="image_" src="{% get_media_prefix %}{{form.imagem.value}}" class="img-fluid mb-2"/>
             {% else %}
-                <img src="{% static 'images/not-image.png' %}" class="img-fluid mb-2">
+                <img id="image" src="" class="img-fluid mb-2 d-none">
+                <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2">
             {% endif %}
+            <div class="d-flex">
                 {{ form.imagem }}
+                <button class="btn btn-light" type="button" onclick="resetar_imagem()"><i class="bi bi-trash"></i></button>
+            </div>
         </div>
-        <div class="form col-5 mb-auto mt-auto">            
+        <div class="form col-4 mb-auto mt-auto">            
             <div>
                 <div class="form-floating mb-3">
                     {{ form.nome }}
@@ -51,14 +56,11 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row container">
         {{ form.descricao }}
-        <div class="mb-3"></div>
-        <div class="row col-1 me-0">
-            <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
-        </div>
-        <div class="row col-1">
-            <input class="btn btn-secondary btn-resetar" type="reset" value="Resetar"/>
-        </div>
+    </div>
+    <div class="container">
+        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar"/>
     </div>
 </form>

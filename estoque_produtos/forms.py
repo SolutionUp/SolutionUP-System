@@ -23,7 +23,7 @@ class FormProduto(ModelForm):
                 'placeholder': 'Insira o tipo'
             }),
             'descricao':  Textarea(attrs={
-                'class': "form-control mt-3",
+                'class': "form-control mt-3 mb-3",
                 'placeholder': 'Insira a descrição do produto...',
                 'style': 'resize: None;'
             }),
@@ -36,7 +36,7 @@ class FormProduto(ModelForm):
                 'placeholder': 'Insira o link do produto'
             }),  
             'imagem': FileInput(attrs={
-                'class': "form-control mb-3",
+                'class': "form-control me-2",
                 'style': 'max-width: 300px;',
             }) 
-        }       
+        }
