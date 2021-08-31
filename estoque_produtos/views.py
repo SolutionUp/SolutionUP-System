@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
 from .forms import FormProduto
-from .models import Produto
+from .models import Produto, Fornecedor
 
 class ProdutoListView(ListView):
     model = Produto
@@ -11,7 +11,7 @@ class ProdutoListView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q') or ''
-        object_list = Produto.objects.filter(
+        object_list = self.model.objects.filter(
             Q(codigo__icontains=query) |
             Q(nome__icontains=query) |
             Q(marca__icontains=query)
@@ -65,3 +65,23 @@ def alterar_produto(request, codigo):
             return render(request, 'estoque_produtos/produto_add.html', {'form': form})
     else:
         return render(request, 'estoque_produtos/produto_add.html', {'form': form})
+
+class FornecedorListView(ListView):
+    model = Fornecedor
+    paginate_by = 100
+
+    def get_queryset(self):
+        query = self.request.GET.get('q') or ''
+        object_list = self.model.objects.filter(
+            Q(nome__icontains=query) |
+        )
+        return object_list
+
+class FornecedorDetailView(DetailView):
+    model = Fornecedor
+
+
+
+
+
+

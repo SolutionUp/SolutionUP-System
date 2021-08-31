@@ -140,6 +140,25 @@ a:hover {
         2px 2px #27ae5f;
 }
 
+/* Fornecedores */
+#id_fornecedor_telefone{
+    height: 135px;
+}
+
+#label-fornecedor{
+    background: #fff;
+    opacity: 1;
+    height: 24px;
+    left: 0;
+    top: 7px;
+    position: absolute;
+    border: none;
+    padding: 0 0 0 10px;
+    width: 100%;
+}
+
+
+/* Animações */
 /* Produto - Animações */
 
 @keyframes kf-produto-valor {

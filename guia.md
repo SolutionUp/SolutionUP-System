@@ -25,3 +25,9 @@
 - Scrum | Kanban | Sprints | Tarefas
 - Testes unitários e automatizados
 - Integração contínua (TravisCI)
+
+
+## Depuração de código
+import ipdb
+
+ipdb.set_trace() na linha desejada (Comando n vai para a próxima linha e o c segue para o final do código)
