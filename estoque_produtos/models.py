@@ -11,9 +11,6 @@ class Produto(models.Model):
     imagem = models.ImageField(upload_to='images/produtos', blank=True, null=True)
 
     def __str__(self):
-<<<<<<< Updated upstream
-        return self.nome
-=======
         return self.nome
 
 class EntidadeExterna(models.Model): #Classe base, só as filhas terão tabela no banco de dados
@@ -40,4 +37,3 @@ class Categoria(models.Model):
 
     def __str__(self):
         return self.nome
->>>>>>> Stashed changes
