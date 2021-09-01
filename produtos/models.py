@@ -12,22 +12,22 @@ class Produto(models.Model):
     imagem = models.ImageField(upload_to='images/produtos', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.id} - {self.nome}"
+        return f'{self.id} - {self.nome}'
 
-class EntidadeExterna(models.Model):
+class Externo(models.Model):
     nome = models.CharField(max_length=100, blank=False, null=False)
     email = models.CharField(max_length=100, blank=False, null=False)
     ramo = models.CharField(max_length=50, blank=False, null=True)
     class Meta:
         abstract = True
         
-class Fornecedor(EntidadeExterna):
+class Fornecedor(Externo):
 
     def __str__(self):
-        return f"{self.id} - {self.nome}"
+        return f'{self.id} - {self.nome}'
 
 class TelefoneFornecedor(models.Model):
-    fornecedor = ForeignKey('Fornecedor',on_delete=models.CASCADE)
+    fornecedor = ForeignKey('Fornecedor', on_delete=models.CASCADE)
     telefone = models.CharField(max_length=20, blank=False, null=False)
 
     def __str__(self):

@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
 <p class="h2">Fornecedores</p>
 <div class="row">
-    <div class="pesquisa col-11 mb-2">
+    <div class="pesquisa col-4">
         <form class="input-group" action="{% url 'listagem_fornecedor' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite para buscar..." />
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou ramo..." />
             <button class="btn btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -17,7 +17,6 @@
 <table class="styled-table">
     <thead>
         <tr>
-            <th scope="row"> Código </th>
             <th scope="col"> Nome </th>
             <th scope="col"> E-mail </th>
             <th scope="col"> Ramo </th>
@@ -27,16 +26,12 @@
     <tbody>
         {% for fornecedor in object_list %}
         <tr class="active-row">
-            <th scope="row">{{ fornecedor.id }}</th>
-            <td>
-                <a href="{{ fornecedor.id }}">{{ fornecedor.nome }}</a>
-            </td>
+            <td>{{ fornecedor.nome }}</td>
             <td>{{ fornecedor.email }}</td>
             <td>{{ fornecedor.ramo }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i
-                        class="bi bi-trash"></i></a>
+                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i class="bi bi-trash"></i></a>
             </td>
         </tr>
         <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
@@ -58,4 +53,4 @@
     </tbody>
 </table>
 {% else %}
-<p class="text-secondary">Não há fornecedores disponíveis.</p> {% endif %} {% endblock %}
+<p class="text-secondary pt-2">Não há fornecedores disponíveis.</p> {% endif %} {% endblock %}

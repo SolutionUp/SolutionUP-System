@@ -13,25 +13,23 @@ class FornecedorListView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q') or ''
         object_list = self.model.objects.filter(
-            Q(nome__icontains=query)
+            Q(nome__icontains=query) | 
+            Q(ramo__icontains=query)
         )
         return object_list
 
 class FornecedorDetailView(DetailView):
     model = Fornecedor
-    template_name = 'fornecedor/fornecedor_detail.html'
 
 def adicionar_fornecedor(request):
     if request.method == 'POST':
         form = FormFornecedor(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS,
-                                 'Fornecedor cadastrado!', extra_tags='success')
+            messages.add_message(request, messages.SUCCESS, 'Fornecedor cadastrado!', extra_tags='success')
             return redirect('/fornecedores/adicionar')
         else:
-            messages.add_message(
-                request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+            messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'fornecedor/fornecedor_add.html', {'form': form})
     else:
         form = FormFornecedor()
@@ -53,7 +51,7 @@ def alterar_fornecedor(request, id):
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, 'fornecedor alterado!', extra_tags='success')
+            messages.add_message(request, messages.SUCCESS, 'Fornecedor alterado!', extra_tags='success')
             return redirect('/fornecedores')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
