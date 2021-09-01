@@ -25,7 +25,6 @@
         </tr>
     </thead>
     <tbody>
-        ramo
         {% for fornecedor in object_list %}
         <tr class="active-row">
             <th scope="row">{{ fornecedor.id }}</th>
@@ -40,8 +39,7 @@
                         class="bi bi-trash"></i></a>
             </td>
         </tr>
-        <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog"
-            aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+        <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header ">

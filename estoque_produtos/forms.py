@@ -66,8 +66,5 @@ class FormFornecedor(ModelForm):
             'ramo': TextInput(attrs={
                 'class': "form-control",
                 'placeholder': 'Insira o Ramo'
-            }),
-            'fornecedor_telefone': SelectMultiple(attrs={
-                'class': "form-control",
             })
         }
