@@ -14,7 +14,7 @@ class Produto(models.Model):
     def __str__(self):
         return f"{self.id} - {self.nome}"
 
-class EntidadeExterna(models.Model): #Classe base, só as filhas terão tabela no banco de dados
+class EntidadeExterna(models.Model):
     nome = models.CharField(max_length=100, blank=False, null=False)
     email = models.CharField(max_length=100, blank=False, null=False)
     ramo = models.CharField(max_length=50, blank=False, null=True)
