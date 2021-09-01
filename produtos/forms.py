@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import ModelForm, TextInput, NumberInput, Textarea, FileInput 
+from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput 
 
-from .models import Produto
+from .models import Produto, Fornecedor
 
 class FormProduto(ModelForm):
     class Meta:
@@ -31,6 +31,14 @@ class FormProduto(ModelForm):
                 'class': "form-control",
                 'placeholder': 'Marca do produto'
             }),
+            'fornecedor': Select(attrs={
+                'class': "form-control",
+                'placeholder': 'Insira o fornecedor'
+            }), 
+            'categoria': Select(attrs={
+                'class': "form-control",
+                'placeholder': 'Insira a categoria'
+            }),
             'link': TextInput(attrs={
                 'class': "form-control",
                 'placeholder': 'Insira o link do produto'
@@ -39,4 +47,23 @@ class FormProduto(ModelForm):
                 'class': "form-control me-2",
                 'style': 'max-width: 300px;',
             }) 
+        }       
+        
+class FormFornecedor(ModelForm):
+    class Meta:
+        model = Fornecedor
+        fields = '__all__'
+        widgets = {
+            'nome': TextInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Nome do fornecedor'
+            }),
+            'email': EmailInput(attrs={
+                'class': "form-control",
+                'placeholder': 'E-mail',
+            }),
+            'ramo': TextInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Insira o Ramo'
+            })
         }

@@ -47,6 +47,20 @@
                     {{ form.marca.errors }}
                 </div>
                 <div class="form-floating mb-3">
+                    {{ form.fornecedor }}
+                    <label for="{{ form.fornecedor.name }}">{{ form.fornecedor.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.fornecedor.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.categoria }}
+                    <label for="{{ form.categoria.name }}">{{ form.categoria.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.categoria.errors }}
+                </div>
+                <div class="form-floating mb-3">
                     {{ form.link }}
                     <label for="{{ form.link.name }}">{{ form.link.label }}</label>
                 </div>
