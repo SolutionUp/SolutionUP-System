@@ -1,0 +1,38 @@
+{% load static %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <p class="h2">Cadastro de fornecedor</p>
+        <div class="form col-5 mb-auto mt-auto">
+            <div>
+                <div class="form-floating mb-3">
+                    {{ form.nome }}
+                    <label for="{{ form.nome.name }}">{{ form.nome.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.nome.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.email }}
+                    <label for="{{ form.email.name }}">{{ form.email.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.ramo }}
+                    <label for="{{ form.ramo.name }}">{{ form.ramo.label }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        {{ form.descricao }}
+        <div class="row col-1 me-0">
+            <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        </div>
+        <div class="row col-1">
+            <input class="btn btn-secondary btn-resetar" type="reset" value="Resetar" />
+        </div>
+    </div>
+</form>

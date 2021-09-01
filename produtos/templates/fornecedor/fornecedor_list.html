@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+<p class="h2">Fornecedores</p>
+<div class="row">
+    <div class="pesquisa col-11 mb-2">
+        <form class="input-group" action="{% url 'listagem_fornecedor' %}" method="get">
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite para buscar..." />
+            <button class="btn btn-secondary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+    <a href="adicionar" class="btn btn-success btn-adicionar">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+</div>
+{% if object_list %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th scope="row"> Código </th>
+            <th scope="col"> Nome </th>
+            <th scope="col"> E-mail </th>
+            <th scope="col"> Ramo </th>
+            <th class="text-center" scope="col"> Opções </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for fornecedor in object_list %}
+        <tr class="active-row">
+            <th scope="row">{{ fornecedor.id }}</th>
+            <td>
+                <a href="{{ fornecedor.id }}">{{ fornecedor.nome }}</a>
+            </td>
+            <td>{{ fornecedor.email }}</td>
+            <td>{{ fornecedor.ramo }}</td>
+            <td class="col-2 text-center">
+                <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i
+                        class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+        <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title ">Confirmação</h5>
+                    </div>
+                    <div class="modal-body">Deseja realmente deletar o fornecedor {{ fornecedor.nome }}?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="remover/{{ fornecedor.id }}"><button type="button"
+                                class="btn btn-danger">Deletar</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-secondary">Não há fornecedores disponíveis.</p> {% endif %} {% endblock %}

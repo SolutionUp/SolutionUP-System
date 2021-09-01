@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
-from .forms import FormProduto
-from .models import Produto
+from produtos.forms import FormProduto
+from produtos.models import Produto
 
 class ProdutoListView(ListView):
     model = Produto
@@ -11,7 +11,7 @@ class ProdutoListView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q') or ''
-        object_list = Produto.objects.filter(
+        object_list = self.model.objects.filter(
             Q(codigo__icontains=query) |
             Q(nome__icontains=query) |
             Q(marca__icontains=query)
@@ -30,10 +30,10 @@ def adicionar_produto(request):
             return redirect('/produtos/adicionar')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'estoque_produtos/produto_add.html', {'form': form})
+            return render(request, 'produtos/produto_add.html', {'form': form})
     else:
         form = FormProduto()
-        return render(request, 'estoque_produtos/produto_add.html', {'form': form})
+        return render(request, 'produtos/produto_add.html', {'form': form})
 
 def remover_produto(request, codigo):
     if request.method == 'GET':
@@ -44,7 +44,7 @@ def remover_produto(request, codigo):
         produto.delete()
         return redirect('/produtos')
     else:
-        return render(request, 'estoque_produtos/produto_list.html')
+        return render(request, 'produtos/produto_list.html')
 
 def alterar_produto(request, codigo): 
     instance = get_object_or_404(Produto, codigo=codigo)
@@ -62,6 +62,9 @@ def alterar_produto(request, codigo):
             return redirect('/produtos')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'estoque_produtos/produto_add.html', {'form': form})
+            return render(request, 'produtos/produto_add.html', {'form': form})
     else:
-        return render(request, 'estoque_produtos/produto_add.html', {'form': form})
+        return render(request, 'produtos/produto_add.html', {'form': form})
+
+
+
