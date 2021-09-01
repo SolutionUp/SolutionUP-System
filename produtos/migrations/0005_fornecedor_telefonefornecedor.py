@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estoque_produtos', '0004_ajuste_produtos'),
+        ('produtos', '0004_ajuste_produtos'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('telefone', models.CharField(max_length=20)),
-                ('fornecedor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estoque_produtos.fornecedor')),
+                ('fornecedor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='produtos.fornecedor')),
             ],
         ),
     ]

@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estoque_produtos', '0003_alter_produto_valor'),
+        ('produtos', '0003_alter_produto_valor'),
     ]
 
     operations = [

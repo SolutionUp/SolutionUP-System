@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
-from estoque_produtos.forms import FormFornecedor
-from estoque_produtos.models import Fornecedor
+from produtos.forms import FormFornecedor
+from produtos.models import Fornecedor
 
 class FornecedorListView(ListView):
     model = Fornecedor

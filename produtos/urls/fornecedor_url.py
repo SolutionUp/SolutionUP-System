@@ -1,5 +1,5 @@
 from django.urls import path, include
-from estoque_produtos.views.fornecedor_view import FornecedorListView, FornecedorDetailView, adicionar_fornecedor, alterar_fornecedor, remover_fornecedor
+from produtos.views.fornecedor_view import FornecedorListView, FornecedorDetailView, adicionar_fornecedor, alterar_fornecedor, remover_fornecedor
 
 urlpatterns = [
     path('', FornecedorListView.as_view(), name='listagem_fornecedor'),

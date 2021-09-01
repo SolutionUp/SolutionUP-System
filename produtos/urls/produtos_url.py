@@ -1,5 +1,5 @@
 from django.urls import path, include
-from estoque_produtos.views.produtos_view import ProdutoListView, ProdutoDetailView, adicionar_produto, alterar_produto, remover_produto
+from produtos.views.produtos_view import ProdutoListView, ProdutoDetailView, adicionar_produto, alterar_produto, remover_produto
 
 urlpatterns = [
     path('', ProdutoListView.as_view(), name='listagem_produto'),
