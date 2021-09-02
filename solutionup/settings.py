@@ -14,8 +14,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
-if '/app' in os.environ['HOME']:
-    import django_heroku
+if 'HOME' in os.environ.keys():
+    if '/app' in os.environ['HOME']:
+        import django_heroku
 
 load_dotenv()  # take environment variables from .env.
 
@@ -139,5 +140,6 @@ MEDIA_URL = '/media/' # Endereço para acessar os arquivos.
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if '/app' in os.environ['HOME']:
-    django_heroku.settings(locals())
+if 'HOME' in os.environ.keys():
+    if '/app' in os.environ['HOME']:
+        django_heroku.settings(locals())
