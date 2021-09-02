@@ -5,18 +5,16 @@
         <p class="row h2 mb-4">Cadastro de produtos</p>
         <div class="produto-foto col-5 p-3">
             {% if form.imagem.value %}
-                <img id="image" src="" class="img-fluid mb-2 d-none"/>
-                <img id="image_" src="{% get_media_prefix %}{{form.imagem.value}}" class="img-fluid mb-2"/>
-            {% else %}
-                <img id="image" src="" class="img-fluid mb-2 d-none">
-                <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2">
-            {% endif %}
+            <img id="image" src="" class="img-fluid mb-2 d-none" />
+            <img id="image_" src="{% get_media_prefix %}{{form.imagem.value}}" class="img-fluid mb-2" /> {% else %}
+            <img id="image" src="" class="img-fluid mb-2 d-none">
+            <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2"> {% endif %}
             <div class="d-flex">
                 {{ form.imagem }}
                 <button class="btn btn-light" type="button" onclick="resetar_imagem()"><i class="bi bi-trash"></i></button>
             </div>
         </div>
-        <div class="form col-4 mb-auto mt-auto">            
+        <div class="form col-4 mb-auto mt-auto">
             <div>
                 <div class="form-floating mb-3">
                     {{ form.nome }}
@@ -33,13 +31,6 @@
                     {{ form.valor.errors }}
                 </div>
                 <div class="form-floating mb-3">
-                    {{ form.tipo }}
-                    <label for="{{ form.tipo.name }}">{{ form.tipo.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form.tipo.errors }}
-                </div>
-                <div class="form-floating mb-3">
                     {{ form.marca }}
                     <label for="{{ form.marca.name }}">{{ form.marca.label }}</label>
                 </div>
@@ -47,25 +38,18 @@
                     {{ form.marca.errors }}
                 </div>
                 <div class="form-floating mb-3">
-                    {{ form.fornecedor }}
-                    <label for="{{ form.fornecedor.name }}">{{ form.fornecedor.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form.fornecedor.errors }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form.categoria }}
-                    <label for="{{ form.categoria.name }}">{{ form.categoria.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form.categoria.errors }}
-                </div>
-                <div class="form-floating mb-3">
                     {{ form.link }}
                     <label for="{{ form.link.name }}">{{ form.link.label }}</label>
                 </div>
                 <div class="text-danger">
                     {{ form.link.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.fornecedor }}
+                    <label for="{{ form.fornecedor.name }}">{{ form.fornecedor.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.fornecedor.errors }}
                 </div>
             </div>
         </div>
@@ -75,6 +59,6 @@
     </div>
     <div class="container">
         <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
-        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar"/>
+        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
     </div>
 </form>
