@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput 
 
-from .models import Produto, Fornecedor
+from .models import Produto, Fornecedor, CategoriaProduto
 
 class FormProduto(ModelForm):
     class Meta:
@@ -36,11 +36,27 @@ class FormProduto(ModelForm):
                 'style': 'max-width: 300px;',
             }),
             'fornecedor': Select(attrs={
-                'class': "form-control",
+                'class': "form-select",
                 'placeholder': 'Selecione o fornecedor'
             }),
+            'categoria': Select(attrs={
+                'class': "form-select",
+            }),
+            
         }       
-        
+
+class FormCategoriaProduto(ModelForm):
+    class Meta:
+        model = CategoriaProduto
+        fields = '__all__'
+        widgets = {      
+            'nome': TextInput(attrs={
+            'class': "form-control",
+            'placeholder': 'Nome da categoria'
+            })
+        }
+
+
 class FormFornecedor(ModelForm):
     class Meta:
         model = Fornecedor
