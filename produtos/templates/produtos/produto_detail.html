@@ -15,7 +15,7 @@
         </div>
         <div class="col-6">
             <p class="h5">{{ object.nome }}</p>
-            <p class="text-muted small mb-2">{{ object.tipo }} {% if object.marca %} - {{ object.marca }} {% endif %}</p>
+            <p class="text-muted small mb-2">{{ object.categoria.nome }} {% if object.marca %} - {{ object.marca }} {% endif %}</p>
             <p class="produto-descricao">{{ object.descricao }}</p>
 
             <p class="h3 produto-valor">R${{ object.valor }}</p>

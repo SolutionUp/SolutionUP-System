@@ -1,5 +1,1 @@
-import pytest
-
-
-def test_ci():
-    assert 1 == 1
+from  produtos.tests import *

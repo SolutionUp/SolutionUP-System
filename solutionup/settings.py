@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
-import django_heroku
 import os
+
+if 'HOME' in os.environ.keys():
+    if '/app' in os.environ['HOME']:
+        import django_heroku
 
 load_dotenv()  # take environment variables from .env.
 
@@ -137,4 +140,6 @@ MEDIA_URL = '/media/' # Endereço para acessar os arquivos.
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-django_heroku.settings(locals())
+if 'HOME' in os.environ.keys():
+    if '/app' in os.environ['HOME']:
+        django_heroku.settings(locals())

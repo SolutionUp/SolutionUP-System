@@ -31,3 +31,8 @@ function resetar_imagem(){
     $("#id_imagem").val(null);
     $("#id_imagem").trigger("change")
 }
+
+// Exibe criação de uma nova categoria
+$(".categoria-control").click(function(){
+	$("#form_categoria").toggleClass('d-none d-flex');
+});
