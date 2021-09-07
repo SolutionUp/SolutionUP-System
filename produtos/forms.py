@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput 
 
-from .models import Produto, Fornecedor, CategoriaProduto
+from .models import *
 
 class FormProduto(ModelForm):
     class Meta:
@@ -68,10 +68,20 @@ class FormFornecedor(ModelForm):
             }),
             'email': EmailInput(attrs={
                 'class': "form-control",
-                'placeholder': 'E-mail',
+                'placeholder': 'E-mail'
             }),
             'ramo': TextInput(attrs={
                 'class': "form-control",
                 'placeholder': 'Insira o Ramo'
-            })
+            }),
+            'telefone': NumberInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Insira o Telefone',
+                'min': 11
+            }),
+            'celular': NumberInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Insira o Celular',
+                'min': 11
+            }),
         }

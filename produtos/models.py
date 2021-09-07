@@ -14,7 +14,7 @@ class Produto(models.Model):
     categoria = models.ForeignKey('CategoriaProduto', on_delete=models.SET_NULL, blank=False, null=True)
 
     def __str__(self):
-        return f'{self.id} - {self.nome}'
+        return f'{self.codigo} - {self.nome}'
 
 class CategoriaProduto(models.Model):
     id = models.AutoField(primary_key=True)
@@ -25,19 +25,23 @@ class CategoriaProduto(models.Model):
 
 class Externo(models.Model):
     nome = models.CharField(max_length=100, blank=False, null=False)
-    email = models.CharField(max_length=100, blank=False, null=False)
     ramo = models.CharField(max_length=50, blank=False, null=True)
+
     class Meta:
         abstract = True
         
-class Fornecedor(Externo):
+class Contato(models.Model):
+    email = models.CharField(max_length=80, blank=False, null=False)
+    telefone = models.CharField(max_length=20, blank=True, null=True)
+    celular = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
-        return f'{self.id} - {self.nome}'
+        return f'{self.telefone}'
 
-class TelefoneFornecedor(models.Model):
-    fornecedor = ForeignKey('Fornecedor', on_delete=models.CASCADE)
-    telefone = models.CharField(max_length=20, blank=False, null=False)
+class Fornecedor(Externo, Contato):
 
     def __str__(self):
-        return self.telefone
+        return f'{self.nome}'

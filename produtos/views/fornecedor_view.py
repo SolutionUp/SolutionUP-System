@@ -23,17 +23,17 @@ class FornecedorDetailView(DetailView):
 
 def adicionar_fornecedor(request):
     if request.method == 'POST':
-        form = FormFornecedor(request.POST)
-        if form.is_valid():
-            form.save()
+        form_fornecedor = FormFornecedor(request.POST)
+        if form_fornecedor.is_valid():
+            form_fornecedor.save()
             messages.add_message(request, messages.SUCCESS, 'Fornecedor cadastrado!', extra_tags='success')
             return redirect('/fornecedores/adicionar')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'fornecedor/fornecedor_add.html', {'form': form})
+            return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
     else:
-        form = FormFornecedor()
-        return render(request, 'fornecedor/fornecedor_add.html', {'form': form})
+        form_fornecedor = FormFornecedor()
+        return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
 
 def remover_fornecedor(request, id):
     if request.method == 'GET':
@@ -45,16 +45,15 @@ def remover_fornecedor(request, id):
 
 def alterar_fornecedor(request, id): 
     instance = get_object_or_404(Fornecedor, id=id)
-    fornecedor = Fornecedor.objects.get(id=id)
-    form = FormFornecedor(request.POST or None, instance=instance)
+    form_fornecedor = FormFornecedor(request.POST or None, instance=instance)
     
     if request.method == 'POST':
-        if form.is_valid():
-            form.save()
+        if form_fornecedor.is_valid():
+            form_fornecedor.save()
             messages.add_message(request, messages.SUCCESS, 'Fornecedor alterado!', extra_tags='success')
             return redirect('/fornecedores')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'fornecedor/fornecedor_add.html', {'form': form})
+            return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
     else:
-        return render(request, 'fornecedor/fornecedor_add.html', {'form': form})
+        return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
