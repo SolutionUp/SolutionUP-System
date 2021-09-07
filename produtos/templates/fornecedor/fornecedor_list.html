@@ -20,6 +20,7 @@
             <th scope="col"> Nome </th>
             <th scope="col"> E-mail </th>
             <th scope="col"> Ramo </th>
+            <th scope="col"> Telefone </th>
             <th class="text-center" scope="col"> Opções </th>
         </tr>
     </thead>
@@ -29,6 +30,7 @@
             <td>{{ fornecedor.nome }}</td>
             <td>{{ fornecedor.email }}</td>
             <td>{{ fornecedor.ramo }}</td>
+            <td>{{ fornecedor.telefone }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i class="bi bi-trash"></i></a>

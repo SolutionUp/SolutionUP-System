@@ -2,7 +2,7 @@
 <form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row">
-        <p class="row h2 mb-4">Cadastro de fornecedor</p>
+        <p class="h2 mb-4">Cadastro de fornecedor</p>
         <div class="form col-4 mb-auto mt-auto">
             <div class="form-floating mb-3">
                 {{ form.nome }}
@@ -24,6 +24,20 @@
             </div>
             <div class="text-danger">
                 {{ form.ramo.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.telefone }}
+                <label for="{{ form.telefone.name }}">{{ form.telefone.label }}</label>
+            </div>
+            <div class="text-danger">
+                {{ form.telefone.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.celular }}
+                <label for="{{ form.celular.name }}">{{ form.celular.label }}</label>
+            </div>
+            <div class="text-danger">
+                {{ form.celular.errors }}
             </div>
         </div>
     </div>
