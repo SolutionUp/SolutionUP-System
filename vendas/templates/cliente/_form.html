@@ -1,0 +1,50 @@
+{% load static %}
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <p class="h2 mb-4">Cadastro de cliente</p>
+        <div class="form col-4 mb-auto mt-auto">
+            <div>
+                <div class="form-floating mb-3">
+                    {{ form.nome }}
+                    <label for="{{ form.nome.name }}">{{ form.nome.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.nome.errors }}
+                </div>
+                <div class="form-floating mb-3 text-uppercase">
+                    {{ form.cpf }}
+                    <label for="{{ form.cpf.name }}">{{ form.cpf.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.cpf.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.email }}
+                    <label for="{{ form.email.name }}">{{ form.email.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.telefone }}
+                    <label for="{{ form.telefone.name }}">{{ form.telefone.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.telefone.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form.celular }}
+                    <label for="{{ form.celular.name }}">{{ form.celular.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form.celular.errors }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
+    </div>    
+</form>
