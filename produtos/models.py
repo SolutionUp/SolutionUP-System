@@ -32,8 +32,8 @@ class Externo(models.Model):
         
 class Contato(models.Model):
     email = models.CharField(max_length=80, blank=False, null=False)
-    telefone = models.CharField(max_length=20, blank=True, null=True)
-    celular = models.CharField(max_length=20, blank=True, null=True)
+    telefone = models.CharField(max_length=11, blank=True, null=True)
+    celular = models.CharField(max_length=11, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -42,6 +42,7 @@ class Contato(models.Model):
         return f'{self.telefone}'
 
 class Fornecedor(Externo, Contato):
+    id = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return f'{self.nome}'
+        return f'{self.id} - {self.nome}'
