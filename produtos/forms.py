@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput 
+from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput
 
 from .models import *
 
@@ -33,7 +33,7 @@ class FormProduto(ModelForm):
             }), 
             'imagem': FileInput(attrs={
                 'class': "form-control me-2",
-                'style': 'max-width: 300px;',
+                'style': 'max-width: 300px;'
             }),
             'fornecedor': Select(attrs={
                 'class': "form-select",
@@ -76,12 +76,10 @@ class FormFornecedor(ModelForm):
             }),
             'telefone': NumberInput(attrs={
                 'class': "form-control",
-                'placeholder': 'Insira o Telefone',
-                'min': 11
+                'placeholder': 'Insira o Telefone'
             }),
             'celular': NumberInput(attrs={
                 'class': "form-control",
-                'placeholder': 'Insira o Celular',
-                'min': 11
+                'placeholder': 'Insira o Celular'
             }),
         }
