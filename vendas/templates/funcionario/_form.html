@@ -1,0 +1,68 @@
+{% load static %}
+<div class="row container">
+    <form id="form_toggle" action="/funcionarios/cargo/adicionar" method="post" class="d-none p-0" novalidate>
+        {% csrf_token %}
+        <div class="d-flex form-floating mb-3">
+            {{ form_cargo.nome }}
+            <label for="{{ form_cargo.nome.name }}">Novo cargo</label>
+            <button class="ms-2 btn btn-success btn-confirmar" type="submit">Criar</button>
+            <button class="ms-2 btn btn-secondary toggle-control" type="button">Cancelar</button>
+        </div>
+    </form>
+</div>
+<form class="col-10" method="post" novalidate>
+    {% csrf_token %}
+    <div class="row container">
+        <p class="row h2 mb-4">Cadastro de funcionario</p>
+        <div class="form col-7 ps-2 pe-0">
+            <div>
+                <div class="form-floating mb-3">
+                    {{ form_funcionario.usuario }}
+                    <label for="{{ form_funcionario.usuario.name }}">{{ form_funcionario.usuario.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.usuario.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_funcionario.nome }}
+                    <label for="{{ form_funcionario.nome.name }}">{{ form_funcionario.nome.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.nome.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_funcionario.cpf }}
+                    <label for="{{ form_funcionario.cpf.name }}">CPF</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.cpf.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_funcionario.dataNascimento }}
+                    <label for="{{ form_funcionario.dataNascimento.name }}">Data de Nascimento</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.dataNascimento.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_funcionario.percentual }}
+                    <label for="{{ form_funcionario.percentual.name }}">Comissão por venda (%)</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.percentual.errors }}
+                </div>
+                <div class="d-flex form-floating mb-3">
+                    {{ form_funcionario.cargo }}
+                    <label for="{{ form_funcionario.cargo.name }}">{{ form_funcionario.cargo.label }}</label>
+                    <button class="ms-2 btn btn-success btn-confirmar toggle-control" type="button">Nova</button>
+                </div>
+                <div class="text-danger">
+                    {{ form_funcionario.cargo.errors }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+    </div>
+</form>
