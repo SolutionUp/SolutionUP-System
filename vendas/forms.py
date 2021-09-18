@@ -18,7 +18,7 @@ class FormCliente(ModelForm):
             }),
             'email': EmailInput(attrs={
                 'class': "form-control",
-                'placeholder': 'E-mail',
+                'placeholder': 'E-mail'
             }),        
             'telefone': NumberInput(attrs={
                 'class': "form-control",
@@ -54,11 +54,11 @@ class FormFuncionario(ModelForm):
                 'class': "form-control",
                 'placeholder': 'CPF do funcionario'
             }),
-            'dataNascimento': DateInput( 
+            'data_nascimento': DateInput( 
                 format=('%Y-%m-%d'),
                 attrs={
                     'class': "form-control",
-                    'type': 'date',
+                    'type': 'date'
                 }),
             'percentual': NumberInput(attrs={
                 'class': "form-control",
@@ -70,7 +70,6 @@ class FormFuncionario(ModelForm):
             }),
             'cargo': Select(attrs={
                 'class': "form-select",
-                'placeholder': 'Selecione o cargo',
+                'placeholder': 'Selecione o cargo'
             }),
-            
-        }    
+        }

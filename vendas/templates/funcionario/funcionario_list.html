@@ -1,9 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<p class="h2">Funcionarios</p>
+<p class="h2">Funcionários</p>
 <div class="row">
     <div class="pesquisa col-4">
         <form class="input-group" action="{% url 'listagem_funcionario' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um funcionario ou código..." />
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou CPF..." />
             <button class="btn btn-secondary" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -29,18 +29,12 @@
     <tbody>
         {% for funcionario in object_list %}
         <tr class="active-row">
-            <td>{{ funcionario.id }}</td>
+            <th scope="row">{{ funcionario.id }}</th>
             <td>{{ funcionario.nome }}</td>
             <td>{{ funcionario.cpf }}</td>
-            <td>{{ funcionario.dataNascimento }}</td>
+            <td>{{ funcionario.data_nascimento }}</td>
             <td>{{ funcionario.percentual }}%</td>
-            <td>
-                <ul>
-                    {% for cargo in funcionario.cargo.all %}
-                    <li>{{ cargo.nome }}</li>
-                    {% endfor %}
-                </ul>
-            </td>
+            <td>{{ funcionario.cargo.nome }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ funcionario.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ funcionario.id }}"><i

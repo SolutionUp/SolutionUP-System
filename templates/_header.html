@@ -20,14 +20,15 @@
                     <div></div>
                 </a>
                 <a href="/funcionarios" class="nav-link">
-                    <li>Funcionarios</li>
+                    <li>Funcionários</li>
                     <div></div>
                 </a>
             </ul>
             {% if user.is_authenticated %}
-            <a href="/admin" class="nav-link"> Painel <i class="bi bi-person-badge"></i>
+            <a href="/admin/logout/" class="nav-link"> Sair <i class="bi bi-person-badge"></i>
                 <div></div>
-            </a> {% endif %}
+            </a>
+            {% endif %}
         </div>
     </div>
     </div>

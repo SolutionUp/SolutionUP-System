@@ -18,16 +18,13 @@ class FuncionarioListView(ListView):
         )
         return object_list
 
-class FuncionarioDetailView(DetailView):
-    model = Funcionario
-
 def adicionar_funcionario(request):
     form_cargo = FormCargo()
     if request.method == 'POST':
         form_funcionario = FormFuncionario(request.POST)
         if form_funcionario.is_valid():
             form_funcionario.save()
-            messages.add_message(request, messages.SUCCESS, 'Funcionario cadastrado!', extra_tags='success')
+            messages.add_message(request, messages.SUCCESS, 'Funcionário cadastrado!', extra_tags='success')
             return redirect('/funcionarios/adicionar')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
@@ -39,9 +36,6 @@ def adicionar_funcionario(request):
 def remover_funcionario(request, id):
     if request.method == 'GET':
         funcionario = Funcionario.objects.get(id=id)
-        imagem = Funcionario.objects.get(id=funcionario.id).imagem.name
-        if imagem:
-            funcionario.imagem.storage.delete(funcionario.imagem.name)
         funcionario.delete()
         return redirect('/funcionarios')
     else:
@@ -55,7 +49,7 @@ def alterar_funcionario(request, id):
     if request.method == 'POST':
         if form_funcionario.is_valid():
             form_funcionario.save()
-            messages.add_message(request, messages.SUCCESS, 'Funcionario alterado!', extra_tags='success')
+            messages.add_message(request, messages.SUCCESS, 'Funcionário alterado!', extra_tags='success')
             return redirect('/funcionarios')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
@@ -68,7 +62,7 @@ def adicionar_cargo(request):
         form_cargo = FormCargo(request.POST)
         if form_cargo.is_valid():
             form_cargo.save()
-            messages.add_message(request, messages.SUCCESS, 'Categoria cadastrada!', extra_tags='success')
+            messages.add_message(request, messages.SUCCESS, 'Cargo cadastrado!', extra_tags='success')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
     return redirect('/funcionarios/adicionar')
