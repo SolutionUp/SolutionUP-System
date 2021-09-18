@@ -19,10 +19,15 @@
                     <li>Terceiros</li>
                     <div></div>
                 </a>
+                <a href="/funcionarios" class="nav-link">
+                    <li>Funcionarios</li>
+                    <div></div>
+                </a>
             </ul>
-            <!-- <a class="nav-link"> Login <i class="bi bi-person-badge"></i>
+            {% if user.is_authenticated %}
+            <a href="/admin" class="nav-link"> Painel <i class="bi bi-person-badge"></i>
                 <div></div>
-            </a> -->
+            </a> {% endif %}
         </div>
     </div>
     </div>
