@@ -1,0 +1,65 @@
+{% extends "base.html" %} {% block content %}
+
+<p class="h2">Pedidos</p>
+<div class="row">
+    <div class="pesquisa col-4">
+        <form class="input-group" action="{% url 'listagem_pedido' %}" method="get">
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite o código do pedido..." />
+            <button class="btn btn-secondary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+    <a href="adicionar" class="btn btn-success btn-adicionar">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+</div>
+{% if object_list %}
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th scope="col"> Código </th>
+            <th scope="col"> Rastreio </th>
+            <th scope="col"> Comprovante </th>
+            <th scope="col"> Taxa de entrega </th>
+            <th scope="col"> Cliente </th>
+            <th scope="col"> Data cadastro </th>
+            <th class="text-center" scope="col"> Opções </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in object_list %}
+        <tr class="active-row">
+            <td>{{ pedido.id }}</td>
+            <td>{{ pedido.rastreio }}</td>
+            <td>
+                <a href="http://localhost:8000/media/{{ pedido.comprovante.name }}" download="http://localhost:8000/media/{{ pedido.comprovante.name }}">{{ pedido.comprovante }}</a>
+            </td>
+            <td>R${{ pedido.taxa_entrega }}</td>
+            <td>{{ pedido.cliente.cpf }}</td>
+            <td>{{ pedido.data_cadastro }}</td>
+            <td class="col-2 text-center">
+                <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ pedido.id }}"><i class="bi bi-trash"></i></a>
+            </td>
+        </tr>
+        <div class="modal fade" id="modalConfirmaExclusao{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h5 class="modal-title ">Confirmação</h5>
+                    </div>
+                    <div class="modal-body">Deseja realmente deletar o pedido {{ pedido.nome }}?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="remover/{{ pedido.id }}"><button type="button"
+                                class="btn btn-danger">Deletar</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-secondary pt-2">Não há pedidos disponíveis.</p> {% endif %} {% endblock %}
