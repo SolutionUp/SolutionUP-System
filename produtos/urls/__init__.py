@@ -1,2 +1,2 @@
-from .fornecedor_url import *
+from .fornecedores_url import *
 from .produtos_url import *

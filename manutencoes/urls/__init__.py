@@ -1,1 +1,1 @@
-from .terceiro_url import *
+from .terceiros_url import *

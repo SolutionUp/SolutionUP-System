@@ -9,7 +9,10 @@ document.querySelectorAll('.nav-link').forEach(function(elemento){
 
 // Esconde as mensagens após um tempo
 setTimeout(function() {
-    document.querySelector('.messages').style.display = 'none'
+    let message = document.querySelector('.messages');
+    if (message !== undefined && message !== null){
+        message.style.display = 'none'
+    }
 }, 3000)
 
 // Renderiza as imagens antes de salvar
@@ -53,6 +56,6 @@ function resetar_comprovante(){
 }
 
 // Exibe criação de uma nova categoria
-$(".categoria-control").click(function(){
-	$("#form_categoria").toggleClass('d-none d-flex');
+$(".toggle-control").click(function(){
+	$("#form_toggle").toggleClass('d-none d-flex');
 });
