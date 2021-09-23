@@ -5,13 +5,13 @@
         <p class="row h2 mb-4">Cadastro de pedido</p>
         <div class="produto-foto col-5 p-3">
             {% if form.comprovante.value %}
-            <img id="image" src="" class="img-fluid mb-2 d-none" />
-            <img id="image_" src="{% get_media_prefix %}{{form.comprovante.value}}" class="img-fluid mb-2" /> {% else %}
-            <img id="image" src="" class="img-fluid mb-2 d-none">
-            <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2"> {% endif %}
+            <img id="comprovante" src="" class="img-fluid mb-2 d-none" />
+            <img id="comprovante_" src="{% get_media_prefix %}{{form.comprovante.value}}" class="img-fluid mb-2" /> {% else %}
+            <img id="comprovante" src="" class="img-fluid mb-2 d-none">
+            <img id="comprovante_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2"> {% endif %}
             <div class="d-flex">
                 {{ form.comprovante }}
-                <button class="btn btn-light" type="button" onclick="resetar_imagem()"><i class="bi bi-trash"></i></button>
+                <button class="btn btn-light" type="button" onclick="resetar_comprovante()"><i class="bi bi-trash"></i></button>
             </div>
         </div>
         <div class="form col-7 ps-2 pe-0">
@@ -56,6 +56,6 @@
     </div>
     <div class="container">
         <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
-        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
+        <input class="btn btn-secondary" type="reset" onclick="resetar_comprovante()" value="Resetar" />
     </div>    
 </form>
