@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<div class="row">
+    <p class="h2 mb-3">Informações do pedido</p>
+    <div class="form col-4 mb-auto mt-auto">
+        <div>
+            <div class="form-floating mb-2">
+                <a href="/pedidos/?q={{ object.id }}">Código do pedido: {{ object.id }}</a>
+            </div>
+            <div class="form-floating mb-2">Data de cadastro: {{ object.data_cadastro }}</div>
+            <div class="form-floating mb-2">Rastreio: {{ object.rastreio }}</div>
+            <div class="form-floating mb-2">Status: {{ object.get_status_display }}</div>
+            <div class="form-floating mb-2">
+                <a href="/clientes/?q={{object.cliente.cpf}}">Cliente: {{ object.cliente.cpf }}</a>
+            </div>
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th scope="col"> Pedido </th>
+                        <th scope="col"> Valor </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="active-row">
+                        <td><a href="/produtos/?q={{object.produtos.codigo}}">{{ object.produtos.nome }}</a></td>
+                        <td>R${{ object.produtos.valor }}</td>
+                    </tr>
+                    <tr class="active-row">
+                        <td>Taxa de entrega</td>
+                        <td>R${{ object.taxa_entrega }}</td>
+                    </tr>
+                    <tr class="active-row">
+                        <th>Total</th>
+                        <td>R${{ object.produtos.valor|add:object.taxa_entrega|floatformat:2 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {% if not object.comprovante %}
+            <a href="/pedidos" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+            {% else %}
+            <a href="/media/{{pedido.comprovante.name}}" target="_blank"><button type="button" class="btn btn-dark text-white">Comprovante</button></a>
+            <a href="/pedidos" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

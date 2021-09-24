@@ -35,6 +35,26 @@ function resetar_imagem(){
     $("#id_imagem").trigger("change")
 }
 
+// Renderiza os comprovantes antes de salvar
+$('#id_comprovante').change(function(){
+    elemento = $('#id_comprovante')[0]
+    if (elemento.files && elemento.files[0]) {
+        var src = URL.createObjectURL(elemento.files[0])
+        $('#comprovante').attr('src', src)
+        $('#comprovante').removeClass('d-none')
+        $('#comprovante_').addClass('d-none')
+    }
+    else{
+        $('#comprovante_').removeClass('d-none')
+        $('#comprovante').addClass('d-none')
+    }
+})
+
+function resetar_comprovante(){
+    $("#id_comprovante").val(null);
+    $("#id_comprovante").trigger("change")
+}
+
 // Exibe criação de uma nova categoria
 $(".toggle-control").click(function(){
 	$("#form_toggle").toggleClass('d-none d-flex');
