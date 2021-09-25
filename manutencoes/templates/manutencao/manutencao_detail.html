@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+<div class="row">
+    <p class="h2 mb-3">Informações da manutenção</p>
+    <div class="form col-4 mb-auto mt-auto">
+        <div>
+            <div class="form-floating mb-2">Data de início: {{ object.data_inicio }}</div>
+            <div class="form-floating mb-2">Data de conclusão: {{ object.data_fim }}</div>
+            <div class="form-floating mb-2">Responsável: {{ object.responsavel.nome }}</div>
+            <div class="form-floating mb-2">Produto: {{ object.produto.nome }}</div>
+            {% if object.terceiro %}
+            <div class="form-floating mb-2">Terceiro: {{ object.terceiro.nome }}</div>
+            {% endif %}
+            <div class="form-floating mb-2">Descrição do problema: <p class="lh-base pt-1">{{ object.descricao }}</p></div>
+        </div>
+        <a href="/manutencoes" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+    </div>
+</div>
+{% endblock %}
