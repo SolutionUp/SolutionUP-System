@@ -1,0 +1,42 @@
+{% load static %}
+<form class="col-7" method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <p class="h2 mb-4">Cadastro de manutenção</p>
+        <div class="form col-7 pe-0">
+            <div class="form-floating mb-3">
+                {{ form_manutencao.data_fim }}
+                <label for="{{ form_manutencao.data_fim.name }}">Data de conclusão</label>
+            </div>
+            <div class="text-danger">
+                {{ form_manutencao.data_fim.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_manutencao.responsavel }}
+                <label for="{{ form_manutencao.responsavel.name }}">Responsável</label>
+            </div>
+            <div class="text-danger">
+                {{ form_manutencao.responsavel.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_manutencao.produto }}
+                <label for="{{ form_manutencao.produto.name }}">{{ form_manutencao.produto.label }}</label>
+            </div>
+            <div class="text-danger">
+                {{ form_manutencao.produto.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_manutencao.terceiro }}
+                <label for="{{ form_manutencao.terceiro.name }}">{{ form_manutencao.terceiro.label }}</label>
+            </div>
+            <div class="text-danger">
+                {{ form_manutencao.terceiro.errors }}
+            </div>
+        </div>
+    </div>
+    <div>{{ form_manutencao.descricao }}</div>
+    <div>
+        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
+    </div>
+</form>
