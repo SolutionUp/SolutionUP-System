@@ -150,6 +150,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+LOGIN_URL = '/auth/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/auth/logout'
+LOGOUT_REDIRECT_URL = '/auth/login'
+
 if 'HOME' in os.environ.keys():
     if '/app' in os.environ['HOME']:
         django_heroku.settings(locals())
+
+        

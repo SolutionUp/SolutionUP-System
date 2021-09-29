@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from vendas.forms import FormFuncionario, FormCargo
 from vendas.models import Funcionario, Cargo
 
-class FuncionarioListView(ListView):
+class FuncionarioListView(LoginRequiredMixin, ListView):
     model = Funcionario
     paginate_by = 100
     template_name = 'funcionario/funcionario_list.html'
@@ -18,7 +20,7 @@ class FuncionarioListView(ListView):
         )
         return object_list
 
-def adicionar_funcionario(request):
+def adicionar_funcionario(LoginRequiredMixin, request):
     form_cargo = FormCargo()
     if request.method == 'POST':
         form_funcionario = FormFuncionario(request.POST)
@@ -33,6 +35,7 @@ def adicionar_funcionario(request):
         form_funcionario = FormFuncionario()
         return render(request, 'funcionario/funcionario_add.html', {'form_funcionario': form_funcionario, 'form_cargo': form_cargo})
 
+@login_required
 def remover_funcionario(request, id):
     if request.method == 'GET':
         funcionario = Funcionario.objects.get(id=id)
@@ -41,6 +44,7 @@ def remover_funcionario(request, id):
     else:
         return render(request, 'funcionario/funcionario_list.html')
 
+@login_required
 def alterar_funcionario(request, id): 
     instance = get_object_or_404(Funcionario, id=id)
     funcionario = Funcionario.objects.get(id=id)
@@ -57,6 +61,7 @@ def alterar_funcionario(request, id):
     else:
         return render(request, 'funcionario/funcionario_add.html', {'form_funcionario': form_funcionario, 'form_cargo': form_cargo})
 
+@login_required
 def adicionar_cargo(request):
     if request.method == 'POST':
         form_cargo = FormCargo(request.POST)

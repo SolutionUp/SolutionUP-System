@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from produtos.forms import FormFornecedor
 from produtos.models import Fornecedor
 
-class FornecedorListView(ListView):
+
+class FornecedorListView(LoginRequiredMixin, ListView):
     model = Fornecedor
     paginate_by = 100
     template_name = 'fornecedor/fornecedor_list.html'
@@ -18,9 +21,11 @@ class FornecedorListView(ListView):
         )
         return object_list
 
-class FornecedorDetailView(DetailView):
+
+class FornecedorDetailView(LoginRequiredMixin, DetailView):
     model = Fornecedor
 
+@login_required
 def adicionar_fornecedor(request):
     if request.method == 'POST':
         form_fornecedor = FormFornecedor(request.POST)
@@ -35,6 +40,7 @@ def adicionar_fornecedor(request):
         form_fornecedor = FormFornecedor()
         return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
 
+@login_required
 def remover_fornecedor(request, id):
     if request.method == 'GET':
         fornecedor = Fornecedor.objects.get(id=id)
@@ -43,6 +49,7 @@ def remover_fornecedor(request, id):
     else:
         return render(request, 'fornecedor/fornecedor_list.html')
 
+@login_required
 def alterar_fornecedor(request, id): 
     instance = get_object_or_404(Fornecedor, id=id)
     form_fornecedor = FormFornecedor(request.POST or None, instance=instance)
