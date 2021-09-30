@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from users.models import User
 from users.forms import LoginForm
 
 def login_view(request):
     loginForm = LoginForm()
-    message = None
 
     if request.user.is_authenticated:
         return redirect('/')
@@ -22,20 +22,10 @@ def login_view(request):
                 _next = request.GET.get('next')
                 if _next is not None:
                     return redirect(_next)
-                else:
-                    return redirect("/")
-            else:
-                message = {
-                    'type': 'danger',
-                    'text': 'Dados de usuário incorretos'
-                }
-
-    context = {
-        'form': loginForm,
-        'message': message,
-    }
-    
-    return render(request, template_name='auth/login.html', context=context, status=200)
+                return redirect('/')
+            messages.add_message(request, messages.ERROR, 'Usuário ou senha inválidos', extra_tags='danger')   
+            return redirect('/')
+    return render(request, 'auth/login.html', {'form': loginForm})
 
 def logout_view(request):
     logout(request)

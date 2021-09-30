@@ -1,4 +1,4 @@
-{% if request.user.is_authenticated %}
+{% if user.is_authenticated %}
 <nav class="p-3">
     <div class="container">
         <div class="d-flex">
@@ -33,13 +33,10 @@
                     <div></div>
                 </a>
             </ul>
-            {% if user.is_authenticated %}
-            <a href="/auth/logout" class="nav-link"> Sair <i class="bi bi-person-badge"></i>
+            <a href="/auth/logout" class="logout"> Sair <i class="bi bi-person-badge"></i>
                 <div></div>
             </a>
-            {% endif %}
         </div>
-    </div>
     </div>
 </nav>
 {% endif %}
