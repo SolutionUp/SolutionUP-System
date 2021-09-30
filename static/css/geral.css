@@ -33,10 +33,21 @@ a:hover {
     color: currentColor !important;
 }
 
+.logout {
+    text-decoration: none;
+    color: #000000 !important;
+}
+
 .form-control:focus {
     box-shadow: unset;
     border: 2px solid #27ae5f;
 }
+
+.form-signin {
+    width: 100%;
+    max-width: 350px;
+}
+
 /* Navbar | Header */
 
 .nav-link div {
@@ -54,6 +65,22 @@ a:hover {
     background-color: #27ae5fcc;
     width: 100%;
 }
+
+.logout div {
+    height: 2px;
+    transition-duration: 0.3s;
+    width: 0%
+}
+
+.logout:hover {
+    color: #dc3545 !important;
+}
+
+.logout:hover div {
+    background-color: #dc3545;
+    width: 100%;
+}
+
 /** Componentes **/
 
 .btn-adicionar {
