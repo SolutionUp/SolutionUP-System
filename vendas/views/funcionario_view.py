@@ -20,7 +20,8 @@ class FuncionarioListView(LoginRequiredMixin, ListView):
         )
         return object_list
 
-def adicionar_funcionario(LoginRequiredMixin, request):
+@login_required
+def adicionar_funcionario(request):
     form_cargo = FormCargo()
     if request.method == 'POST':
         form_funcionario = FormFuncionario(request.POST)
