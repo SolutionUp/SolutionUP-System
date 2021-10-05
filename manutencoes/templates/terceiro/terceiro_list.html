@@ -30,22 +30,8 @@
         <tr class="active-row">
             <td>{{ terceiro.nome }}</td>
             <td>{{ terceiro.email }}</td>
-            <td>
-                {% if terceiro.telefone %}
-                {{ terceiro.telefone }}
-                {% else %}
-                ------
-                {% endif %}
-            </td>
-            <td>
-                {% if terceiro.celular %}
-                {{ terceiro.celular }}
-                {% else %}
-                ------
-                {% endif %}
-            </td>
-
-            <td>{{ terceiro.celular }}</td>
+            <td>{% if terceiro.telefone %}{{ terceiro.telefone }}{% else %}---{% endif %}</td>
+            <td>{% if terceiro.celular %}{{ terceiro.celular }}{% else %}---{% endif %}</td>
             <td>{{ terceiro.ramo }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ terceiro.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
