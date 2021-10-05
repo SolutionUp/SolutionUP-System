@@ -29,10 +29,22 @@
         {% for cliente in object_list %}
         <tr class="active-row">
             <td>{{ cliente.nome }}</td>
-            <td>{{ cliente.cpf }}</td>
+            <td id="maskCpf">{{ cliente.cpf }}</td>
             <td>{{ cliente.email }}</td>
-            <td>{{ cliente.telefone }}</td>
-            <td>{{ cliente.celular }}</td>
+            <td>
+                {% if cliente.telefone %}
+                {{ cliente.telefone }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
+            <td>
+                {% if cliente.celular %}
+                {{ cliente.celular }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ cliente.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ cliente.id }}"><i class="bi bi-trash"></i></a>

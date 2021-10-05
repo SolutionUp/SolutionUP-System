@@ -52,7 +52,8 @@ class FormFuncionario(ModelForm):
             }),
             'cpf': TextInput(attrs={
                 'class': "form-control",
-                'placeholder': 'CPF do funcionario'
+                'placeholder': 'CPF do funcionario',
+                'maxlength': 14
             }),
             'data_nascimento': DateInput( 
                 format=('%Y-%m-%d'),

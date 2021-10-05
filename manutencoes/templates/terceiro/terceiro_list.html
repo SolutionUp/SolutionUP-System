@@ -30,7 +30,21 @@
         <tr class="active-row">
             <td>{{ terceiro.nome }}</td>
             <td>{{ terceiro.email }}</td>
-            <td>{{ terceiro.telefone }}</td>
+            <td>
+                {% if terceiro.telefone %}
+                {{ terceiro.telefone }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
+            <td>
+                {% if terceiro.celular %}
+                {{ terceiro.celular }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
+
             <td>{{ terceiro.celular }}</td>
             <td>{{ terceiro.ramo }}</td>
             <td class="col-2 text-center">

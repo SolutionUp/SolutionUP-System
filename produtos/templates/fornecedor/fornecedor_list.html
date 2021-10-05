@@ -30,7 +30,20 @@
         <tr class="active-row">
             <td>{{ fornecedor.nome }}</td>
             <td>{{ fornecedor.email }}</td>
-            <td>{{ fornecedor.telefone }}</td>
+            <td>
+                {% if fornecedor.telefone %}
+                {{ fornecedor.telefone }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
+            <td>
+                {% if fornecedor.celular %}
+                {{ fornecedor.celular }}
+                {% else %}
+                ------
+                {% endif %}
+            </td>
             <td>{{ fornecedor.celular }}</td>
             <td>{{ fornecedor.ramo }}</td>
             <td class="col-2 text-center">
