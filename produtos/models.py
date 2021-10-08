@@ -32,7 +32,7 @@ class Externo(models.Model):
         
 class Contato(models.Model):
     email = models.CharField(max_length=80, blank=False, null=False)
-    telefone = models.CharField(max_length=11, blank=True, null=True)
+    telefone = models.CharField(max_length=10, blank=True, null=True)
     celular = models.CharField(max_length=11, blank=True, null=True)
 
     class Meta:

@@ -25,9 +25,13 @@ def adicionar_fornecedor(request):
     if request.method == 'POST':
         form_fornecedor = FormFornecedor(request.POST)
         if form_fornecedor.is_valid():
-            form_fornecedor.save()
-            messages.add_message(request, messages.SUCCESS, 'Fornecedor cadastrado!', extra_tags='success')
-            return redirect('/fornecedores/adicionar')
+            if '@' and '.com' in form_fornecedor.cleaned_data['email']:
+                form_fornecedor.save()
+                messages.add_message(request, messages.SUCCESS, 'Fornecedor cadastrado!', extra_tags='success')
+                return redirect('/fornecedores/adicionar')
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'fornecedor/fornecedor_add.html', {'form': form_fornecedor})

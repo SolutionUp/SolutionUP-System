@@ -10,9 +10,8 @@
             <div class="form-floating mb-2">Rastreio: {{ object.rastreio }}</div>
             <div class="form-floating mb-2">Status: {{ object.get_status_display }}</div>
             <div class="form-floating mb-2">
-                <a href="/clientes/?q={{object.cliente.cpf}}">Cliente: {{ object.cliente.cpf }}</a>
-            </div>
-            <table class="styled-table">
+                <a href="/clientes/?q={{object.cliente.cpf}}">Cliente: {{ object.cliente.cpf|slice:":3" }}.{{ object.cliente.cpf|slice:"3:6" }}.{{ object.cliente.cpf|slice:"6:9" }}-{{ object.cliente.cpf|slice:"9:11" }}</a>
+             <table class="styled-table">
                 <thead>
                     <tr>
                         <th scope="col"> Pedido </th>

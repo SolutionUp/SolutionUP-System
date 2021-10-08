@@ -30,8 +30,8 @@
         <tr class="active-row">
             <td>{{ terceiro.nome }}</td>
             <td>{{ terceiro.email }}</td>
-            <td>{{ terceiro.telefone }}</td>
-            <td>{{ terceiro.celular }}</td>
+            <td>{% if terceiro.telefone and terceiro.telefone|length == 10 %}({{ terceiro.telefone|slice:"0:2" }}) {{ terceiro.telefone|slice:"2:6" }}-{{ terceiro.telefone|slice:"6:10" }}{% else %}---{% endif %}</td>
+            <td>{% if terceiro.celular and terceiro.celular|length == 11 %}({{ terceiro.celular|slice:"0:2" }}) {{ terceiro.celular|slice:"2:3" }}{{ terceiro.celular|slice:"3:7" }}-{{ terceiro.celular|slice:"7:11" }}{% else %}---{% endif %}</td>
             <td>{{ terceiro.ramo }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ terceiro.id }}" type="button"><i class="bi bi-pencil-square"></i></a>

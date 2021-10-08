@@ -74,12 +74,12 @@ class FormFornecedor(ModelForm):
                 'class': "form-control",
                 'placeholder': 'Insira o Ramo'
             }),
-            'telefone': NumberInput(attrs={
+            'telefone': TextInput(attrs={
                 'class': "form-control",
-                'placeholder': 'Insira o Telefone'
+                'placeholder': 'Insira o Telefone',
             }),
-            'celular': NumberInput(attrs={
+            'celular': TextInput(attrs={
                 'class': "form-control",
-                'placeholder': 'Insira o Celular'
+                'placeholder': 'Insira o Celular',
             }),
         }
