@@ -34,6 +34,9 @@
             <td>R${{ produto.valor }}</td>
             <td>{{ produto.marca }}</td>
             <td class="col-2 text-center">
+                <a href="{{ produto.codigo }}" type="button">
+                    <i class="bi bi-eye-fill"></i>                
+                </a>
                 <a href="alterar/{{ produto.codigo }}" type="button"><i class="bi bi-pencil-square"></i></a>
                 <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ produto.codigo }}"><i class="bi bi-trash"></i></a>
             </td>

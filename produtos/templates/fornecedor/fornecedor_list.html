@@ -30,8 +30,8 @@
         <tr class="active-row">
             <td>{{ fornecedor.nome }}</td>
             <td>{{ fornecedor.email }}</td>
-            <td>{% if fornecedor.telefone %}{{ fornecedor.telefone }}{% else %}---{% endif %}</td>
-            <td>{% if fornecedor.celular %}{{ fornecedor.celular }}{% else %}---{% endif %}</td>
+            <td>{% if fornecedor.telefone and fornecedor.telefone|length == 10 %}({{ fornecedor.telefone|slice:"0:2" }}) {{ fornecedor.telefone|slice:"2:6" }}-{{ fornecedor.telefone|slice:"6:10" }}{% else %}---{% endif %}</td>
+            <td>{% if fornecedor.celular and fornecedor.celular|length == 11 %}({{ fornecedor.celular|slice:"0:2" }}) {{ fornecedor.celular|slice:"2:3" }}{{ fornecedor.celular|slice:"3:7" }}-{{ fornecedor.celular|slice:"7:11" }}{% else %}---{% endif %}</td>
             <td>{{ fornecedor.ramo }}</td>
             <td class="col-2 text-center">
                 <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>

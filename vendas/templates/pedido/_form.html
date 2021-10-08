@@ -54,8 +54,12 @@
             </div>
         </div>
     </div>
-    <div class="container">
+<div class="container">
+    {% if form.status.value == 'C' or form.status.value == 'F' %}
+        <a href="/pedidos" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+    {% else %}
         <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
         <input class="btn btn-secondary" type="reset" onclick="resetar_comprovante()" value="Resetar" />
-    </div>    
+    {% endif %}
+</div>
 </form>

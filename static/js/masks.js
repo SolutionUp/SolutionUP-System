@@ -1,4 +1,4 @@
-const initCpf = () => {
+const maskcpf = () => {
     const id_cpf = document.getElementById("id_cpf");
 
     if (id_cpf !== undefined && id_cpf !== null) {
@@ -10,27 +10,63 @@ const initCpf = () => {
     }
 }
 
-const initCpfInList = () => {
-    const maskCpf = document.getElementById('maskCpf');
-    if (maskCpf !== undefined && maskCpf !== null) {
-        let formatCpf = maskCpf.innerText;
-        formatCpf = `${formatCpf.substring(0, 3)}.${formatCpf.substring(3, 6)}.${ formatCpf.substring(6, 9) }-${ formatCpf.substring(9, 11) }`
-        maskCpf.innerText = formatCpf;
-        console.log(maskCpf)
-        console.log(formatCpf)
+const masktelefone = () => {
+    const id_telefone = document.getElementById("id_telefone");
+
+    if (id_telefone !== undefined && id_telefone !== null) {
+        id_telefone.setAttribute('maxlength', 14)
+        const maskOptions = {
+            mask: '(00) 0000-0000'
+        }
+        const mask = IMask(id_telefone, maskOptions);
     }
 }
 
-const clearCpf = () => {
+const maskcelular = () => {
+    const id_celular = document.getElementById("id_celular");
+
+    if (id_celular !== undefined && id_celular !== null) {
+        id_celular.setAttribute('maxlength', 15)
+        const maskOptions = {
+            mask: '(00) 00000-0000'
+        }
+        const mask = IMask(id_celular, maskOptions);
+    }
+}
+
+const cleancpf = () => {
     const id_cpf = document.getElementById("id_cpf");
     id_cpf.value = id_cpf.value.replace(/([\u0300-\u036f]|[^0-9a-zA-Z\s])/g, '');
 }
 
+const cleantelefone = () => {
+    const id_telefone = document.getElementById("id_telefone");
+    id_telefone.value = id_telefone.value.replace(/(?<!^)\+|[^\d+]+/g, '');
+}
+
+const cleancelular = () => {
+    const id_celular = document.getElementById("id_celular");
+    id_celular.value = id_celular.value.replace(/(?<!^)\+|[^\d+]+/g, '');
+}
+
 document.addEventListener("DOMContentLoaded", (event) => {
-    initCpf();
-    initCpfInList();
+    maskcpf();
+    masktelefone();
+    maskcelular();
 });
 
 document.getElementsByTagName('form')[0].addEventListener("submit", (event) => {
-    clearCpf();
+    cleancpf();
+});
+
+document.getElementsByTagName('form')[0].addEventListener("submit", (event) => {
+    cleantelefone();
+});
+
+document.getElementsByTagName('form')[0].addEventListener("submit", (event) => {
+    cleancelular();
+});
+
+document.getElementsByTagName('form')[1].addEventListener("submit", (event) => {
+    cleancpf();
 });

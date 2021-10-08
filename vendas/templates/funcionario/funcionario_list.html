@@ -17,7 +17,7 @@
 <table class="styled-table">
     <thead>
         <tr>
-            <th scope="row"> ID </th>
+            <th scope="row"> Código </th>
             <th scope="row"> Nome </th>
             <th scope="col"> CPF </th>
             <th scope="col"> Data de Nascimento </th>
@@ -31,7 +31,7 @@
         <tr class="active-row">
             <th scope="row">{{ funcionario.id }}</th>
             <td>{{ funcionario.nome }}</td>
-            <td id="maskCpf">{{ funcionario.cpf }}</td>
+            <td>{{ funcionario.cpf|slice:":3" }}.{{ funcionario.cpf|slice:"3:6" }}.{{ funcionario.cpf|slice:"6:9" }}-{{ funcionario.cpf|slice:"9:11" }}</td>
             <td>{{ funcionario.data_nascimento }}</td>
             <td>{{ funcionario.percentual }}%</td>
             <td>{{ funcionario.cargo.nome }}</td>

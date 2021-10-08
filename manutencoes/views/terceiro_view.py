@@ -25,9 +25,13 @@ def adicionar_terceiro(request):
     if request.method == 'POST':
         form_terceiro = FormTerceiro(request.POST)
         if form_terceiro.is_valid():
-            form_terceiro.save()
-            messages.add_message(request, messages.SUCCESS, 'Terceiro cadastrado!', extra_tags='success')
-            return redirect('/terceiros/adicionar')
+            if '@' and '.com' in form_terceiro.cleaned_data['email']:
+                form_terceiro.save()
+                messages.add_message(request, messages.SUCCESS, 'Terceiro cadastrado!', extra_tags='success')
+                return redirect('/terceiros/adicionar')
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                return render(request, 'terceiro/terceiro_add.html', {'form': form_terceiro})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'terceiro/terceiro_add.html', {'form': form_terceiro})
