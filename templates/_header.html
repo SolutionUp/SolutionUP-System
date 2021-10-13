@@ -4,10 +4,17 @@
         <div class="d-flex">
             <a class="navbar-brand" href="/">Gamaware</a>
             <ul class="nav col-auto me-auto">
+                
+                <!-- {'vendas.add_pedido', 'vendas.change_pedido', , 'produtos.Fazer o que quiser Apelido', -->
+                <!-- 'vendas.delete_pedido'} -->
+                
+                {% if 'produtos.view_produto' in perms %}
                 <a href="/produtos" class="nav-link">
                     <li>Produtos</li>
                     <div></div>
                 </a>
+                {% endif %}
+                
                 <a href="/fornecedores" class="nav-link">
                     <li>Fornecedores</li>
                     <div></div>
@@ -24,10 +31,12 @@
                     <li>Funcionários</li>
                     <div></div>
                 </a>
+                {% if 'vendas.view_pedido' in perms %}
                 <a href="/pedidos" class="nav-link">
                     <li>Pedidos</li>
                     <div></div>
                 </a>
+                {% endif %}
                 <a href="/manutencoes" class="nav-link">
                     <li>Manutenções</li>
                     <div></div>

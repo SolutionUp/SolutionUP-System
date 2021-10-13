@@ -9,9 +9,11 @@
             </button>
         </form>
     </div>
+    {% if 'vendas.add_pedido' in perms %}
     <a href="adicionar" class="btn btn-success btn-adicionar">
         <i class="bi bi-plus-lg"></i>
     </a>
+    {% endif %}
 </div>
 {% if object_list %}
 <table class="styled-table">
@@ -35,8 +37,12 @@
                 <a href="{{ pedido.id }}" type="button">
                     <i class="bi bi-eye-fill"></i>                
                 </a>
+                {% if 'vendas.change_pedido' in perms %}
                 <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                {% endif %}
+                {% if 'vendas.delete_pedido' in perms %}
                 <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ pedido.id }}"><i class="bi bi-trash"></i></a>
+                {% endif %}
             </td>
         </tr>
         <div class="modal fade" id="modalConfirmaExclusao{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
