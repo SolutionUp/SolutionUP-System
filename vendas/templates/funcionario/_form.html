@@ -5,7 +5,7 @@
     <div class="d-flex form-floating mb-3">
         {{ form_cargo.nome }}
         <label for="{{ form_cargo.nome.name }}">Novo cargo</label>
-        <button class="ms-2 btn btn-success btn-confirmar" type="submit">Criar</button>
+        <button class="ms-2 btn btn-primary btn-confirmar" type="submit">Criar</button>
         <button class="ms-2 btn btn-secondary toggle-control" type="button">Cancelar</button>
     </div>
 </form>
@@ -53,7 +53,7 @@
                 <div class="d-flex form-floating mb-3">
                     {{ form_funcionario.cargo }}
                     <label for="{{ form_funcionario.cargo.name }}">{{ form_funcionario.cargo.label }}</label>
-                    <button class="ms-2 btn btn-success btn-confirmar toggle-control" type="button">Novo</button>
+                    <button class="ms-2 btn btn-primary btn-confirmar toggle-control" type="button">Novo</button>
                 </div>
                 <div class="text-danger">
                     {{ form_funcionario.cargo.errors }}
@@ -62,7 +62,7 @@
         </div>
     </div>
     <div>
-        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-primary btn-confirmar" type="submit" value="Confirmar">
         <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
     </div>
 </form>
