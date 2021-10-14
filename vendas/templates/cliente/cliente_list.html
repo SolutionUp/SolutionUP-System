@@ -25,7 +25,9 @@
                 <th scope="col"> E-mail </th>
                 <th scope="col"> Telefone </th>
                 <th scope="col"> Celular </th>
+                {% if 'vendas.change_clientes' in perms or 'vendas.delete_clientes' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,14 +38,16 @@
                 <td>{{ cliente.email }}</td>
                 <td>{% if cliente.telefone and cliente.telefone|length == 10 %}({{ cliente.telefone|slice:"0:2" }}) {{ cliente.telefone|slice:"2:6" }}-{{ cliente.telefone|slice:"6:10" }}{% else %}---{% endif %}</td>
                 <td>{% if cliente.celular and cliente.celular|length == 11 %}({{ cliente.celular|slice:"0:2" }}) {{ cliente.celular|slice:"2:3" }}{{ cliente.celular|slice:"3:7" }}-{{ cliente.celular|slice:"7:11" }}{% else %}---{% endif %}</td>
+                {% if 'vendas.change_clientes' in perms or 'vendas.delete_clientes' in perms %}
                 <td class="col-2 text-center">
                     {% if 'vendas.change_clientes' in perms %}
                     <a href="alterar/{{ cliente.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                     {% if 'vendas.delete_clientes' in perms %}
                     <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ cliente.id }}"><i class="bi bi-trash"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             <div class="modal fade" id="modalConfirmaExclusao{{ cliente.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -67,4 +71,4 @@
     <p class="text-secondary pt-2">Não há clientes disponíveis.</p>
     {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para visualizar clientes.</p> {% endif %} {% endblock %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'vendas.add_pedido' in perms %}
+{% if 'vendas.add_pedido' in perms and 'vendas.change_pedido' in perms %}
 <form method="post" class="col-10" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row container">
@@ -65,4 +65,4 @@
     {% endif %}   
 </form>
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar pedidos.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}

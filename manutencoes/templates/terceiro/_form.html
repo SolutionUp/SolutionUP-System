@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'manutencoes.add_terceiro' in perms %}
+{% if 'manutencoes.add_terceiro' in perms and 'manutencoes.change_terceiro' in perms %}
 <form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row">
@@ -48,4 +48,4 @@
     </div>
 </form>
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar terceiros.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}

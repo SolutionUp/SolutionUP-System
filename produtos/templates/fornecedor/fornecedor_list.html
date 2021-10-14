@@ -25,7 +25,9 @@
                 <th scope="col"> Telefone </th>
                 <th scope="col"> Celular </th>
                 <th scope="col"> Ramo </th>
+                {% if 'produtos.change_fornecedor' in perms or 'produtos.delete_fornecedor' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,14 +38,16 @@
                 <td>{% if fornecedor.telefone and fornecedor.telefone|length == 10 %}({{ fornecedor.telefone|slice:"0:2" }}) {{ fornecedor.telefone|slice:"2:6" }}-{{ fornecedor.telefone|slice:"6:10" }}{% else %}---{% endif %}</td>
                 <td>{% if fornecedor.celular and fornecedor.celular|length == 11 %}({{ fornecedor.celular|slice:"0:2" }}) {{ fornecedor.celular|slice:"2:3" }}{{ fornecedor.celular|slice:"3:7" }}-{{ fornecedor.celular|slice:"7:11" }}{% else %}---{% endif %}</td>
                 <td>{{ fornecedor.ramo }}</td>
+                {% if 'produtos.change_fornecedor' in perms or 'produtos.delete_fornecedor' in perms %}
                 <td class="col-2 text-center">
                     {% if 'produtos.change_fornecedor' in perms %}
                     <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                     {% if 'produtos.delete_fornecedor' in perms %}
                     <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i class="bi bi-trash"></i></a>
-                    {% else %}-{% endif %}                   
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -67,4 +71,4 @@
     <p class="text-secondary pt-2">Não há fornecedores disponíveis.</p> 
     {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para visualizar fornecedores.</p> {% endif %} {% endblock %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

@@ -25,7 +25,9 @@
                 <th scope="col"> Data de início </th>
                 <th scope="col"> Data de conclusão  </th>
                 <th scope="col"> Responsável </th>
+                {% if 'manutencoes.view_manutencao' in perms or 'manutencoes.change_manutencao' in perms or 'manutencoes.delete_manutencao' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -36,17 +38,19 @@
                 <td>{{ manutencao.data_inicio }}</td>
                 <td>{{ manutencao.data_fim }}</td>
                 <td><a href="/funcionarios/?q={{ manutencao.responsavel.cpf }}">{{ manutencao.responsavel.nome }}</a></td>
+                {% if 'manutencoes.view_manutencao' in perms or 'manutencoes.change_manutencao' in perms or 'manutencoes.delete_manutencao' in perms %}
                 <td class="col-2 text-center">
                     {% if 'manutencoes.view_manutencao' in perms %}
                     <a href="{{ manutencao.id }}" type="button"><i class="bi bi-eye-fill"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                     {% if 'manutencoes.change_manutencao' in perms %}
                     <a href="alterar/{{ manutencao.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                     {% if 'manutencoes.delete_manutencao' in perms %}
                     <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ manutencao.id }}"><i class="bi bi-trash"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             <div class="modal fade" id="modalConfirmaExclusao{{ manutencao.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -69,4 +73,4 @@
     <p class="text-secondary pt-2">Não há manutenções disponíveis.</p>
     {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para visualizar manutenções.</p> {% endif %} {% endblock %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

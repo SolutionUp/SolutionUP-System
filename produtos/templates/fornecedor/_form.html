@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'produtos.add_fornecedor' in perms %}
+{% if 'produtos.add_fornecedor' in perms and 'produtos.change_fornecedor' in perms %}
 <form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row">
@@ -48,4 +48,4 @@
     </div>
 </form>
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar fornecedores.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}

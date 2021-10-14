@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'vendas.add_funcionario' in perms %}
+{% if 'vendas.add_funcionario' in perms and 'vendas.change_funcionario' in perms %}
 <form id="form_toggle" action="/funcionarios/cargo/adicionar" method="post" class="d-none p-0" novalidate>
     {% csrf_token %}
     <div class="d-flex form-floating mb-3">
@@ -68,4 +68,4 @@
 </form>
 {% block script %}<script src="{% static 'js/masks.js' %}"></script>{% endblock %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar funcionários.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}

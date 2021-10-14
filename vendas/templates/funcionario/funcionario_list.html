@@ -26,7 +26,9 @@
                 <th scope="col"> Data de Nascimento </th>
                 <th scope="col"> Percentual </th>
                 <th scope="col"> Cargo </th>
+                {% if 'vendas.change_funcionario' in perms or 'vendas.delete_funcionario' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -38,15 +40,16 @@
                 <td>{{ funcionario.data_nascimento }}</td>
                 <td>{{ funcionario.percentual }}%</td>
                 <td>{{ funcionario.cargo.nome }}</td>
+                {% if 'vendas.change_funcionario' in perms or 'vendas.delete_funcionario' in perms %}
                 <td class="col-2 text-center">
                     {% if 'vendas.change_funcionario' in perms %}
                     <a href="alterar/{{ funcionario.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                     {% if 'vendas.delete_funcionario' in perms %}
-                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ funcionario.id }}"><i
-                            class="bi bi-trash"></i></a>
-                    {% else %}-{% endif %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ funcionario.id }}"><i class="bi bi-trash"></i></a>
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             <div class="modal fade" id="modalConfirmaExclusao{{ funcionario.id }}" tabindex="-1" role="dialog"
                 aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
@@ -70,4 +73,4 @@
     <p class="text-secondary pt-2">Não há funcionários disponíveis.</p>
     {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para visualizar clientes.</p> {% endif %} {% endblock %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

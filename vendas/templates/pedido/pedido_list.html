@@ -24,7 +24,9 @@
                 <th scope="col"> Cliente </th>
                 <th scope="col"> Data de cadastro </th>
                 <th scope="col"> Status </th>
+                {% if 'vendas.view_pedido' in perms or 'vendas.change_pedido' in perms or 'vendas.delete_pedido' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -33,20 +35,18 @@
                 <th scope="row">{{ pedido.id }}</th>
                 <td>{{ pedido.cliente.cpf|slice:":3" }}.{{ pedido.cliente.cpf|slice:"3:6" }}.{{ pedido.cliente.cpf|slice:"6:9" }}-{{ pedido.cliente.cpf|slice:"9:11" }}</td>
                 <td>{{ pedido.data_cadastro }}</td>
-                <td>{{ pedido.get_status_display }}</td> 
+                <td>{{ pedido.get_status_display }}</td>
+                {% if 'vendas.view_pedido' in perms or 'vendas.change_pedido' in perms or 'vendas.delete_pedido' in perms %}
                 <td class="col-2 text-center">
                     {% if 'vendas.view_pedido' in perms %}
-                    <a href="{{ pedido.id }}" type="button">
-                        <i class="bi bi-eye-fill"></i>                
-                    </a>
-                    {% else %}-{% endif %}
+                    <a href="{{ pedido.id }}" type="button"><i class="bi bi-eye-fill"></i></a>{% endif %}
                     {% if 'vendas.change_pedido' in perms %}
-                    <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                    {% else %}-{% endif %}
+                    <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>{% endif %}
                     {% if 'vendas.delete_pedido' in perms %}
                     <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ pedido.id }}"><i class="bi bi-trash"></i></a>
-                    {% else %}-{% endif %}
+                    {% endif %}
                 </td>
+                {% endif %}
             </tr>
             <div class="modal fade" id="modalConfirmaExclusao{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -70,4 +70,4 @@
     <p class="text-secondary pt-2">Não há pedidos disponíveis.</p>
     {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para visualizar pedidos.</p> {% endif %} {% endblock %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

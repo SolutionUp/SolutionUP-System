@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'vendas.add_clientes' in perms %}
+{% if 'vendas.add_clientes' in perms and 'vendas.change_clientes' in perms %}
 <form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row">
@@ -50,4 +50,4 @@
     </div>    
 </form>
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar clientes.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}

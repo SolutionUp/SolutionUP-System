@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %} {% load static %}
+{% if 'vendas.view_pedido' in perms %}
 <div class="row">
     <p class="h2 mb-3">Informações do pedido</p>
     <div class="form col-4 mb-auto mt-auto">
@@ -42,4 +43,5 @@
         </div>
     </div>
 </div>
-{% endblock %}
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

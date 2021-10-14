@@ -1,5 +1,5 @@
 {% load static %}
-{% if 'produtos.add_produto' in perms %}
+{% if 'produtos.add_produto' in perms and 'produtos.change_produto' in perms %}
     <div class="row container">
     <form id="form_toggle" action="/produtos/categoria/adicionar" method="post" class="d-none p-0" novalidate>
         {% csrf_token %}
@@ -83,4 +83,4 @@
         </div>
     </form>
 {% else %}
-<p class="text-secondary pt-2">Você não tem permissão para adicionar produtos.</p> {% endif %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}
