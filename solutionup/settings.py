@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'produtos',
     'vendas',
     'manutencoes',
-    'users'
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -158,5 +158,3 @@ LOGOUT_REDIRECT_URL = '/auth/login'
 if 'HOME' in os.environ.keys():
     if '/app' in os.environ['HOME']:
         django_heroku.settings(locals())
-
-        

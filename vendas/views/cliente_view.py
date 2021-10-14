@@ -28,9 +28,17 @@ def adicionar_cliente(request):
     if request.method == 'POST':
         form_cliente = FormCliente(request.POST)
         if form_cliente.is_valid():
-            form_cliente.save()
-            messages.add_message(request, messages.SUCCESS, 'Cliente cadastrado!', extra_tags='success')
-            return redirect('/clientes/adicionar')
+            if len(form_cliente.cleaned_data['cpf']) == 11:
+                if '@' and '.com' in form_cliente.cleaned_data['email']:
+                    form_cliente.save()
+                    messages.add_message(request, messages.SUCCESS, 'Cliente cadastrado!', extra_tags='success')
+                    return redirect('/clientes/adicionar')
+                else:
+                    messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                    return render(request, 'cliente/cliente_add.html', {'form': form_cliente})
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                return render(request, 'cliente/cliente_add.html', {'form': form_cliente})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'cliente/cliente_add.html', {'form': form_cliente})

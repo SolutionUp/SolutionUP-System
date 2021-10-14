@@ -26,9 +26,13 @@ def adicionar_funcionario(request):
     if request.method == 'POST':
         form_funcionario = FormFuncionario(request.POST)
         if form_funcionario.is_valid():
-            form_funcionario.save()
-            messages.add_message(request, messages.SUCCESS, 'Funcionário cadastrado!', extra_tags='success')
-            return redirect('/funcionarios/adicionar')
+            if len(form_funcionario.cleaned_data['cpf']) == 11:
+                form_funcionario.save()
+                messages.add_message(request, messages.SUCCESS, 'Funcionário cadastrado!', extra_tags='success')
+                return redirect('/funcionarios/adicionar')
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                return render(request, 'funcionario/funcionario_add.html', {'form_funcionario': form_funcionario, 'form_cargo': form_cargo})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'funcionario/funcionario_add.html', {'form_funcionario': form_funcionario, 'form_cargo': form_cargo})
