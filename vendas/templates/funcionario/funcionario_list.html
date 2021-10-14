@@ -1,63 +1,73 @@
 {% extends "base.html" %} {% block content %}
-<p class="h2">Funcionários</p>
-<div class="row">
-    <div class="pesquisa col-4">
-        <form class="input-group" action="{% url 'listagem_funcionario' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou CPF..." />
-            <button class="btn btn-secondary" type="submit">
-                <i class="bi bi-search"></i>
-            </button>
-        </form>
+{% if 'vendas.view_funcionario' in perms %}
+    <p class="h2">Funcionários</p>
+    <div class="row">
+        <div class="pesquisa col-4">
+            <form class="input-group" action="{% url 'listagem_funcionario' %}" method="get">
+                <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou CPF..." />
+                <button class="btn btn-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        {% if 'vendas.add_funcionario' in perms %}
+        <a href="adicionar" class="btn btn-success btn-adicionar">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
     </div>
-    <a href="adicionar" class="btn btn-success btn-adicionar">
-        <i class="bi bi-plus-lg"></i>
-    </a>
-</div>
-{% if object_list %}
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th scope="row"> Código </th>
-            <th scope="row"> Nome </th>
-            <th scope="col"> CPF </th>
-            <th scope="col"> Data de Nascimento </th>
-            <th scope="col"> Percentual </th>
-            <th scope="col"> Cargo </th>
-            <th class="text-center" scope="col"> Opções </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for funcionario in object_list %}
-        <tr class="active-row">
-            <th scope="row">{{ funcionario.id }}</th>
-            <td>{{ funcionario.nome }}</td>
-            <td>{{ funcionario.cpf|slice:":3" }}.{{ funcionario.cpf|slice:"3:6" }}.{{ funcionario.cpf|slice:"6:9" }}-{{ funcionario.cpf|slice:"9:11" }}</td>
-            <td>{{ funcionario.data_nascimento }}</td>
-            <td>{{ funcionario.percentual }}%</td>
-            <td>{{ funcionario.cargo.nome }}</td>
-            <td class="col-2 text-center">
-                <a href="alterar/{{ funcionario.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ funcionario.id }}"><i
-                        class="bi bi-trash"></i></a>
-            </td>
-        </tr>
-        <div class="modal fade" id="modalConfirmaExclusao{{ funcionario.id }}" tabindex="-1" role="dialog"
-            aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title ">Confirmação</h5>
-                    </div>
-                    <div class="modal-body">Deseja realmente deletar o funcionário {{ funcionario.nome }}?</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="remover/{{ funcionario.id }}"><button type="button" class="btn btn-danger">Deletar</button></a>
+    {% if object_list %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th scope="row"> ID </th>
+                <th scope="row"> Nome </th>
+                <th scope="col"> CPF </th>
+                <th scope="col"> Data de Nascimento </th>
+                <th scope="col"> Percentual </th>
+                <th scope="col"> Cargo </th>
+                <th class="text-center" scope="col"> Opções </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for funcionario in object_list %}
+            <tr class="active-row">
+                <th scope="row">{{ funcionario.id }}</th>
+                <td>{{ funcionario.nome }}</td>
+                <td>{{ funcionario.cpf }}</td>
+                <td>{{ funcionario.data_nascimento }}</td>
+                <td>{{ funcionario.percentual }}%</td>
+                <td>{{ funcionario.cargo.nome }}</td>
+                <td class="col-2 text-center">
+                    {% if 'vendas.change_funcionario' in perms %}
+                    <a href="alterar/{{ funcionario.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                    {% else %}-{% endif %}
+                    {% if 'vendas.delete_funcionario' in perms %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ funcionario.id }}"><i
+                            class="bi bi-trash"></i></a>
+                    {% else %}-{% endif %}
+                </td>
+            </tr>
+            <div class="modal fade" id="modalConfirmaExclusao{{ funcionario.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">Deseja realmente deletar o funcionário {{ funcionario.nome }}?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="remover/{{ funcionario.id }}"><button type="button" class="btn btn-danger">Deletar</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </tbody>
-</table>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-secondary pt-2">Não há funcionários disponíveis.</p>
+    {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Não há funcionários disponíveis.</p> {% endif %} {% endblock %}
+<p class="text-secondary pt-2">Você não tem permissão para visualizar clientes.</p> {% endif %} {% endblock %}

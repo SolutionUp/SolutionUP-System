@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from vendas.forms import FormPedido
 from vendas.models import Pedido
+from django.http import Http404
 
-class PedidoListView(ListView):
+class PedidoListView(LoginRequiredMixin, ListView):
     model = Pedido
     paginate_by = 100
     template_name = 'pedido/pedido_list.html'
@@ -17,11 +20,13 @@ class PedidoListView(ListView):
             Q(status__icontains=query)
         )
         return object_list
+        
 
-class PedidoDetailView(DetailView):
+class PedidoDetailView(LoginRequiredMixin, DetailView):
     model = Pedido
     template_name = 'pedido/pedido_detail.html'
 
+@login_required
 def adicionar_pedido(request):
     if request.method == 'POST':
         form_pedido = FormPedido(request.POST, request.FILES)
@@ -36,6 +41,7 @@ def adicionar_pedido(request):
         form_pedido = FormPedido()
         return render(request, 'pedido/pedido_add.html', {'form': form_pedido})
 
+@login_required
 def remover_pedido(request, id):
     if request.method == 'GET':
         pedido = Pedido.objects.get(id=id)
@@ -47,6 +53,7 @@ def remover_pedido(request, id):
     else:
         return render(request, 'pedido/pedido_list.html')
 
+@login_required
 def alterar_pedido(request, id):
     instance = get_object_or_404(Pedido, id=id)
     pedido = Pedido.objects.get(id=id)

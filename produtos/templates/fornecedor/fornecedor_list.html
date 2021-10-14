@@ -1,60 +1,70 @@
 {% extends "base.html" %} {% block content %}
-<p class="h2">Fornecedores</p>
-<div class="row">
-    <div class="pesquisa col-4">
-        <form class="input-group" action="{% url 'listagem_fornecedor' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou ramo..." />
-            <button class="btn btn-secondary" type="submit">
-                <i class="bi bi-search"></i>
-            </button>
-        </form>
+{% if 'produtos.view_fornecedor' in perms %}
+    <p class="h2">Fornecedores</p>
+    <div class="row">
+        <div class="pesquisa col-4">
+            <form class="input-group" action="{% url 'listagem_fornecedor' %}" method="get">
+                <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um nome ou ramo..." />
+                <button class="btn btn-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        {% if 'produtos.add_fornecedor' in perms %}
+        <a href="adicionar" class="btn btn-success btn-adicionar">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
     </div>
-    <a href="adicionar" class="btn btn-success btn-adicionar">
-        <i class="bi bi-plus-lg"></i>
-    </a>
-</div>
-{% if object_list %}
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th scope="col"> Nome </th>
-            <th scope="col"> E-mail </th>
-            <th scope="col"> Telefone </th>
-            <th scope="col"> Celular </th>
-            <th scope="col"> Ramo </th>
-            <th class="text-center" scope="col"> Opções </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for fornecedor in object_list %}
-        <tr class="active-row">
-            <td>{{ fornecedor.nome }}</td>
-            <td>{{ fornecedor.email }}</td>
-            <td>{% if fornecedor.telefone and fornecedor.telefone|length == 10 %}({{ fornecedor.telefone|slice:"0:2" }}) {{ fornecedor.telefone|slice:"2:6" }}-{{ fornecedor.telefone|slice:"6:10" }}{% else %}---{% endif %}</td>
-            <td>{% if fornecedor.celular and fornecedor.celular|length == 11 %}({{ fornecedor.celular|slice:"0:2" }}) {{ fornecedor.celular|slice:"2:3" }}{{ fornecedor.celular|slice:"3:7" }}-{{ fornecedor.celular|slice:"7:11" }}{% else %}---{% endif %}</td>
-            <td>{{ fornecedor.ramo }}</td>
-            <td class="col-2 text-center">
-                <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i class="bi bi-trash"></i></a>
-            </td>
-        </tr>
-        <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title ">Confirmação</h5>
-                    </div>
-                    <div class="modal-body">Deseja realmente deletar o fornecedor {{ fornecedor.nome }}?</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="remover/{{ fornecedor.id }}"><button type="button"
-                                class="btn btn-danger">Deletar</button></a>
+    {% if object_list %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th scope="col"> Nome </th>
+                <th scope="col"> E-mail </th>
+                <th scope="col"> Telefone </th>
+                <th scope="col"> Celular </th>
+                <th scope="col"> Ramo </th>
+                <th class="text-center" scope="col"> Opções </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fornecedor in object_list %}
+            <tr class="active-row">
+                <td>{{ fornecedor.nome }}</td>
+                <td>{{ fornecedor.email }}</td>
+                <td>{{ fornecedor.telefone }}</td>
+                <td>{{ fornecedor.celular }}</td>
+                <td>{{ fornecedor.ramo }}</td>
+                <td class="col-2 text-center">
+                    {% if 'produtos.change_fornecedor' in perms %}
+                    <a href="alterar/{{ fornecedor.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                    {% else %}-{% endif %}
+                    {% if 'produtos.delete_fornecedor' in perms %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ fornecedor.id }}"><i class="bi bi-trash"></i></a>
+                    {% else %}-{% endif %}                   
+                </td>
+            </tr>
+            <div class="modal fade" id="modalConfirmaExclusao{{ fornecedor.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">Deseja realmente deletar o fornecedor {{ fornecedor.nome }}?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="remover/{{ fornecedor.id }}"><button type="button"
+                                    class="btn btn-danger">Deletar</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </tbody>
-</table>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-secondary pt-2">Não há fornecedores disponíveis.</p> 
+    {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Não há fornecedores disponíveis.</p> {% endif %} {% endblock %}
+<p class="text-secondary pt-2">Você não tem permissão para visualizar fornecedores.</p> {% endif %} {% endblock %}

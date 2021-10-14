@@ -2,10 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from produtos.forms import FormProduto, FormCategoriaProduto
 from produtos.models import Produto, CategoriaProduto
+from django.http import Http404
 
-class ProdutoListView(ListView):
+
+class ProdutoListView(LoginRequiredMixin, ListView):
     model = Produto
     paginate_by = 100
 
@@ -18,9 +22,10 @@ class ProdutoListView(ListView):
         )
         return object_list
 
-class ProdutoDetailView(DetailView):
+class ProdutoDetailView(LoginRequiredMixin, DetailView):
     model = Produto
 
+@login_required
 def adicionar_produto(request):
     form_categoria = FormCategoriaProduto()
     if request.method == 'POST':
@@ -36,6 +41,7 @@ def adicionar_produto(request):
         form_produto = FormProduto()
         return render(request, 'produtos/produto_add.html', {'form_produto': form_produto, 'form_categoria': form_categoria})
 
+@login_required
 def remover_produto(request, codigo):
     if request.method == 'GET':
         produto = Produto.objects.get(codigo=codigo)
@@ -47,7 +53,8 @@ def remover_produto(request, codigo):
     else:
         return render(request, 'produtos/produto_list.html')
 
-def alterar_produto(request, codigo): 
+@login_required
+def alterar_produto(request, codigo):
     instance = get_object_or_404(Produto, codigo=codigo)
     produto = Produto.objects.get(codigo=codigo)
     form_produto = FormProduto(request.POST or None, request.FILES or None, instance=instance)
@@ -68,6 +75,7 @@ def alterar_produto(request, codigo):
     else:
         return render(request, 'produtos/produto_add.html', {'form_produto': form_produto, 'form_categoria': form_categoria})
 
+@login_required
 def adicionar_categoria(request):
     if request.method == 'POST':
         form_categoria = FormCategoriaProduto(request.POST)

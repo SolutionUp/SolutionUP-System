@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% load static %}
+
+{% block content %}
+<body class="text-center">
+    <main class="form-signin m-auto p-15">
+        <form method="post">
+        {% csrf_token %}
+            <img class="mb-4" src="{% static 'images/login.png'%}" width="50%">
+            <h1 class="h3 mb-3 fw-normal">Gamaware Login</h1>
+            {% for campo in form %}
+            <div class="form-group form-floating m-2">
+                {{ campo }}
+                <label for="id_{{campo.name}}" class="form-label">{{ campo.label }}</label>
+            </div>
+            {% endfor %}
+            <div class="container p-2">
+                <button class="btn btn-success btn-confirmar" type="submit">Entrar</button>
+                <input class="btn btn-secondary" type="reset" value="Resetar" />
+            </div>
+        </form>
+    </main>
+</body>
+{% endblock %}
