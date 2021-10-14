@@ -1,4 +1,5 @@
 {% load static %}
+{% if 'vendas.add_pedido' in perms %}
 <form method="post" class="col-10" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row container">
@@ -59,3 +60,5 @@
         <input class="btn btn-secondary" type="reset" onclick="resetar_comprovante()" value="Resetar" />
     </div>    
 </form>
+{% else %}
+<p class="text-secondary pt-2">Você não tem permissão para adicionar pedidos.</p> {% endif %}

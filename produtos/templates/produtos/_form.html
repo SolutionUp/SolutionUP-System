@@ -1,83 +1,86 @@
 {% load static %}
-<div class="row container">
-<form id="form_toggle" action="/produtos/categoria/adicionar" method="post" class="d-none p-0" novalidate>
-    {% csrf_token %}
-    <div class="d-flex form-floating mb-3">
-        {{ form_categoria.nome }}
-        <label for="{{ form_categoria.nome.name }}">Nova categoria</label>
-        <button class="ms-2 btn btn-success btn-confirmar" type="submit">Criar</button>
-        <button class="ms-2 btn btn-secondary toggle-control" type="button">Cancelar</button>
-    </div>
-</form>
-</div>
-<form class="col-10" method="post" enctype="multipart/form-data" novalidate>
-    {% csrf_token %}
+{% if 'produtos.add_produto' in perms %}
     <div class="row container">
-        <p class="row h2 mb-4">Cadastro de produtos</p>
-        <div class="produto-foto col-5 p-3">
-            {% if form_produto.imagem.value %}
-            <img id="image" src="" class="img-fluid mb-2 d-none" />
-            <img id="image_" src="{% get_media_prefix %}{{form_produto.imagem.value}}" class="img-fluid mb-2" /> {% else %}
-            <img id="image" src="" class="img-fluid mb-2 d-none">
-            <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2"> {% endif %}
-            <div class="d-flex">
-                {{ form_produto.imagem }}
-                <button class="btn btn-light" type="button" onclick="resetar_imagem()"><i class="bi bi-trash"></i></button>
-            </div>
+    <form id="form_toggle" action="/produtos/categoria/adicionar" method="post" class="d-none p-0" novalidate>
+        {% csrf_token %}
+        <div class="d-flex form-floating mb-3">
+            {{ form_categoria.nome }}
+            <label for="{{ form_categoria.nome.name }}">Nova categoria</label>
+            <button class="ms-2 btn btn-success btn-confirmar" type="submit">Criar</button>
+            <button class="ms-2 btn btn-secondary toggle-control" type="button">Cancelar</button>
         </div>
-        <div class="form col-7 ps-2 pe-0">
-            <div>
-                <div class="form-floating mb-3">
-                    {{ form_produto.nome }}
-                    <label for="{{ form_produto.nome.name }}">{{ form_produto.nome.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.nome.errors }}
-                </div>
-                <div class="d-flex form-floating mb-3">
-                    {{ form_produto.categoria }}
-                    <label for="{{ form_produto.categoria.name }}">{{ form_produto.categoria.label }}</label>
-                    <button class="ms-2 btn btn-success btn-confirmar toggle-control" type="button">Nova</button>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.categoria.errors }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form_produto.valor }}
-                    <label for="{{ form_produto.valor.name }}">{{ form_produto.valor.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.valor.errors }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form_produto.marca }}
-                    <label for="{{ form_produto.marca.name }}">{{ form_produto.marca.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.marca.errors }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form_produto.link }}
-                    <label for="{{ form_produto.link.name }}">{{ form_produto.link.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.link.errors }}
-                </div>
-                <div class="form-floating mb-3">
-                    {{ form_produto.fornecedor }}
-                    <label for="{{ form_produto.fornecedor.name }}">{{ form_produto.fornecedor.label }}</label>
-                </div>
-                <div class="text-danger">
-                    {{ form_produto.fornecedor.errors }}
+    </form>
+    </div>
+    <form class="col-10" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <div class="row container">
+            <p class="row h2 mb-4">Cadastro de produtos</p>
+            <div class="produto-foto col-5 p-3">
+                {% if form_produto.imagem.value %}
+                <img id="image" src="" class="img-fluid mb-2 d-none" />
+                <img id="image_" src="{% get_media_prefix %}{{form_produto.imagem.value}}" class="img-fluid mb-2" /> {% else %}
+                <img id="image" src="" class="img-fluid mb-2 d-none">
+                <img id="image_" src="{% static 'images/not-image.png' %}" class="img-fluid mb-2"> {% endif %}
+                <div class="d-flex">
+                    {{ form_produto.imagem }}
+                    <button class="btn btn-light" type="button" onclick="resetar_imagem()"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
+            <div class="form col-7 ps-2 pe-0">
+                <div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.nome }}
+                        <label for="{{ form_produto.nome.name }}">{{ form_produto.nome.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.nome.errors }}
+                    </div>
+                    <div class="d-flex form-floating mb-3">
+                        {{ form_produto.categoria }}
+                        <label for="{{ form_produto.categoria.name }}">{{ form_produto.categoria.label }}</label>
+                        <button class="ms-2 btn btn-success btn-confirmar toggle-control" type="button">Nova</button>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.categoria.errors }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.valor }}
+                        <label for="{{ form_produto.valor.name }}">{{ form_produto.valor.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.valor.errors }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.marca }}
+                        <label for="{{ form_produto.marca.name }}">{{ form_produto.marca.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.marca.errors }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.link }}
+                        <label for="{{ form_produto.link.name }}">{{ form_produto.link.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.link.errors }}
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.fornecedor }}
+                        <label for="{{ form_produto.fornecedor.name }}">{{ form_produto.fornecedor.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.fornecedor.errors }}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row container">
-        {{ form_produto.descricao }}
-    </div>
-    <div class="container">
-        <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
-        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
-    </div>
-</form>
+        <div class="row container">
+            {{ form_produto.descricao }}
+        </div>
+        <div class="container">
+            <input class="btn btn-success btn-confirmar" type="submit" value="Confirmar">
+            <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
+        </div>
+    </form>
+{% else %}
+<p class="text-secondary pt-2">Você não tem permissão para adicionar produtos.</p> {% endif %}

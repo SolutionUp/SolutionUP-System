@@ -1,67 +1,73 @@
 {% extends "base.html" %} {% block content %}
-<p class="h2">Pedidos</p>
-<div class="row">
-    <div class="pesquisa col-4">
-        <form class="input-group" action="{% url 'listagem_pedido' %}" method="get">
-            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um código ou status..." />
-            <button class="btn btn-secondary" type="submit">
-                <i class="bi bi-search"></i>
-            </button>
-        </form>
+{% if 'vendas.view_pedido' in perms %}
+    <p class="h2">Pedidos</p>
+    <div class="row">
+        <div class="pesquisa col-4">
+            <form class="input-group" action="{% url 'listagem_pedido' %}" method="get">
+                <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um código ou status..." />
+                <button class="btn btn-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        {% if 'vendas.add_pedido' in perms %}
+        <a href="adicionar" class="btn btn-success btn-adicionar">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
     </div>
-    {% if 'vendas.add_pedido' in perms %}
-    <a href="adicionar" class="btn btn-success btn-adicionar">
-        <i class="bi bi-plus-lg"></i>
-    </a>
-    {% endif %}
-</div>
-{% if object_list %}
-<table class="styled-table">
-    <thead>
-        <tr>
-            <th scope="col"> Código </th>
-            <th scope="col"> Cliente </th>
-            <th scope="col"> Data de cadastro </th>
-            <th scope="col"> Status </th>
-            <th class="text-center" scope="col"> Opções </th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for pedido in object_list %}
-        <tr class="active-row">
-            <th scope="row">{{ pedido.id }}</th>
-            <td>{{ pedido.cliente.cpf }}</td>
-            <td>{{ pedido.data_cadastro }}</td>
-            <td>{{ pedido.get_status_display }}</td> 
-            <td class="col-2 text-center">
-                <a href="{{ pedido.id }}" type="button">
-                    <i class="bi bi-eye-fill"></i>                
-                </a>
-                {% if 'vendas.change_pedido' in perms %}
-                <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
-                {% endif %}
-                {% if 'vendas.delete_pedido' in perms %}
-                <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ pedido.id }}"><i class="bi bi-trash"></i></a>
-                {% endif %}
-            </td>
-        </tr>
-        <div class="modal fade" id="modalConfirmaExclusao{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header ">
-                        <h5 class="modal-title ">Confirmação</h5>
-                    </div>
-                    <div class="modal-body">Deseja realmente deletar o pedido do CPF: {{ pedido.cliente.cpf }}?</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="remover/{{ pedido.id }}"><button type="button"
-                                class="btn btn-danger">Deletar</button></a>
+    {% if object_list %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th scope="col"> Código </th>
+                <th scope="col"> Cliente </th>
+                <th scope="col"> Data de cadastro </th>
+                <th scope="col"> Status </th>
+                <th class="text-center" scope="col"> Opções </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in object_list %}
+            <tr class="active-row">
+                <th scope="row">{{ pedido.id }}</th>
+                <td>{{ pedido.cliente.cpf }}</td>
+                <td>{{ pedido.data_cadastro }}</td>
+                <td>{{ pedido.get_status_display }}</td> 
+                <td class="col-2 text-center">
+                    {% if 'vendas.view_pedido' in perms %}
+                    <a href="{{ pedido.id }}" type="button">
+                        <i class="bi bi-eye-fill"></i>                
+                    </a>
+                    {% else %}-{% endif %}
+                    {% if 'vendas.change_pedido' in perms %}
+                    <a href="alterar/{{ pedido.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                    {% else %}-{% endif %}
+                    {% if 'vendas.delete_pedido' in perms %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ pedido.id }}"><i class="bi bi-trash"></i></a>
+                    {% else %}-{% endif %}
+                </td>
+            </tr>
+            <div class="modal fade" id="modalConfirmaExclusao{{ pedido.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">Deseja realmente deletar o pedido do CPF: {{ pedido.cliente.cpf }}?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="remover/{{ pedido.id }}"><button type="button"
+                                    class="btn btn-danger">Deletar</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </tbody>
-</table>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-secondary pt-2">Não há pedidos disponíveis.</p>
+    {% endif %}
 {% else %}
-<p class="text-secondary pt-2">Não há pedidos disponíveis.</p> {% endif %} {% endblock %}
+<p class="text-secondary pt-2">Você não tem permissão para visualizar pedidos.</p> {% endif %} {% endblock %}
