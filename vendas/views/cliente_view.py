@@ -28,7 +28,7 @@ def adicionar_cliente(request):
     if request.method == 'POST':
         form_cliente = FormCliente(request.POST)
         if form_cliente.is_valid():
-            if len(form_cliente.cleaned_data['cpf']) == 11:
+            if form_cliente.cleaned_data['cpf'] == None or len(form_cliente.cleaned_data['cpf']) == 11:
                 if '@' and '.com' in form_cliente.cleaned_data['email']:
                     form_cliente.save()
                     messages.add_message(request, messages.SUCCESS, 'Cliente cadastrado!', extra_tags='success')
