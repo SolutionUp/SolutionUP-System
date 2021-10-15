@@ -2,8 +2,10 @@
 <nav class="p-3">
     <div class="container">
         <div class="d-flex">
-            <a class="navbar-brand" href="/">Gamaware</a>
-            <ul class="nav col-auto me-auto">               
+            <ul class="nav col-auto me-auto">
+                <a href="/" class="navbar-brand">
+                    <li>Gamaware</li>
+                </a>
                 {% if 'produtos.view_produto' in perms %}
                 <a href="/produtos" class="nav-link">
                     <li>Produtos</li>
@@ -47,9 +49,11 @@
                 </a>
                 {% endif %}
             </ul>
-            <a href="/auth/logout" class="logout"> Sair <i class="bi bi-person-badge"></i>
-                <div></div>
-            </a>
+            {% if user.is_authenticated %}
+                <a href="/auth/logout" class="logout nav-link"> Sair <i class="bi bi-person-badge"></i>
+                    <div></div>
+                </a>
+            {% endif %}
         </div>
     </div>
 </nav>
