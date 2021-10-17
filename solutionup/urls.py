@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from produtos.views import catalogo_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls), 
-    path('', include('produtos.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('produtos.urls.catalogo_url')),
     path('produtos/', include('produtos.urls.produtos_url')),
     path('funcionarios/', include('vendas.urls.funcionarios_url')),
     path('fornecedores/', include('produtos.urls.fornecedores_url')),

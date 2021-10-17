@@ -143,6 +143,15 @@ a:hover {
 .styled-table tbody tr:last-of-type {
     border-bottom: 2px solid #003F86;
 }
+
+.image-catalogo {
+    display: block;
+    max-height:170px;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    max-width: -webkit-fill-available !important;
+}
+
 /** Produtos **/
 
 .produto-foto {

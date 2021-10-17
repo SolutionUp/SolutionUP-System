@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block content %} {% load static %}
-{% if 'produtos.view_produto' in perms %}
 <section class="col-10 offset-1 mb-5">
     <div class="text-center col-8 offset-2 mb-5">
         <p class="h3">Informações do produto</p>
@@ -23,13 +22,14 @@
             <a href="{{ object.link }}" type="button" class="btn btn-warning btn-mercado-livre">
                 <img src="{% static 'images/mercado-livre.png' %}" width="94px">
             </a>
-            <a href="/produtos" type="button" class="btn btn-secondary btn-voltar">
-               Voltar
-            </a>
+            {% if user.is_authenticated %}
+            <a href="/" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+            {% else %}
+            <a href="/" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+            {% endif %}
             <p class="text-muted small pt-2">Observação: Toda compra é realizada através do Mercado Livre.</p>
         </div>
     </div>
     </div>
 </section>
-{% else %}
-<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}
+{% endblock %}
