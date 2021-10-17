@@ -24,13 +24,13 @@
     <section class="section-name padding-y-sm pt-3">
         <div class="row">
             {% for produto in object_list %}
-            <div class="col-md-3 pt-3">
-                <div class="card shadow-sm mb-5 bg-white rounded">
+            <div class="col-md-3 pt-3 mb-3">
+                <div class="card shadow-sm bg-white rounded">
                     <a href="/produtos/{{ produto.codigo }}"> 
                         {% if produto.imagem %}
-                        <img src="{{ produto.imagem.url }}" class="img-fluid mb-2">
+                        <img src="{{ produto.imagem.url }}" class="image-catalogo">
                         {% else %}
-                        <img src="{% static 'images/not-image.png' %}" class="img-fluid mb-2">
+                        <img src="{% static 'images/not-image.png' %}" class="image-catalogo">
                         {% endif %}
                     </a>
                     <div class="container mb-3">
