@@ -22,7 +22,7 @@ class ProdutoListView(LoginRequiredMixin, ListView):
         )
         return object_list
 
-class ProdutoDetailView(LoginRequiredMixin, DetailView):
+class ProdutoDetailView(DetailView):
     model = Produto
 
 @login_required
