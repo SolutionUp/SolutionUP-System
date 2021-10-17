@@ -1,3 +1,8 @@
+import io
+import csv
+from datetime import datetime
+from reportlab.pdfgen import canvas
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
@@ -7,7 +12,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from produtos.forms import FormProduto, FormCategoriaProduto
 from produtos.models import Produto, CategoriaProduto
 from django.http import Http404
-
 
 class ProdutoListView(LoginRequiredMixin, ListView):
     model = Produto
@@ -85,3 +89,56 @@ def adicionar_categoria(request):
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
     return redirect('/produtos/adicionar')
+
+@login_required
+def gerar_relatorio_pdf(request):
+    if request.user.has_perm('produtos.view_produto'):
+        buffer = io.BytesIO()
+        arquivo = canvas.Canvas(buffer)
+        arquivo.setTitle('Gamaware Solution')
+        arquivo.drawString(212, 800, f'{datetime.now().strftime("Gerado em %d/%m/%Y às %H:%M")}')
+        arquivo.drawString(225, 780, f'Quantidade de produtos: {Produto.objects.all().count()}')
+        arquivo.drawString(255, 760, f'Usuário: {request.user.username}')
+        margem, linha, ultima_linha, valor_linha, linha_topo = 70, 720, 60, 20, 780
+        for produto in Produto.objects.all():
+            produto = [
+                f'Código: {produto.codigo}',
+                f'Produto: {produto.nome}',
+                f'Categoria: {produto.categoria.nome}',
+                f'Marca: {produto.marca}',
+                f'Fornecedor: {produto.fornecedor.nome}',
+                f'Valor de venda: R${produto.valor}'
+            ]
+            for dado in produto:
+                arquivo.drawString(margem, linha, dado)
+                linha -= valor_linha
+                if linha == ultima_linha:
+                    arquivo.showPage()
+                    linha = linha_topo
+            linha -= valor_linha
+        arquivo.showPage()
+        arquivo.save()
+        buffer.seek(0)
+        return FileResponse(buffer, as_attachment=False, filename=f'relatorio_produtos_{datetime.now().strftime("%d/%m/%Y")}.pdf')
+    return redirect('/')
+
+@login_required
+def gerar_relatorio_csv(request):
+    if request.user.has_perm('produtos.view_produto'):
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={'Content-Disposition': f'attachment; filename="relatorio_produtos_{datetime.now().strftime("%d/%m/%Y")}.csv"'},
+        )
+        arquivo = csv.writer(response, delimiter=';')
+        arquivo.writerow(['Codigo', 'Produto', 'Valor', 'Categoria', 'Marca', 'Fornecedor'])
+        for produto in Produto.objects.all():
+            arquivo.writerow([
+                f'{produto.codigo}',
+                f'{produto.nome}',
+                f'{produto.valor}',
+                f'{produto.categoria.nome}',
+                f'{produto.marca}',
+                f'{produto.fornecedor.nome}'
+            ])
+        return response
+    return redirect('/')

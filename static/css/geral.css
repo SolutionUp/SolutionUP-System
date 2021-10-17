@@ -112,6 +112,33 @@ a:hover {
     border-color: #fff159;
 }
 
+.btn-pdf {
+    color: #ffffff !important;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    margin: 0 12px;
+    padding: 10px;
+    width: 40px;
+    height: 38.5px;
+}
+
+.btn-pdf:hover {
+    color: #ffffff !important;
+}
+
+.btn-csv {
+    color: #ffffff !important;
+    background-color: #19993f;
+    border-color: #19993f;
+    padding: 10px;
+    width: 40px;
+    height: 38.5px;
+}
+
+.btn-csv:hover {
+    color: #ffffff !important;
+}
+
 .styled-table {
     border-collapse: collapse;
     margin: 25px 0;
