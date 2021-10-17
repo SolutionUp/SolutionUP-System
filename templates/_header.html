@@ -1,60 +1,69 @@
-{% if user.is_authenticated %}
 <nav class="p-3">
     <div class="container">
-        <div class="d-flex">
+        <div class="d-flex mb-3">
             <ul class="nav col-auto me-auto">
                 <a href="/" class="navbar-brand">
                     <li>Gamaware</li>
                 </a>
-                {% if 'produtos.view_produto' in perms %}
-                <a href="/produtos" class="nav-link">
-                    <li>Produtos</li>
+                <a href="/" class="nav-link">
+                    <li>Catálogo</li>
                     <div></div>
                 </a>
-                {% endif %}
-                {% if 'produtos.view_fornecedor' in perms %}
-                <a href="/fornecedores" class="nav-link">
-                    <li>Fornecedores</li>
-                    <div></div>
-                </a>
-                {% endif %}
-                {% if 'vendas.view_clientes' in perms %}
-                <a href="/clientes" class="nav-link">
-                    <li>Clientes</li>
-                    <div></div>
-                </a>
-                {% endif %}
-                {% if 'manutencoes.view_terceiro' in perms %}
-                <a href="/terceiros" class="nav-link">
-                    <li>Terceiros</li>
-                    <div></div>
-                </a>
-                {% endif %}
-                {% if 'vendas.view_funcionario' in perms %}
-                <a href="/funcionarios" class="nav-link">
-                    <li>Funcionários</li>
-                    <div></div>
-                </a>
-                {% endif %}
-                {% if 'vendas.view_pedido' in perms %}
-                <a href="/pedidos" class="nav-link">
-                    <li>Pedidos</li>
-                    <div></div>
-                </a>
-                {% endif %}
-                {% if 'manutencoes.view_manutencao' in perms %}
-                <a href="/manutencoes" class="nav-link">
-                    <li>Manutenções</li>
-                    <div></div>
-                </a>
+                {% if user.is_authenticated %}
+                    {% if 'produtos.view_produto' in perms %}
+                    <a href="/produtos" class="nav-link">
+                        <li>Produtos</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'produtos.view_fornecedor' in perms %}
+                    <a href="/fornecedores" class="nav-link">
+                        <li>Fornecedores</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'vendas.view_clientes' in perms %}
+                    <a href="/clientes" class="nav-link">
+                        <li>Clientes</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'manutencoes.view_terceiro' in perms %}
+                    <a href="/terceiros" class="nav-link">
+                        <li>Terceiros</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'vendas.view_funcionario' in perms %}
+                    <a href="/funcionarios" class="nav-link">
+                        <li>Funcionários</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'vendas.view_pedido' in perms %}
+                    <a href="/pedidos" class="nav-link">
+                        <li>Pedidos</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
+                    {% if 'manutencoes.view_manutencao' in perms %}
+                    <a href="/manutencoes" class="nav-link">
+                        <li>Manutenções</li>
+                        <div></div>
+                    </a>
+                    {% endif %}
                 {% endif %}
             </ul>
             {% if user.is_authenticated %}
                 <a href="/auth/logout" class="logout nav-link"> Sair <i class="bi bi-person-badge"></i>
                     <div></div>
                 </a>
+            {% else %}
+                <a href="/auth/login" class="login nav-link"> Login <i class="bi bi-person-badge"></i>
+                    <div></div>
+                </a>
             {% endif %}
+
         </div>
     </div>
 </nav>
-{% endif %}

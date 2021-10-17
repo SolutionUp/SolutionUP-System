@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+{% if not user.is_authenticated %}
+<section class="py-2 text-center">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Gamaware Solution</h1>
+            <p class="lead text-muted">Fundada em 2019 por dois amigos, a revendedora de equipamentos recondicionados de informática Gamaware Solution, começou com uma pequena carteira de clientes e com poucos recursos, a empresa contava apenas com o “marketing” boca a boca das pessoas que haviam comprado os produtos e com os posts publicados em redes sociais.</p>
+        </div>
+    </div>
+</section>
+{% else %}
+<p class="h2">Produtos</p>
+{% endif %}
+<div class="row">
+    <div class="pesquisa col-4">
+        <form class="input-group" action="{% url 'listagem_catalogo' %}" method="get">
+            <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite o nome ou marca do produto..." />
+            <button class="btn btn-secondary" type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+    {% if object_list %}
+    <section class="section-name padding-y-sm pt-3">
+        <div class="row">
+            {% for produto in object_list %}
+            <div class="col-md-3 pt-3">
+                <div class="card shadow-sm mb-5 bg-white rounded">
+                    <a href="/produtos/{{ produto.codigo }}"> 
+                        {% if produto.imagem %}
+                        <img src="{{ produto.imagem.url }}" class="img-fluid mb-2">
+                        {% else %}
+                        <img src="{% static 'images/not-image.png' %}" class="img-fluid mb-2">
+                        {% endif %}
+                    </a>
+                    <div class="container mb-3">
+                        <div class="mt-1 text-muted">{{ produto.categoria.nome }}</div>
+                        <a href="/produtos/{{ produto.codigo }}" class="fw-bold">{{ produto.nome }}</a>
+                        <div class="mt-1 text-muted">{{ produto.marca }}</div>
+                        <h4 class="mt-1 fw-bold">R${{ produto.valor }}</h4>
+                        <a href="/produtos/{{ produto.codigo }}">
+                            <button class="btn btn-primary btn-confirmar">Ir para loja <i class="bi bi-hand-thumbs-up"></i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}   
+        </div>         
+    </section>
+    {% else %}
+    <p class="text-secondary pt-2">Não há produtos disponíveis.</p> 
+    {% endif %}
+</div>
+{% endblock %}
