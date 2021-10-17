@@ -15,6 +15,16 @@
             <i class="bi bi-plus-lg"></i>
         </a>
         {% endif %}
+        {% if 'produtos.add_produto' in perms and 'produtos.change_produto' in perms and 'produtos.delete_produto' in perms%}
+        <a href="relatorio/pdf" class="btn btn-danger btn-pdf">
+            <i class="bi bi-file-earmark-pdf-fill"></i> 
+        </a>
+        {% endif %}
+        {% if 'produtos.add_produto' in perms and 'produtos.change_produto' in perms and 'produtos.delete_produto' in perms%}
+        <a href="relatorio/csv" class="btn btn-success btn-csv">
+            <i class="bi bi-file-earmark-bar-graph"></i>
+        </a>
+        {% endif %}
     </div>
     {% if object_list %}
     <table class="styled-table">
