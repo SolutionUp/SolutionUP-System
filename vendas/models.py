@@ -23,7 +23,6 @@ class Funcionario(models.Model):
     nome = models.CharField(max_length=30, blank=False, null=False)
     cpf = models.CharField(max_length=11, blank=False, null=False)
     data_nascimento = models.DateField()
-    percentual = models.DecimalField(max_digits=5, decimal_places=2)
     cargo = models.ForeignKey('Cargo', on_delete=models.SET_NULL, blank=False, null=True)
 
     def __str__(self):
@@ -46,4 +45,14 @@ class Pedido(models.Model):
     produtos = models.ForeignKey(Produto, related_name='pedido_produto', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f'{self.id} - {self.cliente}'
+        return f'{self.id} - {self.cliente.nome}'
+
+class ComissaoPedido(models.Model):
+    id = models.AutoField(primary_key=True)
+    percentual_comissao = models.DecimalField(max_digits=5, decimal_places=2)
+    valor_comissao = models.DecimalField(blank=False, null=False, max_digits=7, decimal_places=2)
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=False, blank=False)
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, blank=False, null=False)
+
+    def __str__(self):
+        return f'{self.id} - {self.funcionario.nome}'

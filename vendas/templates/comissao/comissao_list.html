@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% block content %}
+{% if 'vendas.view_comissaopedido' in perms %}
+    <p class="h2">Comissões</p>
+    <div class="row">
+        <div class="pesquisa col-4">
+            <form class="input-group" action="{% url 'listagem_comissoes' %}" method="get">
+                <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um código ou funcionário..." />
+                <button class="btn btn-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        {% if 'vendas.add_comissaopedido' in perms %}
+        <a href="adicionar" class="btn btn-primary btn-adicionar">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
+    </div>
+    {% if object_list %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th scope="row"> Código </th>
+                <th scope="row"> Funcionário </th>
+                <th scope="col"> Pedido </th>
+                <th scope="col"> Valor da comissão </th>
+                <th scope="col"> Percentual </th>
+                {% if 'vendas.change_comissaopedido' in perms or 'vendas.delete_comissaopedido' in perms %}
+                <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for comissao in object_list %}
+            <tr class="active-row">
+                <th scope="row">{{ comissao.id }}</th>
+                <td>{{ comissao.funcionario.nome }}</td>
+                <td>{{ comissao.pedido.cliente.cpf|slice:":3" }}.{{ comissao.pedido.cliente.cpf|slice:"3:6" }}.{{ comissao.pedido.cliente.cpf|slice:"6:9" }}-{{ comissao.pedido.cliente.cpf|slice:"9:11" }}</td>
+                <td>{{ comissao.valor_comissao }}</td>
+                <td>{{ comissao.percentual_comissao }}%</td>
+                {% if 'vendas.change_comissaopedido' in perms or 'vendas.delete_comissaopedido' in perms %}
+                <td class="col-2 text-center">
+                    {% if 'vendas.change_comissaopedido' in perms %}
+                    <a href="alterar/{{ comissao.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                    {% endif %}
+                    {% if 'vendas.delete_comissaopedido' in perms %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ comissao.id }}"><i class="bi bi-trash"></i></a>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            <div class="modal fade" id="modalConfirmaExclusao{{ comissao.id }}" tabindex="-1" role="dialog"
+                aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">Deseja realmente deletar a comissão do funcionário {{ comissao.funcionario.nome }}?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="remover/{{ comissao.id }}"><button type="button" class="btn btn-danger">Deletar</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-secondary pt-2">Não há comissões disponíveis.</p>
+    {% endif %}
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

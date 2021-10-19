@@ -1,7 +1,7 @@
 from django.db.models.fields import DateField
 from django.forms import ModelForm, DateInput, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput
 
-from .models import Clientes, Cargo, Funcionario, Pedido
+from .models import Clientes, Cargo, Funcionario, Pedido, ComissaoPedido
 
 class FormCliente(ModelForm):
     class Meta:
@@ -62,10 +62,6 @@ class FormFuncionario(ModelForm):
                     'class': "form-control",
                     'type': 'date'
                 }),
-            'percentual': NumberInput(attrs={
-                'class': "form-control",
-                'placeholder': 'Percentual'
-            }),
             'usuario': Select(attrs={
                 'class': "form-select",
                 'placeholder': 'Selecione o usuário'
@@ -113,5 +109,30 @@ class FormPedido(ModelForm):
             'produtos': Select(attrs={
                 'class': "form-select",
                 'placeholder': 'Selecione os produtos'
+            })
+        }
+
+class FormComissaoPedido(ModelForm):
+    class Meta:
+        model = ComissaoPedido
+        fields = '__all__'
+        widgets = {
+            'percentual_comissao': NumberInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Percentual'
+            }),
+            'valor_comissao': NumberInput(attrs={
+                'class': "form-control", 
+                'placeholder': 'R$',
+                'step' : 0.01,
+                'min' : 0
+            }),
+            'funcionario': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Selecione o funcionário'
+            }),
+            'pedido': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Selecione o pedido'
             })
         }
