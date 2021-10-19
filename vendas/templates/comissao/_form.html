@@ -1,0 +1,46 @@
+{% load static %}
+{% if 'vendas.add_comissaopedido' in perms and 'vendas.change_comissaopedido' in perms %}
+<form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <p class="h2 mb-4">Cadastro de comissão</p>
+        <div class="form col-4 mb-auto mt-auto">
+            <div>
+                <div class="form-floating mb-3">
+                    {{ form_comissao.funcionario }}
+                    <label for="{{ form_comissao.funcionario.name }}">{{ form_comissao.funcionario.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_comissao.funcionario.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_comissao.pedido }}
+                    <label for="{{ form_comissao.pedido.name }}">{{ form_comissao.pedido.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_comissao.pedido.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_comissao.percentual_comissao }}
+                    <label for="{{ form_comissao.percentual_comissao.name }}">Comissão por venda (%)</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_comissao.percentual_comissao.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_comissao.valor_comissao }}
+                    <label for="{{ form_comissao.valor_comissao.name }}">Valor da comissão (R$)</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_comissao.valor_comissao.errors }}
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div>
+        <input class="btn btn-primary btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-secondary" type="reset" value="Resetar" />
+    </div>    
+</form>
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}
