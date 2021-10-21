@@ -50,6 +50,13 @@
                     <div class="text-danger">
                         {{ form_produto.categoria.errors }}
                     </div>
+                     <div class="form-floating mb-3">
+                        {{ form_produto.custo }}
+                        <label for="{{ form_produto.custo.name }}">{{ form_produto.custo.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.custo.errors }}
+                    </div>
                     <div class="form-floating mb-3">
                         {{ form_produto.valor }}
                         <label for="{{ form_produto.valor.name }}">{{ form_produto.valor.label }}</label>

@@ -16,6 +16,12 @@ class FormProduto(ModelForm):
                 'class': "form-control", 
                 'step' : 1
             }),
+            'custo': NumberInput(attrs={
+                'class': "form-control", 
+                'placeholder': 'R$',
+                'step' : 0.01,
+                'min' : 0
+            }), 
             'valor': NumberInput(attrs={
                 'class': "form-control", 
                 'placeholder': 'R$',

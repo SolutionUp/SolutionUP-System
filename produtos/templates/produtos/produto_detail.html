@@ -22,9 +22,10 @@
                 <p class="text-danger">Nenhum em estoque</p>
             {% endif %}            
             <p class="produto-descricao">{{ object.descricao }}</p>
-
-
+            
+            <p class="h5">Custo: R${{ object.custo }}</p>
             <p class="h3 produto-valor">R${{ object.valor }}</p>
+            
             <a href="{{ object.link }}" type="button" class="btn btn-warning btn-mercado-livre">
                 <img src="{% static 'images/mercado-livre.png' %}" width="94px">
             </a>
