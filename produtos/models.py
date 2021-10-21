@@ -4,7 +4,7 @@ from django.db.models.fields.related import ForeignKey
 
 class Produto(models.Model):
     codigo = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=30, blank=False, null=False)
+    nome = models.CharField(max_length=30, blank=False, null=False, unique=True)
     valor = models.DecimalField(blank=False, null=False, max_digits=7, decimal_places=2)
     descricao = models.TextField(blank=True, null=True)
     marca = models.CharField(max_length=30, blank=False, null=True)
