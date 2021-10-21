@@ -35,6 +35,13 @@
                     <div class="text-danger">
                         {{ form_produto.nome.errors }}
                     </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.quantidade }}
+                        <label for="{{ form_produto.valor.name }}">{{ form_produto.quantidade.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.quantidade.errors }}
+                    </div>
                     <div class="d-flex form-floating mb-3">
                         {{ form_produto.categoria }}
                         <label for="{{ form_produto.categoria.name }}">{{ form_produto.categoria.label }}</label>

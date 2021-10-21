@@ -12,6 +12,10 @@ class FormProduto(ModelForm):
                 'class': "form-control",
                 'placeholder': 'Nome do produto'
             }),
+            'quantidade': NumberInput(attrs={
+                'class': "form-control", 
+                'step' : 1
+            }),
             'valor': NumberInput(attrs={
                 'class': "form-control", 
                 'placeholder': 'R$',

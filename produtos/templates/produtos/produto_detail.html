@@ -16,7 +16,13 @@
         <div class="col-6">
             <p class="h5">{{ object.nome }}</p>
             <p class="text-muted small mb-2">{{ object.categoria.nome }} {% if object.marca %} - {{ object.marca }} {% endif %}</p>
+            {% if object.quantidade != 0 %}
+                <p>Disponíves: {{ object.quantidade }}</p>
+            {% else %}
+                <p class="text-danger">Nenhum em estoque</p>
+            {% endif %}            
             <p class="produto-descricao">{{ object.descricao }}</p>
+
 
             <p class="h3 produto-valor">R${{ object.valor }}</p>
             <a href="{{ object.link }}" type="button" class="btn btn-warning btn-mercado-livre">

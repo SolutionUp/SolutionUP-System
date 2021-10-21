@@ -12,6 +12,7 @@ class Produto(models.Model):
     imagem = models.ImageField(upload_to='images/produtos', blank=True, null=True)
     fornecedor = models.ForeignKey('Fornecedor', on_delete=models.SET_NULL, blank=False, null=True)
     categoria = models.ForeignKey('CategoriaProduto', on_delete=models.SET_NULL, blank=False, null=True)
+    quantidade = models.IntegerField(blank=False, null=True)
 
     def __str__(self):
         return f'{self.codigo} - {self.nome}'
