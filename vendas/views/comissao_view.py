@@ -25,9 +25,14 @@ def adicionar_comissao(request):
     if request.method == 'POST':
         form_comissao = FormComissaoPedido(request.POST)
         if form_comissao.is_valid():
-            form_comissao.save()
-            messages.add_message(request, messages.SUCCESS, 'Comissão cadastrada!', extra_tags='success')
-            return redirect('/comissoes/adicionar')
+            status_pedido = form_comissao.cleaned_data['pedido'].status
+            if status_pedido != 'C' and status_pedido != 'F':
+                form_comissao.save()
+                messages.add_message(request, messages.SUCCESS, 'Comissão cadastrada!', extra_tags='success')
+                return redirect('/comissoes/adicionar')
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, o pedido está inválido!', extra_tags='danger')
+                return render(request, 'comissao/comissao_add.html', {'form_comissao': form_comissao})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'comissao/comissao_add.html', {'form_comissao': form_comissao})
