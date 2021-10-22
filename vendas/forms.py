@@ -1,7 +1,7 @@
-from django.db.models.fields import DateField
+from django.db.models.fields import CharField, DateField
 from django.forms import ModelForm, DateInput, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput
 
-from .models import Clientes, Cargo, Funcionario, Pedido, ComissaoPedido
+from .models import Clientes, Cargo, Funcionario, Pedido, ComissaoPedido, PedidoItem
 
 class FormCliente(ModelForm):
     class Meta:
@@ -79,7 +79,7 @@ class FormPedido(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance.id:
             if (self.initial['status'] == 'F' or self.initial['status'] == 'C'):
-                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente", "produtos"]:
+                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente"]:
                     self.fields[field].widget.attrs['disabled'] = 'disabled'
 
     class Meta:
@@ -135,4 +135,21 @@ class FormComissaoPedido(ModelForm):
                 'class': "form-select",
                 'placeholder': 'Selecione o pedido'
             })
+        }
+
+class FormPedidoItem(ModelForm):
+
+    class Meta:
+        model = PedidoItem
+        fields = ['produto', 'quantidade']
+        widgets = {
+            'produto': Select(attrs={
+                'class': "form-control mb-2",
+                'max-width': '200px', 
+            }),
+            'quantidade': NumberInput(attrs={
+                'class': "form-control mb-2",
+                'step' : 1,
+                'min' : 1
+            }),
         }

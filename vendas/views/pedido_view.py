@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from vendas.forms import FormPedido
-from vendas.models import Pedido
+from vendas.forms import FormPedido, FormPedidoItem
+from vendas.models import Pedido, PedidoItem
 from django.http import Http404
 
 class PedidoListView(LoginRequiredMixin, ListView):
@@ -28,18 +28,16 @@ class PedidoDetailView(LoginRequiredMixin, DetailView):
 
 @login_required
 def adicionar_pedido(request):
+    form_pedido = FormPedido(request.POST or None, request.FILES or None)
     if request.method == 'POST':
-        form_pedido = FormPedido(request.POST, request.FILES)
         if form_pedido.is_valid():
-            form_pedido.save()
-            messages.add_message(request, messages.SUCCESS, 'Pedido cadastrado!', extra_tags='success')
-            return redirect('/pedidos/adicionar')
+            new_pedido = form_pedido.save()
+            messages.add_message(request, messages.SUCCESS, 'Agora insira os itens do pedido!', extra_tags='success')
+            return redirect(f'/pedidos/alterar/{new_pedido.id}')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'pedido/pedido_add.html', {'form': form_pedido})
-    else:
-        form_pedido = FormPedido()
-        return render(request, 'pedido/pedido_add.html', {'form': form_pedido})
+         
+    return render(request, 'pedido/pedido_add.html', {'form_pedido': form_pedido})
 
 @login_required
 def remover_pedido(request, id):
@@ -57,7 +55,10 @@ def remover_pedido(request, id):
 def alterar_pedido(request, id):
     instance = get_object_or_404(Pedido, id=id)
     pedido = Pedido.objects.get(id=id)
+    itens = PedidoItem.objects.filter(pedido=id)
+    total_itens = pedido.get_total_itens()
     form_pedido = FormPedido(request.POST or None, request.FILES or None, instance=instance)
+    form_item = FormPedidoItem(request.POST or None)
     if request.method == 'POST':
         if form_pedido.is_valid():
             old_comprovante = Pedido.objects.get(id=pedido.id).comprovante.name
@@ -70,6 +71,21 @@ def alterar_pedido(request, id):
             return redirect('/pedidos')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-            return render(request, 'pedido/pedido_add.html', {'form': form_pedido})
+            return render(request, 'pedido/pedido_edit.html', {'form': form_pedido})
     else:
-        return render(request, 'pedido/pedido_add.html', {'form': form_pedido})
+        return render(request, 'pedido/pedido_edit.html', {'form_pedido': form_pedido, 'form_item' : form_item, 'pedido': pedido, "itens": itens, "total_itens": total_itens})
+
+
+@login_required
+def alterar_item(request, id_pedido):
+    pedido = Pedido.objects.get(id=id_pedido)
+    form_item = FormPedidoItem(request.POST or None)
+    if request.method == "POST":
+        if form_item.is_valid():
+            new_item = PedidoItem(
+                pedido=pedido,
+                produto=form_item.cleaned_data["produto"],
+                quantidade=form_item.cleaned_data["quantidade"]
+            )
+            new_item.save()
+    return redirect(f'/pedidos/alterar/{id_pedido}')
