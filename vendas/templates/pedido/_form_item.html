@@ -7,6 +7,9 @@
         {% csrf_token %}
         {{form_item.produto.label}}
         {{form_item.produto}}
+        <p>
+            Disponívies: <span id="qtd">0</span>
+        </p>
         {{form_item.quantidade.label}}
         {{form_item.quantidade}} 
         <input class="btn btn-primary btn-confirmar mt-3"  type="submit" value="Adicionar">

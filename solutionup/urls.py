@@ -31,4 +31,6 @@ urlpatterns = [
     path('pedidos/', include('vendas.urls.pedido_url')),
     path('comissoes/', include('vendas.urls.comissao_url')),
     path('auth/', include('users.urls.auth_url')),
+    path('api/', include('api.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
