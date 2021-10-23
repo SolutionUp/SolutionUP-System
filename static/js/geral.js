@@ -70,6 +70,7 @@ elemento.onchange = function (){
     success: function(data) {
         if (data) {
             document.querySelector("span#qtd").innerText = data["qtd"];
+            document.querySelector("#id_quantidade").max = data["qtd"];
         } else {
             document.querySelector("span#qtd").innerText = 0;
         }
