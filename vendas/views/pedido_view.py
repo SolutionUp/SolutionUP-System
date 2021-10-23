@@ -1,3 +1,4 @@
+from django.contrib.messages.api import success
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
@@ -87,5 +88,37 @@ def alterar_item(request, id_pedido):
                 produto=form_item.cleaned_data["produto"],
                 quantidade=form_item.cleaned_data["quantidade"]
             )
-            new_item.save()
+
+            if new_item.quantidade > new_item.produto.quantidade:
+                messages.add_message(request, messages.ERROR, "Quantidade de produtos informada maior que a disponível!", extra_tags="danger")
+            else:
+                new_item.produto.quantidade -= new_item.quantidade
+                new_item.produto.save()
+                
+                item = PedidoItem.objects.filter(pedido=pedido, produto=new_item.produto)
+                if item:
+                    item[0].quantidade += new_item.quantidade
+                    item[0].save() 
+                else:
+                    new_item.produto.save()
+                    new_item.save()
+    
     return redirect(f'/pedidos/alterar/{id_pedido}')
+
+
+@login_required
+def remover_item(request, id_pedido, id_item):
+    if request.method == 'GET':
+        try:
+            item = PedidoItem.objects.get(id=id_item)
+            print(item)
+            messages.add_message(request, messages.SUCCESS, "Item removido!", extra_tags="success")
+        except:
+            messages.add_message(request, messages.ERROR, "Não foi possível remover item do pedido!", extra_tags="danger")
+            return redirect('/pedidos')                                        
+
+        item.produto.quantidade += item.quantidade
+        item.produto.save()
+        item.delete()
+        
+        return redirect(f'/pedidos/alterar/{id_pedido}')

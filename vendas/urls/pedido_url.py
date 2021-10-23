@@ -8,4 +8,5 @@ urlpatterns = [
     path('alterar/<int:id>', alterar_pedido, name='alterar_pedido'),
     path('remover/<int:id>', remover_pedido, name='remover_pedido'),
     path('alterar/<int:id_pedido>/itens', alterar_item, name='alterar_itens'),
+    path('alterar/<int:id_pedido>/itens/<int:id_item>/remover', remover_item, name='remover_itens'),
 ]
