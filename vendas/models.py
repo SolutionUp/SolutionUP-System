@@ -25,6 +25,7 @@ class Funcionario(models.Model):
     nome = models.CharField(max_length=30, blank=False, null=False)
     cpf = models.CharField(max_length=11, blank=False, null=False)
     data_nascimento = models.DateField()
+    percentual_comissao = models.DecimalField(max_digits=5, decimal_places=2, blank=False, null=True)
     cargo = models.ForeignKey('Cargo', on_delete=models.SET_NULL, blank=False, null=True)
 
     def __str__(self):
@@ -44,6 +45,7 @@ class Pedido(models.Model):
     taxa_entrega = models.DecimalField(blank=True , null=True, default=0.00, max_digits=5, decimal_places=2)
     status = models.CharField(max_length=10, choices=STATUS_PEDIDO, blank=False, null=False)   
     cliente = models.ForeignKey(Clientes, related_name='pedido_cliente', null=False, blank=False, on_delete=models.CASCADE)
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=True, blank=False)
 
     def __str__(self):
         return f'{self.id} - {self.cliente.nome}'
@@ -64,10 +66,8 @@ class PedidoItem(models.Model):
     def get_total(self):
         return self.produto.valor * self.quantidade
 
-
 class ComissaoPedido(models.Model):
     id = models.AutoField(primary_key=True)
-    percentual_comissao = models.DecimalField(max_digits=5, decimal_places=2)
     valor_comissao = models.DecimalField(blank=False, null=False, max_digits=7, decimal_places=2)
     funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=False, blank=False)
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, blank=False, null=False)

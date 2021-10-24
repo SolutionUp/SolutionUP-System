@@ -1,5 +1,4 @@
-{% load static %}
-{% if 'vendas.add_pedido' in perms and 'vendas.change_pedido' in perms %}
+{% if 'vendas.add_pedido' in perms and 'vendas.change_pedido' in perms %} {% load static %}
 <form method="post" class="col-10" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     <div class="row container">
@@ -44,6 +43,13 @@
                 </div>
                 <div class="text-danger">
                     {{ form_pedido.cliente.errors }}
+                </div>
+                <div class="form-floating mb-3">
+                    {{ form_pedido.funcionario }}
+                    <label for="{{ form_pedido.funcionario.name }}">{{ form_pedido.funcionario.label }}</label>
+                </div>
+                <div class="text-danger">
+                    {{ form_pedido.funcionario.errors }}
                 </div>
             </div>
         </div>

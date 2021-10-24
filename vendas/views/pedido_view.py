@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from vendas.forms import FormPedido, FormPedidoItem
-from vendas.models import Pedido, PedidoItem
+from vendas.models import Pedido, PedidoItem, Funcionario, ComissaoPedido
 from django.http import Http404
 
 class PedidoListView(LoginRequiredMixin, ListView):
@@ -65,6 +65,16 @@ def alterar_pedido(request, id):
                 form_pedido.save()
             elif form_pedido.cleaned_data['comprovante'] != old_comprovante:
                 pedido.comprovante.storage.delete(pedido.comprovante.name)
+            funcionario = form_pedido.cleaned_data['funcionario']
+            comissao = Funcionario.objects.get(id=funcionario.id).percentual_comissao
+            valor_comissao = (comissao / 100) * total_itens
+            if ComissaoPedido.objects.filter(pedido=pedido.id).exists():
+                comissao_pedido = ComissaoPedido.objects.get(pedido=pedido.id)
+                comissao_pedido.valor_comissao = valor_comissao
+                comissao_pedido.save()
+            else:
+                comissao_pedido = ComissaoPedido.objects.create(pedido=pedido, funcionario=funcionario, valor_comissao=valor_comissao)
+            
             form_pedido.save()
             messages.add_message(request, messages.SUCCESS, 'Pedido alterado!', extra_tags='success')
             return redirect(f'/pedidos/alterar/{pedido.id}')
@@ -72,21 +82,21 @@ def alterar_pedido(request, id):
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'pedido/pedido_edit.html', {'form': form_pedido})
     else:
-        return render(request, 'pedido/pedido_edit.html', {'form_pedido': form_pedido, 'form_item' : form_item, 'pedido': pedido, "itens": itens, "total_itens": total_itens})
+        return render(request, 'pedido/pedido_edit.html', {'form_pedido': form_pedido, 'form_item' : form_item, 'pedido': pedido, 'itens': itens, 'total_itens': total_itens})
 
 @login_required
 def alterar_item(request, id_pedido):
     pedido = Pedido.objects.get(id=id_pedido)
     form_item = FormPedidoItem(request.POST or None)
-    if request.method == "POST":
+    if request.method == 'POST':
         if form_item.is_valid():
             new_item = PedidoItem(
                 pedido=pedido,
-                produto=form_item.cleaned_data["produto"],
-                quantidade=form_item.cleaned_data["quantidade"]
+                produto=form_item.cleaned_data['produto'],
+                quantidade=form_item.cleaned_data['quantidade']
             )
             if new_item.quantidade > new_item.produto.quantidade:
-                messages.add_message(request, messages.ERROR, "Quantidade de produtos informada maior que a disponível!", extra_tags="danger")
+                messages.add_message(request, messages.ERROR, 'Quantidade de produtos informada maior que a disponível!', extra_tags='danger')
             else:
                 new_item.produto.quantidade -= new_item.quantidade
                 new_item.produto.save()
@@ -106,11 +116,11 @@ def remover_item(request, id_pedido, id_item):
         try:
             item = PedidoItem.objects.get(id=id_item)
             print(item)
-            messages.add_message(request, messages.SUCCESS, "Item removido!", extra_tags="success")
+            messages.add_message(request, messages.SUCCESS, 'Item removido!', extra_tags='success')
         except:
-            messages.add_message(request, messages.ERROR, "Não foi possível remover item do pedido!", extra_tags="danger")
+            messages.add_message(request, messages.ERROR, 'Não foi possível remover item do pedido!', extra_tags='danger')
             return redirect('/pedidos')                                    
         item.produto.quantidade += item.quantidade
         item.produto.save()
-        item.delete()        
+        item.delete()     
         return redirect(f'/pedidos/alterar/{id_pedido}')

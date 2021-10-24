@@ -61,7 +61,12 @@ class FormFuncionario(ModelForm):
                 attrs={
                     'class': "form-control",
                     'type': 'date'
-                }),
+                }
+            ),
+            'percentual_comissao': NumberInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Percentual'
+            }),
             'usuario': Select(attrs={
                 'class': "form-select",
                 'placeholder': 'Selecione o usuário'
@@ -106,9 +111,9 @@ class FormPedido(ModelForm):
                 'class': "form-select",
                 'placeholder': 'Selecione o cliente'
             }),
-            'produtos': Select(attrs={
+            'funcionario': Select(attrs={
                 'class': "form-select",
-                'placeholder': 'Selecione os produtos'
+                'placeholder': 'Selecione o funcionário'
             })
         }
 
@@ -117,10 +122,6 @@ class FormComissaoPedido(ModelForm):
         model = ComissaoPedido
         fields = '__all__'
         widgets = {
-            'percentual_comissao': NumberInput(attrs={
-                'class': "form-control",
-                'placeholder': 'Percentual'
-            }),
             'valor_comissao': NumberInput(attrs={
                 'class': "form-control", 
                 'placeholder': 'R$',
@@ -138,7 +139,6 @@ class FormComissaoPedido(ModelForm):
         }
 
 class FormPedidoItem(ModelForm):
-
     class Meta:
         model = PedidoItem
         fields = ['produto', 'quantidade']
@@ -151,5 +151,5 @@ class FormPedidoItem(ModelForm):
                 'class': "form-control mb-2",
                 'step' : 1,
                 'min' : 1
-            }),
+            })
         }

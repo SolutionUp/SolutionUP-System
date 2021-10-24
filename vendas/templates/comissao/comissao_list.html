@@ -24,7 +24,6 @@
                 <th scope="row"> Funcionário </th>
                 <th scope="col"> Pedido </th>
                 <th scope="col"> Valor da comissão </th>
-                <th scope="col"> Percentual </th>
                 {% if 'vendas.change_comissaopedido' in perms or 'vendas.delete_comissaopedido' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
                 {% endif %}
@@ -36,8 +35,7 @@
                 <th scope="row">{{ comissao.id }}</th>
                 <td>{{ comissao.funcionario.nome }}</td>
                 <td>{{ comissao.pedido.cliente.cpf|slice:":3" }}.{{ comissao.pedido.cliente.cpf|slice:"3:6" }}.{{ comissao.pedido.cliente.cpf|slice:"6:9" }}-{{ comissao.pedido.cliente.cpf|slice:"9:11" }}</td>
-                <td>{{ comissao.valor_comissao }}</td>
-                <td>{{ comissao.percentual_comissao }}%</td>
+                <td>R${{ comissao.valor_comissao }}</td>
                 {% if 'vendas.change_comissaopedido' in perms or 'vendas.delete_comissaopedido' in perms %}
                 <td class="col-2 text-center">
                     {% if 'vendas.change_comissaopedido' in perms %}
