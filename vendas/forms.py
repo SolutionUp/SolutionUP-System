@@ -84,7 +84,7 @@ class FormPedido(ModelForm):
         instance = getattr(self, 'instance', None)
         if instance.id:
             if (self.initial['status'] == 'F' or self.initial['status'] == 'C'):
-                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente"]:
+                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente", "funcionario"]:
                     self.fields[field].widget.attrs['disabled'] = 'disabled'
 
     class Meta:
