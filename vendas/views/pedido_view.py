@@ -21,7 +21,6 @@ class PedidoListView(LoginRequiredMixin, ListView):
             Q(status__icontains=query)
         )
         return object_list
-        
 
 class PedidoDetailView(LoginRequiredMixin, DetailView):
     model = Pedido
@@ -36,8 +35,7 @@ def adicionar_pedido(request):
             messages.add_message(request, messages.SUCCESS, 'Agora insira os itens do pedido!', extra_tags='success')
             return redirect(f'/pedidos/alterar/{new_pedido.id}')
         else:
-            messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
-         
+            messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')       
     return render(request, 'pedido/pedido_add.html', {'form_pedido': form_pedido})
 
 @login_required
@@ -69,13 +67,12 @@ def alterar_pedido(request, id):
                 pedido.comprovante.storage.delete(pedido.comprovante.name)
             form_pedido.save()
             messages.add_message(request, messages.SUCCESS, 'Pedido alterado!', extra_tags='success')
-            return redirect('/pedidos')
+            return redirect(f'/pedidos/alterar/{pedido.id}')
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'pedido/pedido_edit.html', {'form': form_pedido})
     else:
         return render(request, 'pedido/pedido_edit.html', {'form_pedido': form_pedido, 'form_item' : form_item, 'pedido': pedido, "itens": itens, "total_itens": total_itens})
-
 
 @login_required
 def alterar_item(request, id_pedido):
@@ -88,7 +85,6 @@ def alterar_item(request, id_pedido):
                 produto=form_item.cleaned_data["produto"],
                 quantidade=form_item.cleaned_data["quantidade"]
             )
-
             if new_item.quantidade > new_item.produto.quantidade:
                 messages.add_message(request, messages.ERROR, "Quantidade de produtos informada maior que a disponível!", extra_tags="danger")
             else:
@@ -101,10 +97,8 @@ def alterar_item(request, id_pedido):
                     item[0].save() 
                 else:
                     new_item.produto.save()
-                    new_item.save()
-    
+                    new_item.save()    
     return redirect(f'/pedidos/alterar/{id_pedido}')
-
 
 @login_required
 def remover_item(request, id_pedido, id_item):
@@ -115,10 +109,8 @@ def remover_item(request, id_pedido, id_item):
             messages.add_message(request, messages.SUCCESS, "Item removido!", extra_tags="success")
         except:
             messages.add_message(request, messages.ERROR, "Não foi possível remover item do pedido!", extra_tags="danger")
-            return redirect('/pedidos')                                        
-
+            return redirect('/pedidos')                                    
         item.produto.quantidade += item.quantidade
         item.produto.save()
-        item.delete()
-        
+        item.delete()        
         return redirect(f'/pedidos/alterar/{id_pedido}')
