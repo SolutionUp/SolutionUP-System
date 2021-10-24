@@ -96,18 +96,21 @@ def gerar_relatorio_pdf(request):
         buffer = io.BytesIO()
         arquivo = canvas.Canvas(buffer)
         arquivo.setTitle('Gamaware Solution')
-        arquivo.drawString(212, 800, f'{datetime.now().strftime("Gerado em %d/%m/%Y às %H:%M")}')
+        arquivo.drawString(210, 800, f'{datetime.now().strftime("Gerado em %d/%m/%Y às %H:%M")}')
         arquivo.drawString(225, 780, f'Quantidade de produtos: {Produto.objects.all().count()}')
-        arquivo.drawString(255, 760, f'Usuário: {request.user.username}')
+        arquivo.drawString(250, 760, f'Usuário: {request.user.username}')
         margem, linha, ultima_linha, valor_linha, linha_topo = 70, 720, 60, 20, 780
         for produto in Produto.objects.all():
             produto = [
                 f'Código: {produto.codigo}',
                 f'Produto: {produto.nome}',
-                f'Categoria: {produto.categoria.nome}',
                 f'Marca: {produto.marca}',
+                f'Categoria: {produto.categoria.nome}',
                 f'Fornecedor: {produto.fornecedor.nome}',
-                f'Valor de venda: R${produto.valor}'
+                f'Valor de custo: R${produto.custo}',
+                f'Valor de venda: R${produto.valor}',
+                f'Quantidade: {produto.quantidade}',
+                f'Link: {produto.link}'
             ]
             for dado in produto:
                 arquivo.drawString(margem, linha, dado)
@@ -130,15 +133,18 @@ def gerar_relatorio_csv(request):
             headers={'Content-Disposition': f'attachment; filename="relatorio_produtos_{datetime.now().strftime("%d/%m/%Y")}.csv"'},
         )
         arquivo = csv.writer(response, delimiter=';')
-        arquivo.writerow(['Codigo', 'Produto', 'Valor', 'Categoria', 'Marca', 'Fornecedor'])
+        arquivo.writerow(['Codigo', 'Produto', 'Quantidade', 'Marca', 'Categoria','Fornecedor', 'Valor de custo', 'Valor de venda', 'Link'])
         for produto in Produto.objects.all():
             arquivo.writerow([
                 f'{produto.codigo}',
                 f'{produto.nome}',
-                f'{produto.valor}',
-                f'{produto.categoria.nome}',
+                f'{produto.quantidade}',
                 f'{produto.marca}',
-                f'{produto.fornecedor.nome}'
+                f'{produto.categoria.nome}',
+                f'{produto.fornecedor.nome}',
+                f'{produto.custo}',                
+                f'{produto.valor}',
+                f'{produto.link}'
             ])
         return response
     return redirect('/')

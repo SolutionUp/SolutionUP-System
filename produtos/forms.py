@@ -13,7 +13,8 @@ class FormProduto(ModelForm):
                 'placeholder': 'Nome do produto'
             }),
             'quantidade': NumberInput(attrs={
-                'class': "form-control", 
+                'class': "form-control",
+                'placeholder': 'Quantidade',
                 'step' : 1
             }),
             'custo': NumberInput(attrs={
