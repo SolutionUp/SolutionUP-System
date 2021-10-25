@@ -47,7 +47,7 @@
             {% for pedido in object_list %}
             <tr class="active-row">
                 <th scope="row">{{ pedido.id }}</th>
-                <td>{% if cliente.cpf is not None %}{{ cliente.cpf|slice:":3" }}.{{ cliente.cpf|slice:"3:6" }}.{{ cliente.cpf|slice:"6:9" }}-{{ cliente.cpf|slice:"9:11" }}{% else %}---{% endif %}</td>
+                <td>{% if pedido.cliente.cpf is not None %}{{ pedido.cliente.cpf|slice:":3" }}.{{ pedido.cliente.cpf|slice:"3:6" }}.{{ pedido.cliente.cpf|slice:"6:9" }}-{{ pedido.cliente.cpf|slice:"9:11" }}{% else %}---{% endif %}</td>
                 <td>{{ pedido.data_cadastro }}</td>
                 <td>{{ pedido.get_status_display }}</td>
                 {% if 'vendas.view_pedido' in perms or 'vendas.change_pedido' in perms or 'vendas.delete_pedido' in perms %}
