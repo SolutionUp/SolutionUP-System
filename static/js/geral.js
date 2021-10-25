@@ -60,6 +60,11 @@ $(".toggle-control").click(function(){
 	$("#form_toggle").toggleClass('d-none d-flex');
 });
 
+// Exibe o filtro do relatório de pedidos
+$(".filtro-control").click(function(){
+	$("#form_filtro").toggleClass('d-none');
+    $(".btn-csv-pedido").toggleClass('d-none');
+});
 
 elemento = document.querySelector("select[name=produto]")
 elemento.onchange = function (){ 

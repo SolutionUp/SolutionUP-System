@@ -35,8 +35,7 @@ class Pedido(models.Model):
     STATUS_PEDIDO = (
         ("E", "Enviado"),
         ("R", "Realizado"),
-        ("F", "Finalizado"),
-        ("C", "Cancelado")
+        ("F", "Finalizado")
     )
     id = models.AutoField(primary_key=True)
     data_cadastro = models.DateTimeField(auto_now_add=True)
@@ -56,6 +55,9 @@ class Pedido(models.Model):
 
     def get_total(self):
         return float(self.get_total_itens() or 0) + float(self.taxa_entrega or 0)
+
+    def get_valor_comissao(self):
+        return float(self.funcionario.percentual_comissao or 0) / 100 * float(self.get_total_itens() or 0)
 
 class PedidoItem(models.Model):
     id = models.AutoField(primary_key=True)

@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} 
 {% if 'vendas.view_pedido' in perms %}
     <p class="h2">Pedidos</p>
     <div class="row">
@@ -13,6 +13,20 @@
         {% if 'vendas.add_pedido' in perms %}
         <a href="adicionar" class="btn btn-primary btn-adicionar">
             <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
+        {% if 'vendas.add_pedido' in perms and 'vendas.change_pedido' in perms and 'vendas.delete_pedido' in perms%}
+        <form id="form_filtro" action="/pedidos/filtro/adicionar" method="post" class="col-2 d-none p-0 filtro-pedido">
+        {% csrf_token %}
+        <div class="d-flex">
+            <input type="date" min="2000-01-01" max="2079-12-01" class="form-control col-2 me-2" name="data_inicio" id="data_inicio" required>
+            <input type="date" min="2000-01-01" max="2079-12-01" class="form-control col-2 me-2" name="data_final" id="data_final" required>   
+            <button class="btn btn-primary btn-confirmar me-2" type="submit">Gerar</button>
+            <button class="btn btn-secondary filtro-control me-2" type="button">Cancelar</button>
+        </div>
+        </form>
+        <a class="btn btn-success btn-csv-pedido filtro-control">
+            <i class="bi bi-file-earmark-bar-graph"></i>
         </a>
         {% endif %}
     </div>

@@ -1,3 +1,6 @@
+import csv
+from datetime import datetime
+from django.http import FileResponse, HttpResponse
 from django.contrib.messages.api import success
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
@@ -42,6 +45,10 @@ def adicionar_pedido(request):
 def remover_pedido(request, id):
     if request.method == 'GET':
         pedido = Pedido.objects.get(id=id)
+        itens = PedidoItem.objects.filter(pedido=id)
+        for item in itens:
+            item.produto.quantidade += item.quantidade
+            item.produto.save()
         comprovante = Pedido.objects.get(id=pedido.id).comprovante.name
         if comprovante:
             pedido.comprovante.storage.delete(pedido.comprovante.name)
@@ -115,7 +122,6 @@ def remover_item(request, id_pedido, id_item):
     if request.method == 'GET':
         try:
             item = PedidoItem.objects.get(id=id_item)
-            print(item)
             messages.add_message(request, messages.SUCCESS, 'Item removido!', extra_tags='success')
         except:
             messages.add_message(request, messages.ERROR, 'Não foi possível remover item do pedido!', extra_tags='danger')
@@ -124,3 +130,26 @@ def remover_item(request, id_pedido, id_item):
         item.produto.save()
         item.delete()     
         return redirect(f'/pedidos/alterar/{id_pedido}')
+
+@login_required
+def adicionar_filtro(request):
+    if request.user.has_perm('vendas.view_pedido'):
+        data_inicial = datetime.strptime(request.POST.get('data_inicio'), '%Y-%m-%d')
+        data_final = datetime.strptime(request.POST.get('data_final') + ' 23:59:59', '%Y-%m-%d %H:%M:%S')
+        if request.method == 'POST':
+            pedidos = Pedido.objects.filter(data_cadastro__gte=data_inicial, data_cadastro__lte=data_final)
+            if pedidos:
+                response = HttpResponse(                
+                    content_type='text/csv',
+                    headers={'Content-Disposition': f'attachment; filename="relatorio_pedidos_{datetime.now().strftime("%d/%m/%Y")}.csv"'},
+                )
+                writer = csv.writer(response, delimiter=';')
+                writer.writerow(['Pedido', 'Data de Cadastro', 'Funcionario', 'Comissao', 'Valor Total'])
+                for pedido in pedidos:
+                    writer.writerow([pedido.id, pedido.data_cadastro.strftime('%d/%m/%Y'), pedido.funcionario.nome, pedido.get_valor_comissao(), pedido.get_total_itens()])
+                    messages.add_message(request, messages.SUCCESS, 'Relátorio gerado com sucesso!', extra_tags='success')
+                return response
+            else:
+                messages.add_message(request, messages.ERROR, 'Nenhum pedido encontrado neste período!', extra_tags='danger')
+        return redirect('/pedidos')
+    return redirect('/')

@@ -9,4 +9,5 @@ urlpatterns = [
     path('remover/<int:id>', remover_pedido, name='remover_pedido'),
     path('alterar/<int:id_pedido>/itens', alterar_item, name='alterar_itens'),
     path('alterar/<int:id_pedido>/itens/<int:id_item>/remover', remover_item, name='remover_itens'),
+    path('filtro/adicionar', adicionar_filtro, name='adicionar_filtro'),
 ]

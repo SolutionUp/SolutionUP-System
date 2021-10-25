@@ -30,7 +30,9 @@
                     <td>R${{ item.produto.valor }}</td>
                     <td>{{ item.quantidade }}</td>
                     <td>R${{ item.get_total|floatformat:2}}</td>
+                    {% if pedido.status != "F" %}
                     <td><a class="btn btn-light" href="/pedidos/alterar/{{ pedido.id }}/itens/{{ item.id }}/remover"><i class="bi bi-trash"></i></a></td>
+                    {% endif %}
                 </tr>
                 {% empty %}
                 <tr>
