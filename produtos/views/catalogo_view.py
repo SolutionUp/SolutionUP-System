@@ -12,7 +12,6 @@ class CatalogoListView(ListView):
         object_list = self.model.objects.filter(
             Q(nome__icontains=query) |
             Q(marca__icontains=query) | 
-            Q(valor__icontains=query) | 
             Q(categoria__nome__icontains=query)
         )
         return object_list

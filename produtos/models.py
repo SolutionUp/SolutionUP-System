@@ -6,12 +6,14 @@ class Produto(models.Model):
     codigo = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=30, blank=False, null=False, unique=True)
     valor = models.DecimalField(blank=False, null=False, max_digits=7, decimal_places=2)
+    custo = models.DecimalField(blank=False, null=True, max_digits=7, decimal_places=2)
     descricao = models.TextField(blank=True, null=True)
     marca = models.CharField(max_length=30, blank=False, null=True)
     link = models.TextField(blank=True, null=True)
     imagem = models.ImageField(upload_to='images/produtos', blank=True, null=True)
     fornecedor = models.ForeignKey('Fornecedor', on_delete=models.SET_NULL, blank=False, null=True)
     categoria = models.ForeignKey('CategoriaProduto', on_delete=models.SET_NULL, blank=False, null=True)
+    quantidade = models.IntegerField(blank=False, null=True)
 
     def __str__(self):
         return f'{self.codigo} - {self.nome}'

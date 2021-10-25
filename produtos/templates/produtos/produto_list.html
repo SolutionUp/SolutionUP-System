@@ -32,8 +32,10 @@
             <tr>
                 <th scope="row"> Código </th>
                 <th scope="col"> Produto </th>
-                <th scope="col"> Valor </th>
                 <th scope="col"> Marca </th>
+                <th scope="col"> Valor de Custo </th>
+                <th scope="col"> Valor de Venda </th>
+                <th scope="col"> Quantidade </th>
                 {% if 'produtos.view_produto' in perms or 'produtos.change_produto' in perms or 'produtos.delete_produto' in perms %}
                 <th class="text-center" scope="col"> Opções </th>
                 {% endif %}
@@ -43,11 +45,11 @@
             {% for produto in object_list %}
             <tr class="active-row">
                 <th scope="row">{{ produto.codigo }}</th>
-                <td>
-                    <a href="{{ produto.codigo }}">{{ produto.nome }}</a>
-                </td>
-                <td>R${{ produto.valor }}</td>
+                <td><a href="{{ produto.codigo }}">{{ produto.nome }}</a></td>
                 <td>{{ produto.marca }}</td>
+                <td>R${{ produto.custo }}</td>
+                <td>R${{ produto.valor }}</td>
+                <td>{% if produto.quantidade != 0 %}{{ produto.quantidade }}{% else %}---{% endif %}</td>
                 {% if 'produtos.view_produto' in perms or 'produtos.change_produto' in perms or 'produtos.delete_produto' in perms %}
                 <td class="col-2 text-center">
                     {% if 'produtos.view_produto' in perms %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} 
 {% if 'vendas.view_pedido' in perms %}
     <p class="h2">Pedidos</p>
     <div class="row">
@@ -13,6 +13,20 @@
         {% if 'vendas.add_pedido' in perms %}
         <a href="adicionar" class="btn btn-primary btn-adicionar">
             <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
+        {% if 'vendas.add_pedido' in perms and 'vendas.change_pedido' in perms and 'vendas.delete_pedido' in perms%}
+        <form id="form_filtro" action="/pedidos/filtro/adicionar" method="post" class="col-2 d-none p-0 filtro-pedido">
+        {% csrf_token %}
+        <div class="d-flex">
+            <input type="date" min="2000-01-01" max="2079-12-01" class="form-control col-2 me-2" name="data_inicio" id="data_inicio" required>
+            <input type="date" min="2000-01-01" max="2079-12-01" class="form-control col-2 me-2" name="data_final" id="data_final" required>   
+            <button class="btn btn-primary btn-confirmar me-2" type="submit">Gerar</button>
+            <button class="btn btn-secondary filtro-control me-2" type="button">Cancelar</button>
+        </div>
+        </form>
+        <a class="btn btn-success btn-csv-pedido filtro-control">
+            <i class="bi bi-file-earmark-bar-graph"></i>
         </a>
         {% endif %}
     </div>
@@ -33,7 +47,7 @@
             {% for pedido in object_list %}
             <tr class="active-row">
                 <th scope="row">{{ pedido.id }}</th>
-                <td>{{ pedido.cliente.cpf|slice:":3" }}.{{ pedido.cliente.cpf|slice:"3:6" }}.{{ pedido.cliente.cpf|slice:"6:9" }}-{{ pedido.cliente.cpf|slice:"9:11" }}</td>
+                <td>{% if cliente.cpf is not None %}{{ cliente.cpf|slice:":3" }}.{{ cliente.cpf|slice:"3:6" }}.{{ cliente.cpf|slice:"6:9" }}-{{ cliente.cpf|slice:"9:11" }}{% else %}---{% endif %}</td>
                 <td>{{ pedido.data_cadastro }}</td>
                 <td>{{ pedido.get_status_display }}</td>
                 {% if 'vendas.view_pedido' in perms or 'vendas.change_pedido' in perms or 'vendas.delete_pedido' in perms %}
@@ -67,7 +81,7 @@
         </tbody>
     </table>
     {% else %}
-    <p class="text-secondary pt-2">Não há pedidos disponíveis.</p>
+    <p class="text-secondary pt-2">Pedido não localizado.</p>
     {% endif %}
 {% else %}
 <p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

@@ -1,7 +1,7 @@
-from django.db.models.fields import DateField
+from django.db.models.fields import CharField, DateField
 from django.forms import ModelForm, DateInput, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput
 
-from .models import Clientes, Cargo, Funcionario, Pedido, ComissaoPedido
+from .models import Clientes, Cargo, Funcionario, Pedido, ComissaoPedido, PedidoItem
 
 class FormCliente(ModelForm):
     class Meta:
@@ -61,7 +61,12 @@ class FormFuncionario(ModelForm):
                 attrs={
                     'class': "form-control",
                     'type': 'date'
-                }),
+                }
+            ),
+            'percentual_comissao': NumberInput(attrs={
+                'class': "form-control",
+                'placeholder': 'Percentual'
+            }),
             'usuario': Select(attrs={
                 'class': "form-select",
                 'placeholder': 'Selecione o usuário'
@@ -78,8 +83,8 @@ class FormPedido(ModelForm):
 
         instance = getattr(self, 'instance', None)
         if instance.id:
-            if (self.initial['status'] == 'F' or self.initial['status'] == 'C'):
-                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente", "produtos"]:
+            if (self.initial['status'] == 'F'):
+                for field in ["rastreio", "comprovante", "taxa_entrega", "status", "cliente", "funcionario"]:
                     self.fields[field].widget.attrs['disabled'] = 'disabled'
 
     class Meta:
@@ -106,9 +111,9 @@ class FormPedido(ModelForm):
                 'class': "form-select",
                 'placeholder': 'Selecione o cliente'
             }),
-            'produtos': Select(attrs={
+            'funcionario': Select(attrs={
                 'class': "form-select",
-                'placeholder': 'Selecione os produtos'
+                'placeholder': 'Selecione o funcionário'
             })
         }
 
@@ -117,10 +122,6 @@ class FormComissaoPedido(ModelForm):
         model = ComissaoPedido
         fields = '__all__'
         widgets = {
-            'percentual_comissao': NumberInput(attrs={
-                'class': "form-control",
-                'placeholder': 'Percentual'
-            }),
             'valor_comissao': NumberInput(attrs={
                 'class': "form-control", 
                 'placeholder': 'R$',
@@ -134,5 +135,21 @@ class FormComissaoPedido(ModelForm):
             'pedido': Select(attrs={
                 'class': "form-select",
                 'placeholder': 'Selecione o pedido'
+            })
+        }
+
+class FormPedidoItem(ModelForm):
+    class Meta:
+        model = PedidoItem
+        fields = ['produto', 'quantidade']
+        widgets = {
+            'produto': Select(attrs={
+                'class': "form-control mb-2",
+                'max-width': '200px', 
+            }),
+            'quantidade': NumberInput(attrs={
+                'class': "form-control mb-2",
+                'step' : 1,
+                'min' : 1
             })
         }

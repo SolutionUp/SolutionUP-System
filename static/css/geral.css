@@ -135,8 +135,26 @@ a:hover {
     height: 38.5px;
 }
 
+.btn-csv-pedido {
+    color: #ffffff !important;
+    background-color: #19993f;
+    border-color: #19993f;
+    margin: 0 12px;
+    padding: 10px;
+    width: 40px;
+    height: 38.5px;
+}
+
 .btn-csv:hover {
     color: #ffffff !important;
+}
+
+.btn-csv-pedido:hover {
+    color: #ffffff !important;
+}
+
+.filtro-pedido {
+    margin: 0 12px;
 }
 
 .styled-table {

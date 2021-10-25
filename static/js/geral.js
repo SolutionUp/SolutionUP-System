@@ -59,3 +59,34 @@ function resetar_comprovante(){
 $(".toggle-control").click(function(){
 	$("#form_toggle").toggleClass('d-none d-flex');
 });
+
+// Exibe o filtro do relatório de pedidos
+$(".filtro-control").click(function(){
+	$("#form_filtro").toggleClass('d-none');
+    $(".btn-csv-pedido").toggleClass('d-none');
+});
+
+elemento = document.querySelector("select[name=produto]")
+elemento.onchange = function (){ 
+    codigo = elemento.value ? elemento.value : 0
+    $.get({
+        type: "GET",
+        url: "/api/produto/" + codigo, 
+    success: function(data) {
+        if (data) {
+            document.querySelector("span#qtd").innerText = data["qtd"];
+            document.querySelector("#id_quantidade").max = data["qtd"];
+        } else {
+            document.querySelector("span#qtd").innerText = 0;
+        }
+    },
+    error:function(e){
+        alert("something wrong"+ e) // this will alert an error
+        }
+    });
+}
+
+function getProduto(){
+    alert("Evento acionado!")
+    //$.post("/api/get_produto", {"produto": 1} ,alert("request ajax aqui"));
+}

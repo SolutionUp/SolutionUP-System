@@ -1,5 +1,4 @@
-{% load static %}
-{% if 'produtos.add_produto' in perms and 'produtos.change_produto' in perms %}
+{% if 'produtos.add_produto' in perms and 'produtos.change_produto' in perms %} {% load static %}
     <div class="row container">
     <form id="form_toggle" action="/produtos/categoria/adicionar" method="post" class="d-none p-0" novalidate>
         {% csrf_token %}
@@ -35,6 +34,13 @@
                     <div class="text-danger">
                         {{ form_produto.nome.errors }}
                     </div>
+                    <div class="form-floating mb-3">
+                        {{ form_produto.quantidade }}
+                        <label for="{{ form_produto.quantidade.name }}">{{ form_produto.quantidade.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.quantidade.errors }}
+                    </div>
                     <div class="d-flex form-floating mb-3">
                         {{ form_produto.categoria }}
                         <label for="{{ form_produto.categoria.name }}">{{ form_produto.categoria.label }}</label>
@@ -42,6 +48,13 @@
                     </div>
                     <div class="text-danger">
                         {{ form_produto.categoria.errors }}
+                    </div>
+                     <div class="form-floating mb-3">
+                        {{ form_produto.custo }}
+                        <label for="{{ form_produto.custo.name }}">{{ form_produto.custo.label }}</label>
+                    </div>
+                    <div class="text-danger">
+                        {{ form_produto.custo.errors }}
                     </div>
                     <div class="form-floating mb-3">
                         {{ form_produto.valor }}
@@ -77,7 +90,7 @@
         <div class="row container">
             {{ form_produto.descricao }}
         </div>
-        <div class="container">
+        <div class="container mb-3">
             <input class="btn btn-primary btn-confirmar" type="submit" value="Confirmar">
             <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
         </div>

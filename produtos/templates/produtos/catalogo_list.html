@@ -24,6 +24,7 @@
     <section class="section-name padding-y-sm pt-3">
         <div class="row">
             {% for produto in object_list %}
+            {% if produto.quantidade > 0 %}
             <div class="col-md-3 pt-3 mb-3">
                 <div class="card shadow-sm bg-white rounded">
                     <a href="/produtos/{{ produto.codigo }}"> 
@@ -44,11 +45,12 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endfor %}   
         </div>         
     </section>
     {% else %}
-    <p class="text-secondary pt-2">Não há produtos disponíveis.</p> 
+    <p class="text-secondary pt-2">Produto não localizado.</p> 
     {% endif %}
 </div>
 {% endblock %}
