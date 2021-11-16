@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+{% if 'manutencoes.view_chamado' in perms %}
+<div class="row">
+    <p class="h2 mb-3">Informações do Chamado</p>
+    <div class="form col-4 mb-auto mt-auto">
+        <div>
+            <div class="form-floating mb-2">Pedido: {{ object.pedido.id }}</div>
+            <div class="form-floating mb-2">Status: {{ object.get_status_display }}</div>
+            <div class="form-floating mb-2">Data de abertura: {{ object.data_abertura }}</div>
+            <div class="form-floating mb-2">Data de conclusão: {{ object.data_fim }}</div>
+            <div class="form-floating mb-2">Funcionário: {{ object.responsavel.nome }}</div>
+            <div class="form-floating mb-2">Tipo do chamado: {{ object.get_tipo_display  }}</div>
+            <div class="form-floating mb-2">Descrição do problema: <p class="lh-base pt-1">{{ object.mensagem }}</p></div>
+        </div>
+        <a href="/chamados" type="button" class="btn btn-secondary btn-voltar">Voltar</a>
+    </div>
+</div>
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

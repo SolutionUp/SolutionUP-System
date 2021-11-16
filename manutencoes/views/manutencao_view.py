@@ -31,7 +31,7 @@ def adicionar_manutencao(request):
         if form_manutencao.is_valid():
             if form_manutencao.data_conclusao_valid():
                 form_manutencao.save()
-                messages.add_message(request, messages.SUCCESS, 'Manutenção alterada!', extra_tags='success')
+                messages.add_message(request, messages.SUCCESS, 'Manutenção cadastrada!', extra_tags='success')
                 return redirect('/manutencoes')
             else:
                 messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')

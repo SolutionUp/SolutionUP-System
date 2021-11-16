@@ -1,6 +1,9 @@
 from django.db import models
+from datetime import datetime
 from produtos.models import Contato, Externo, Produto
 from vendas.models import Funcionario
+from vendas.models import Pedido
+from vendas.models import Clientes
 
 class Terceiro(Contato, Externo):
     id = models.AutoField(primary_key=True)
@@ -19,3 +22,25 @@ class Manutencao(models.Model):
 
     def __str__(self):
         return f'{self.id} - {self.produto}'
+
+class Chamado(models.Model):
+    STATUS_CHAMADO = (
+        ('C', 'Cancelado'),
+        ('E', 'Em andamento'),
+        ('F', 'Finalizado'),
+        ('R', 'Recebido')
+    )
+    TIPO_CHAMADO = (
+        ('C', 'Contato'),
+        ('D', 'Devolução'),
+        ('S', 'Suporte'),
+        ('O', 'Outros'),
+    )
+    id = models.AutoField(primary_key=True)
+    mensagem = models.TextField(blank=True, null=False, verbose_name='Mensagem')
+    data_abertura = models.DateField(auto_now_add=True)
+    data_fim = models.DateField(auto_now=False, blank=False, null=False, default=datetime.now())
+    status = models.CharField(max_length=30, choices=STATUS_CHAMADO, verbose_name='Status', blank=False, null=False)
+    pedido = models.ForeignKey(Pedido, related_name='chamado_pedido', null=False, blank=False, on_delete=models.CASCADE, verbose_name='Pedido')
+    responsavel = models.ForeignKey(Funcionario, related_name='chamado_funcionario', null=False, blank=False, on_delete=models.CASCADE)
+    tipo = models.CharField(max_length=30, choices=TIPO_CHAMADO, verbose_name='Tipo de chamado')

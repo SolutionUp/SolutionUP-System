@@ -28,6 +28,8 @@ urlpatterns = [
     path('clientes/', include('vendas.urls.clientes_url')),
     path('terceiros/', include('manutencoes.urls.terceiros_url')),
     path('manutencoes/', include('manutencoes.urls.manutencoes_url')),
+    path('chamados/', include('manutencoes.urls.chamados_url')),
+    path('contato/', include('manutencoes.urls.contato_url')),
     path('pedidos/', include('vendas.urls.pedido_url')),
     path('comissoes/', include('vendas.urls.comissao_url')),
     path('auth/', include('users.urls.auth_url')),
