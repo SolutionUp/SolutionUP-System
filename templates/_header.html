@@ -61,18 +61,16 @@
                     </ul>
                     {% endif %}
                 {% endif %}
-                {% if not user.is_authenticated %}
-                <a href="/contato" class="nav-link">
-                    <li>Contato</li>
-                    <div></div>
-                </a>
-                {% else %}
-                {% if 'manutencao.view_chamado' in perms %}
+                {% if user.is_authenticated and 'manutencao.view_chamado' in perms%}
                 <a href="/chamados" class="nav-link">
                     <li>Chamados</li>
                     <div></div>
                 </a>
-                {% endif %}
+                {% else %}
+                <a href="/contato" class="nav-link">
+                    <li>Contato</li>
+                    <div></div>
+                </a>
                 {% endif %}
             </ul>
             {% if user.is_authenticated %}

@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 from django import forms
 from django.forms import ModelForm, SelectMultiple, Select, EmailInput, TextInput, NumberInput, Textarea, FileInput, DateInput, ValidationError
 
@@ -62,7 +62,7 @@ class FormManutencao(ModelForm):
         }
     
     def data_conclusao_valid(self):
-        return False if self.cleaned_data['data_fim']< datetime.date.today() else True 
+        return False if self.cleaned_data['data_fim']< date.today() else True 
 
 class FormChamado(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -106,3 +106,6 @@ class FormChamado(ModelForm):
                 'style': 'resize: None;'
             }),
         }
+
+    def data_fim_valid(self):
+        return False if self.cleaned_data['data_fim']< date.today() else True 

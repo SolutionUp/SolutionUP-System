@@ -25,7 +25,6 @@ class Manutencao(models.Model):
 
 class Chamado(models.Model):
     STATUS_CHAMADO = (
-        ('C', 'Cancelado'),
         ('E', 'Em andamento'),
         ('F', 'Finalizado'),
         ('R', 'Recebido')
@@ -39,8 +38,11 @@ class Chamado(models.Model):
     id = models.AutoField(primary_key=True)
     mensagem = models.TextField(blank=True, null=False, verbose_name='Mensagem')
     data_abertura = models.DateField(auto_now_add=True)
-    data_fim = models.DateField(auto_now=False, blank=False, null=False, default=datetime.now())
+    data_fim = models.DateField(auto_now=False, blank=False, null=False)
     status = models.CharField(max_length=30, choices=STATUS_CHAMADO, verbose_name='Status', blank=False, null=False)
-    pedido = models.ForeignKey(Pedido, related_name='chamado_pedido', null=False, blank=False, on_delete=models.CASCADE, verbose_name='Pedido')
-    responsavel = models.ForeignKey(Funcionario, related_name='chamado_funcionario', null=False, blank=False, on_delete=models.CASCADE)
+    pedido = models.ForeignKey(Pedido, null=False, blank=False, on_delete=models.CASCADE, verbose_name='Pedido')
+    responsavel = models.ForeignKey(Funcionario, null=False, blank=False, on_delete=models.CASCADE)
     tipo = models.CharField(max_length=30, choices=TIPO_CHAMADO, verbose_name='Tipo de chamado')
+
+    def __str__(self):
+        return f'{self.id} - {self.tipo}'

@@ -7,7 +7,7 @@
             <div class="form-floating mb-2">Pedido: {{ object.pedido.id }}</div>
             <div class="form-floating mb-2">Status: {{ object.get_status_display }}</div>
             <div class="form-floating mb-2">Data de abertura: {{ object.data_abertura }}</div>
-            <div class="form-floating mb-2">Data de conclusão: {{ object.data_fim }}</div>
+            <div class="form-floating mb-2">Data de conclusão prevista: {{ object.data_fim }}</div>
             <div class="form-floating mb-2">Funcionário: {{ object.responsavel.nome }}</div>
             <div class="form-floating mb-2">Tipo do chamado: {{ object.get_tipo_display  }}</div>
             <div class="form-floating mb-2">Descrição do problema: <p class="lh-base pt-1">{{ object.mensagem }}</p></div>

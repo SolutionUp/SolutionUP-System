@@ -29,9 +29,13 @@ def adicionar_chamado(request):
     if request.method == 'POST':
         form_chamado = FormChamado(request.POST)
         if form_chamado.is_valid():
-            form_chamado.save()
-            messages.add_message(request, messages.SUCCESS, 'Chamado cadastrado!', extra_tags='success')
-            return redirect('/chamados')
+            if form_chamado.data_fim_valid():
+                form_chamado.save()
+                messages.add_message(request, messages.SUCCESS, 'Chamado cadastrado!', extra_tags='success')
+                return redirect('/chamados')
+            else:
+                messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
+                return render(request, 'chamado/chamado_add.html', {'form_chamado': form_chamado})
         else:
             messages.add_message(request, messages.ERROR, 'Erro no formulário, tente novamente!', extra_tags='danger')
             return render(request, 'chamado/chamado_add.html', {'form_chamado': form_chamado})
