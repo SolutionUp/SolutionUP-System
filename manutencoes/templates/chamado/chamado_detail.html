@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %} {% load static %}
 {% if 'manutencoes.view_chamado' in perms %}
 <div class="row">
-    <p class="h2 mb-3">Informações do Chamado</p>
+    <p class="h2 mb-3">Informações do chamado</p>
     <div class="form col-4 mb-auto mt-auto">
         <div>
             <div class="form-floating mb-2">Pedido: {{ object.pedido.id }}</div>

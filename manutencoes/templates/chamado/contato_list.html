@@ -1,15 +1,19 @@
 {% extends "base.html" %} {% block content %} {% load static %}
+<div class="mb-3">
+  <h1 class="text-center">Fale conosco!</h1>
+  <h6 class="text-center text-muted">Preencha os campos abaixo e retornaremos em até 48 horas.</h6>
+</div>
 <form class= "col-7" action="https://api.staticforms.xyz/submit" method="POST">
   <input type="hidden" name="accessKey" value="fdd0f3d4-fece-4c4b-ab2e-657e1d227372">
   <input type="hidden" name="redirectTo" value="https://solutionup.herokuapp.com/contato">
   <div class ="row">
       <div class="form col-7 pe-0">
-        <label class="required" for="name">Nome:</label><br />
+        <label class="required" for="nome">Nome:</label><br />
         <input id="name" class="input form-control" placeholder="Informe seu nome completo" name="name" type="text" value="" size="30" /><br />
         <label class="required" for="email">E-mail:</label><br />
         <input id="email" class="input form-control" name="email" placeholder="Informe seu melhor e-mail" type="text" value="" size="30" /><br />
         <label class="required" for="message">Mensagem:</label><br />
-        <textarea id="message" placeholder="Digite sua mensagem" class="input form-control" name="message" rows="7" cols="30"></textarea><br />
+        <textarea id="message" placeholder="Digite aqui uma breve mensagem..." class="input form-control" name="message" rows="7" cols="30"></textarea><br />
       </div>
   </div>    
   <input class="btn btn-primary btn-confirmar" type="submit" value="Enviar">
