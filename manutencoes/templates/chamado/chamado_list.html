@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+{% if 'chamado.view_chamado' in perms %}
+    <p class="h2">Chamados</p>
+    <div class="row">
+        <div class="pesquisa col-4">
+            <form class="input-group" action="{% url 'listagem_chamado' %}" method="get">
+                <input id="campo-pesquisa" type="text" class="form-control" name="q" placeholder="Digite um código ou responsável..." />
+                <button class="btn btn-secondary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </div>
+        {% if 'chamado.add_chamado' in perms %}
+        <a href="adicionar" class="btn btn-primary btn-adicionar">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+        {% endif %}
+    </div>
+    {% if object_list %}
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th scope="row"> Código </th>
+                <th scope="col"> Data de Abertura </th>
+                <th scope="col"> Funcionário </th>
+                <th scope="col"> Tipo </th>
+                <th scope="col"> Status </th> 
+                {% if 'chamados.view_chamado' in perms or 'chamados.change_chamado' in perms or 'chamadosdelete_chamado' in perms %}
+                <th class="text-center" scope="col"> Opções </th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for chamado in object_list %}
+            <tr class="active-row">
+                <th scope="row">{{ chamado.id }}</th>
+                <td>{{ chamado.data_abertura }}</td>
+                <td><a href="/funcionarios/?q={{ chamado.responsavel.cpf }}">{{ chamado.responsavel.nome }}</a></td>
+                <td>{{ chamado.get_tipo_display }}</td>
+                <td>{{ chamado.get_status_display }}</td>
+                {% if 'chamados.view_chamado' in perms or 'chamados.change_chamado' in perms or 'chamados.delete_chamado' in perms %}
+                <td class="col-2 text-center">
+                    {% if 'chamados.view_chamado' in perms %}
+                    <a href="{{ chamado.id }}" type="button"><i class="bi bi-eye-fill"></i></a>
+                    {% endif %}
+                    {% if 'chamados.change_chamado' in perms %}
+                    <a href="alterar/{{ chamado.id }}" type="button"><i class="bi bi-pencil-square"></i></a>
+                    {% endif %}
+                    {% if 'chamados.delete_chamado' in perms %}
+                    <a href="" data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao{{ chamado.id }}"><i class="bi bi-trash"></i></a>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            <div class="modal fade" id="modalConfirmaExclusao{{ chamado.id }}" tabindex="-1" role="dialog" aria-labelledby="modalConfirmaExclusao" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h5 class="modal-title ">Confirmação</h5>
+                        </div>
+                        <div class="modal-body">Deseja realmente deletar o chamado {{ chamado.id }}?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="remover/{{ chamado.id }}"><button type="button" class="btn btn-danger">Deletar</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-secondary pt-2">Não há chamados disponíveis.</p>
+    {% endif %}
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %} {% endblock %}

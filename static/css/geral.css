@@ -7,7 +7,7 @@
 
 body {
     font-family: ProximaHelvetica, Helvetica, Arial, sans-serif;
-    /* min-height: 100vh; */
+    min-height: 100vh;
     background-color: #f8f9fa
 }
 
@@ -16,8 +16,7 @@ body .main {
 }
 
 footer {
-    display: None;
-    /* Temporariamente desativado*/
+
     text-align: center;
     bottom: 0;
     position: absolute;

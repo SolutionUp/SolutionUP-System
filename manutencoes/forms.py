@@ -62,4 +62,47 @@ class FormManutencao(ModelForm):
         }
     
     def data_conclusao_valid(self):
-        return False if self.cleaned_data['data_fim']< datetime.date.today() else True
+        return False if self.cleaned_data['data_fim']< datetime.date.today() else True 
+
+class FormChamado(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(FormChamado, self).__init__(*args, **kwargs)
+
+        instance = getattr(self, 'instance', None)
+        if instance.id:
+            if (self.initial['status'] == 'F'):
+                for field in ["mensagem", "pedido", "status", "tipo", "responsavel", "data_fim"]:
+                    self.fields[field].widget.attrs['disabled'] = 'disabled'
+
+    class Meta:
+        model = Chamado
+        fields = '__all__'
+        widgets ={
+            'data_fim': DateInput( 
+                format=('%Y-%m-%d'),
+                attrs={
+                    'class': "form-control",
+                    'type': 'date'
+            }),
+            'responsavel': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Selecione o responsável'
+            }),
+            'tipo': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Selecione o tipo'
+            }),
+            'status': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Selecione o status'
+            }),                        
+            'pedido': Select(attrs={
+                'class': "form-select",
+                'placeholder': 'Pedido'
+            }),
+            'mensagem':  Textarea(attrs={
+                'class': "form-control mt-3 mb-3",
+                'placeholder': 'Descreva a descrição do chamado...',
+                'style': 'resize: None;'
+            }),
+        }

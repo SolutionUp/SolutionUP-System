@@ -1,0 +1,50 @@
+{% load static %}
+{% if 'manutencoes.add_chamado' in perms and 'manutencoes.change_chamado' in perms %}
+<form class="col-7" method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row">
+        <p class="h2 mb-4">Cadastro de chamados</p>
+        <div class="form col-7 pe-0">
+            <div class="form-floating mb-3">
+                {{ form_chamado.data_fim }}
+                <label for="{{ form_chamado.data_fim.name }}">Data de conclusão prevista</label>
+            </div>
+            <div class="text-danger">
+                {{ form_chamado.data_fim.errors }}
+            </div>
+
+            <div class="form-floating mb-3">
+                {{ form_chamado.responsavel }}
+                <label for="{{ form_chamado.responsavel.name }}">Responsável</label>
+            </div>
+            <div class="text-danger">
+                {{ form_chamado.responsavel.errors }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_chamado.tipo }}
+                <label for="{{ form_chamado.tipo.name }}">{{ form_chamado.tipo.label }}</label>
+            </div>            
+            <div class="text-danger">
+                {{ form_chamado.tipo.errors }}
+            </div>           
+            <div class="form-floating mb-3">
+                {{ form_chamado.status }}
+                <label for="{{ form_chamado.status.name }}">{{ form_chamado.status.label }}</label>
+            </div>
+            <div class="form-floating mb-3">
+                {{ form_chamado.pedido }}
+                <label for="{{ form_chamado.pedido.id }}">Pedido</label>
+            </div>
+            <div class="text-danger">
+                {{ form_chamado.pedido.errors }}
+            </div>
+        </div>
+    </div>
+    <div>{{ form_chamado.mensagem }}</div>
+    <div class="mb-2">
+        <input class="btn btn-primary btn-confirmar" type="submit" value="Confirmar">
+        <input class="btn btn-secondary" type="reset" onclick="resetar_imagem()" value="Resetar" />
+    </div>
+</form>
+{% else %}
+<p class="text-secondary text-danger pt-2">Você não tem permissões suficientes.</p> {% endif %}
