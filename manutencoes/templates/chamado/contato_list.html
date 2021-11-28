@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %} {% load static %}
 <div class="mb-6">
   <h1>Fale conosco</h1>
-  <h6 class="text-muted mb-4">Preencha os campos abaixo e retornaremos o mais breve possível.</h6>
+  <h6 class="text-muted mb-4">Preencha o formulário abaixo, e encaminharemos um retorno assim que possível.</h6>
 </div>
 <form class= "col-7" action="https://api.staticforms.xyz/submit" method="POST">
   <input type="hidden" name="accessKey" value="fdd0f3d4-fece-4c4b-ab2e-657e1d227372">
@@ -12,7 +12,7 @@
         <input id="email" class="input form-control" name="email" placeholder="Informe seu melhor e-mail" type="text" value="" size="30" /><br />
         <textarea id="message" placeholder="Digite aqui uma breve mensagem..." class="input form-control" name="message" rows="7" cols="30"></textarea><br />
       </div>
-  </div>    
-  <input class="btn btn-primary btn-confirmar" type="submit" value="Enviar">
+  </div>
+  <input class="btn btn-primary btn-confirmar" type="submit" onclick="contato()" value="Enviar">
 </form>
 {% endblock %}

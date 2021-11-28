@@ -90,3 +90,7 @@ function getProduto(){
     alert("Evento acionado!")
     //$.post("/api/get_produto", {"produto": 1} ,alert("request ajax aqui"));
 }
+
+function contato() {
+    alert("Mensagem enviada, retornaremos o mais breve possível.");
+};
