@@ -52,8 +52,13 @@ def remover_produto(request, codigo):
         imagem = Produto.objects.get(codigo=produto.codigo).imagem.name
         if imagem:
             produto.imagem.storage.delete(produto.imagem.name)
-        produto.delete()
-        return redirect('/produtos')
+        try:
+            produto.delete()
+            messages.add_message(request, messages.SUCCESS, 'Produto removido!', extra_tags='success')
+            return redirect('/produtos')
+        except Exception:
+            messages.add_message(request, messages.ERROR, 'O produto está atribuído a um pedido!', extra_tags='danger')
+            return redirect('/produtos')
     else:
         return render(request, 'produtos/produto_list.html')
 
