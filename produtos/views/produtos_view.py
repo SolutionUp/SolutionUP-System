@@ -49,9 +49,6 @@ def adicionar_produto(request):
 def remover_produto(request, codigo):
     if request.method == 'GET':
         produto = Produto.objects.get(codigo=codigo)
-        imagem = Produto.objects.get(codigo=produto.codigo).imagem.name
-        if imagem:
-            produto.imagem.storage.delete(produto.imagem.name)
         try:
             produto.delete()
             messages.add_message(request, messages.SUCCESS, 'Produto removido!', extra_tags='success')
@@ -70,11 +67,6 @@ def alterar_produto(request, codigo):
     form_categoria = FormCategoriaProduto()
     if request.method == 'POST':
         if form_produto.is_valid():
-            old_img = Produto.objects.get(codigo=produto.codigo).imagem.name
-            if not old_img:
-                form_produto.save()
-            elif form_produto.cleaned_data['imagem'] != old_img:
-                produto.imagem.storage.delete(produto.imagem.name)
             form_produto.save()
             messages.add_message(request, messages.SUCCESS, 'Produto alterado!', extra_tags='success')
             return redirect('/produtos')

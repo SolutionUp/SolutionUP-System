@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 if 'HOME' in os.environ.keys():
     if '/app' in os.environ['HOME']:
@@ -23,6 +26,12 @@ load_dotenv()  # take environment variables from .env.
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Configuration Cloudinary
+cloudinary.config( 
+  cloud_name = 'dknbtyyit', 
+  api_key = '384469476184938',
+  api_secret = 'XK54pAcd7OrRFQbNcr7_uXYyMqM'
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -51,6 +60,7 @@ INSTALLED_APPS = [
     'vendas',
     'manutencoes',
     'users',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
